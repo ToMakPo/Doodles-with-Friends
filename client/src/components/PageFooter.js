@@ -1,4 +1,4 @@
-const Footer = () => {
+const PageFooter = () => {
     return (
         <footer>
             <hr/>
@@ -8,4 +8,4 @@ const Footer = () => {
     )
 }
 
-export default Footer
+export default PageFooter
