@@ -1,7 +1,29 @@
 {
+  "name": "doodles-with-friends",
+  "description": "Fun app that allows multiple people to play a Pictionary type game online.",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ToMakPo/Doodles-with-Friends.git"
+  },
+  "keywords": [
+    "Pictionary",
+    "online multiplayer game"
+  ],
+  "author": "Makai Post, Aaron Parnell, Danny Zosh, & Mike Belliveau",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/ToMakPo/Doodles-with-Friends/issues"
+  },
+  "homepage": "https://postnet-doodles-with-friends.herokuapp.com/",
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.11.19",
     "socket.io": "^3.1.2"
-  }
+  },
+  "devDependencies": {}
 }
