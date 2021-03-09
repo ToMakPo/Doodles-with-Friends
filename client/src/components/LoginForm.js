@@ -1,7 +1,8 @@
 import React from 'react';
-import "./style.css";
+import '../styles/palette.css'
 
-export default function inputForm() {
+
+function LoginForm() {
     return (
         <div>
             <form>
@@ -24,4 +25,4 @@ export default function inputForm() {
     )
 }
 
-export default inputForm
+export default LoginForm;

@@ -10,6 +10,7 @@ import ActiveGame from './pages/ActiveGame'
 import ScoreBoard from './pages/ScoreBoard'
 import ActiveUserContext from './utils/ActiveUserContext'
 import PageNotFound from './pages/PageNotFound'
+import "./styles/palette.css"
 
 const App = () => {
 	const [activeUser, setActiveUser] = useState(null)
@@ -24,6 +25,7 @@ const App = () => {
 
 			{
 				// If the user is not logged in, then direct the user to the login page. Other wise, take them to the page requested page.
+				true ? <Home/>:
 				activeUser === null ? (
 					loginDisplay 
 						? <Login {...{logUserIn, setLoginDisplay}}/>
