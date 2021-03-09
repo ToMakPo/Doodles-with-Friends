@@ -24,6 +24,7 @@ const App = () => {
 
 			{
 				// If the user is not logged in, then direct the user to the login page. Other wise, take them to the page requested page.
+				true ? <ActiveGame/> :
 				activeUser === null ? (
 					loginDisplay 
 						? <Login {...{logUserIn, setLoginDisplay}}/>
