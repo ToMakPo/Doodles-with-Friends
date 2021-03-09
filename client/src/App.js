@@ -10,6 +10,7 @@ import ActiveGame from './pages/ActiveGame'
 import ScoreBoard from './pages/ScoreBoard'
 import ActiveUserContext from './utils/ActiveUserContext'
 import PageNotFound from './pages/PageNotFound'
+import "./styles/palette.css"
 
 const App = () => {
 	const [activeUser, setActiveUser] = useState(null)
