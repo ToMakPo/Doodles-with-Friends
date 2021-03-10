@@ -8,15 +8,14 @@ const Home = () => {
 
             <div class="card-deck">
                 <div class="card">
-
                     <div class="card-body">
                     <h5 class="card-title">START A NEW GAME</h5>
                     <p class="card-text">YOU'LL BE THE HOST.</p>
                     <button type="button" class="btn btn-primary btn-lg btn-block">START A NEW GAME</button>
                     </div>
                 </div>
-                <div class="card">
 
+                <div class="card">
                     <div class="card-body">
                     <h5 class="card-title">JOIN AN EXISTING GAME</h5>
                     <p class="card-text">YOU'RE JOINING A GAME YOUR FRIEND ALREADY STARTED.</p>

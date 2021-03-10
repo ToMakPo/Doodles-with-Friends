@@ -7,9 +7,11 @@ const Options = () => {
             <h2>Options</h2>
 
             <div className="card text-center">
+
                 <div className="card-header">
                     Customize Your Game
                 </div>
+
                 <div className="card-body">
                     <h5 className="card-title">Choose a Category</h5>
                     <div className="dropdown">
@@ -28,21 +30,30 @@ const Options = () => {
 
                 <div className="card-body">
                     <h5 className="card-title">Choose the number of Rounds:</h5>
-                    <div className="dropdown">
-                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Rounds:
-                        </button>
-                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a className="dropdown-item" >5</a></li>
-                            <li><a className="dropdown-item" >10</a></li>
-                            <li><a className="dropdown-item" >15</a></li>
-                        </ul>
+                    <div>
+                        <input 
+                        type="text" 
+                        className="form-control" 
+                        placeholder="Enter number of Rounds" 
+                        aria-label="Recipient's username" 
+                        aria-describedby="basic-addon2"
+                        // style={{ width: "25%" }}
+                        />
                     </div>
                 </div>
 
                 <div className="card-body">
                     <h5 className="card-title">Select the number of Players:</h5>
-                    <input type="text" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+                    <div>
+                        <input 
+                        type="text" 
+                        className="form-control" 
+                        placeholder="Enter number of Players" 
+                        aria-label="Recipient's username" 
+                        aria-describedby="basic-addon2"
+                        // style={{ width: "25%" }}
+                        />
+                    </div>
                 </div>
 
                 <div className="card-body">
@@ -57,10 +68,11 @@ const Options = () => {
                     </div>
                 </div>
 
+                <div className="card-body">
+                    <button class="btn btn-outline-secondary" type="button">Start Game</button>
+                </div>
+
             </div>
-
-
-
 
         </main>
     )
