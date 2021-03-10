@@ -4,7 +4,7 @@ import '../styles/Home.css'
 const Home = () => {
     return (
         <main>
-            <h2>Home</h2>
+            <h2>Options</h2>
 
             <div class="card-deck">
                 <div class="card">

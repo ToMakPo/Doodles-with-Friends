@@ -5,6 +5,7 @@ import PageFooter from './components/PageFooter'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Home from './pages/Home'
+import Options from './pages/Options'
 import WaitingRoom from './pages/WaitingRoom'
 import ActiveGame from './pages/ActiveGame'
 import ScoreBoard from './pages/ScoreBoard'
@@ -25,7 +26,7 @@ const App = () => {
 
 			{
 				// If the user is not logged in, then direct the user to the login page. Other wise, take them to the page requested page.
-				true ? <ActiveGame/> :
+				true ? <Options/> :
 				activeUser === null ? (
 					loginDisplay 
 						? <Login {...{logUserIn, setLoginDisplay}}/>
@@ -36,6 +37,7 @@ const App = () => {
 						<Switch>
 							<Route exact path='/' component={Home}/>
 							<Route exact path='/home' component={Home}/>
+							<Route exact path='/options' component={Options}/>
 							<Route exact path='/waiting-room/:roomId' component={WaitingRoom}/>
 							<Route exact path='/active-game/:roomId' component={ActiveGame}/>
 							<Route exact path='/score-board/:roomId' component={ScoreBoard}/>
