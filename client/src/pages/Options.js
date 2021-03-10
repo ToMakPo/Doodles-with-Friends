@@ -73,7 +73,7 @@ const Options = () => {
                 </div>
 
                 <div className="card-body">
-                    <button class="btn btn-outline-secondary" type="button">Start Game</button>
+                    <button className="btn btn-outline-secondary" type="button">Start Game</button>
                 </div>
 
             </div>
