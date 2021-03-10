@@ -5,6 +5,7 @@ const Options = () => {
     return (
         <main>
             <h2>Options</h2>
+            <div className="container">
 
             <div className="card text-center">
 
@@ -42,7 +43,9 @@ const Options = () => {
                     </div>
                 </div>
 
-                <div className="card-body">
+                <div className="container">
+
+                <div className="card-body ">
                     <h5 className="card-title">Select the number of Players:</h5>
                     <div>
                         <input 
@@ -51,9 +54,10 @@ const Options = () => {
                         placeholder="Enter number of Players" 
                         aria-label="Recipient's username" 
                         aria-describedby="basic-addon2"
-                        // style={{ width: "25%" }}
+                        // style={{ width: "25%"}}
                         />
                     </div>
+                </div>
                 </div>
 
                 <div className="card-body">
@@ -72,6 +76,7 @@ const Options = () => {
                     <button class="btn btn-outline-secondary" type="button">Start Game</button>
                 </div>
 
+            </div>
             </div>
 
         </main>
