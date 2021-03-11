@@ -1,0 +1,38 @@
+#chat-component {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 15px);
+}
+
+#input-box {
+    display: flex;
+    margin-top: 5px;
+}
+
+#chat-input {
+    flex: 1 0 auto;
+}
+
+#chat-log {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #4d4d4d;
+    min-height: 250px;
+    overflow-y: auto;
+}
+
+.chat-item.self {
+    color: rgb(57, 104, 148)
+}
+.chat-item.guess {
+    color: rgb(112, 57, 148)
+}
+.chat-item.answer {
+    color: rgb(57, 148, 92)
+}
+.chat-item.answer :is(small, strong) {
+    display: block;
+    text-align: center;
+}
