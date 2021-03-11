@@ -1,0 +1,72 @@
+canvas {
+    cursor: none;
+    background-color: white;
+}
+
+#draw-area {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    overflow: hidden;
+    background-color: #4d4d4d;
+    margin-bottom: 5px;
+    border: 2px solid #4d4d4d;
+}
+
+#canvas-cursor {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    z-index: 5;
+    cursor: none;
+    pointer-events: none;
+    border: 1px solid black;
+}
+
+#canvas-cursor.eraser {
+    background-color: #ffffff88 !important;
+}
+
+#clear-drawing-button {
+    cursor: pointer;
+}
+
+#tools {
+    overflow: hidden;
+    pointer-events: none;
+}
+
+#tools > div {
+    position: absolute;
+    bottom: -75px;
+    width: 100%;
+    display: flex;
+}
+
+#tools .tool {
+    margin-left: 25px;
+    margin-top: 25px;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+#tools .tool.selected {
+    animation: selectTool 0.5s;
+    margin-top: 0
+}
+
+#tools .tool:not(.selected) {
+    animation: deselectTool 0.5s;
+}
+
+@keyframes selectTool {
+    from {margin-top: 25px}
+    to {margin-top: 0}
+}
+
+@keyframes deselectTool {
+    from {margin-top: 0}
+    to {margin-top: 25px}
+}
