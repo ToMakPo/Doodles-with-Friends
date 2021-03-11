@@ -8,8 +8,6 @@ const ScoreBoard = () => {
         <div className="container ">
             <main className="container">
 
-
-
                 <h2>FINISHED</h2>
                 <div class="card-deck">
                         <div className="card">
@@ -31,15 +29,11 @@ const ScoreBoard = () => {
                     </div>
                 </div>
 <br></br>
-                <div class="container">
-                <div class="card">
-                        <div class="card-body">
-                    <div class="row align-items-end">
-                        <ChatBox/>
-                        </div>
-                        </div>
-                    </div>
+                <div>
+                    <ChatBox/>
                 </div>
+
+
             </main>
 
         </div>
