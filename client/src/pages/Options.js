@@ -1,7 +1,9 @@
 import '../styles/palette.css'
 import '../styles/Options.css'
 
+
 const Options = () => {
+    
     return (
         <main>
             <h2>Options</h2>
@@ -15,7 +17,7 @@ const Options = () => {
 
                 <div className="card-body">
                     <h5 className="card-title">Choose a Category</h5>
-                    <div className="dropdown">
+                    {/* <div className="dropdown">
                         <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             Categories
                         </button>
@@ -26,7 +28,18 @@ const Options = () => {
                             <li><a className="dropdown-item" >Existential Crises</a></li>
                             <li><a className="dropdown-item" >Movies</a></li>
                         </ul>
-                    </div>
+                    </div> */}
+                    <select 
+                        className="btn btn-secondary" 
+                        name="categories" 
+                        id="categoriesEl"
+                        type="button">
+                        <option value="Plants">Plants</option>
+                        <option value="Celebrities">Celebrities</option>
+                        <option value="Existential Crises">Existential Crises</option>
+                    </select>
+
+
                 </div>
 
                 <div className="card-body">
@@ -62,19 +75,24 @@ const Options = () => {
 
                 <div className="card-body">
                     <h5 className="card-title">Allow Custom Categories:</h5>
-                    <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                    {/* <div className="btn-group btn-group-toggle" data-toggle="buttons">
                     <label className="btn btn-secondary active">
                         <input type="radio" name="options" id="option1" autocomplete="off" checked/> Yes
                     </label>
                     <label className="btn btn-secondary">
                         <input type="radio" name="options" id="option3" autocomplete="off"/> No
                     </label>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="card-body">
-                    <button className="btn btn-outline-secondary" type="button">Start Game</button>
+                <label class="switch">
+                    <input type="checkbox"/>
+                    <span class="slider round"></span>
+                </label>
                 </div>
+
+
 
             </div>
             </div>
