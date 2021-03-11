@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { Link } from 'react-router-dom'
 import ActiveUserContext from "../utils/ActiveUserContext"
+import Jumbotron from "./Jumbotron"
 
 const PageHeader = ({logUserOut}) => {
     const {activeUser} = useContext(ActiveUserContext)
@@ -8,7 +9,8 @@ const PageHeader = ({logUserOut}) => {
     return (
         <>
         <header>
-            <h1>Doodles with Friends</h1>
+        <Jumbotron/>
+            {/* <h1>Doodles with Friends</h1> */}
                 <div>
                 {activeUser && (
                     <>

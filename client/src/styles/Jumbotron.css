@@ -1,0 +1,14 @@
+.jumbotron-fluid{
+    padding:0em !important;
+
+
+}
+.jumbotron{
+    padding:0em !important;
+    
+}
+.container{
+    justify-content: flex-start !important;
+    align-items: center;
+
+}
