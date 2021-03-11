@@ -2,9 +2,10 @@ import { useContext } from "react"
 import { Link } from 'react-router-dom'
 import ActiveUserContext from "../utils/ActiveUserContext"
 import Jumbotron from "./Jumbotron"
+import GameContext from "../utils/GameContext"
 
 const PageHeader = ({logUserOut}) => {
-    const {activeUser} = useContext(ActiveUserContext)
+    const {user} = useContext(GameContext)
 
     return (
         <>
@@ -12,9 +13,9 @@ const PageHeader = ({logUserOut}) => {
         <Jumbotron/>
             {/* <h1>Doodles with Friends</h1> */}
                 <div>
-                {activeUser && (
+                {user && (
                     <>
-                    <span>{activeUser.username}</span>
+                    <span>{user.username}</span>
                     <Link to='/login' onClick={logUserOut}>Log out</Link>
                     </>
                 )}

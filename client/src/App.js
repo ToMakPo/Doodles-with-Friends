@@ -9,7 +9,7 @@ import Options from './pages/Options'
 import WaitingRoom from './pages/WaitingRoom'
 import ActiveGame from './pages/ActiveGame'
 import ScoreBoard from './pages/ScoreBoard'
-import ActiveUserContext from './utils/ActiveUserContext'
+import GameContext from './utils/GameContext'
 import PageNotFound from './pages/PageNotFound'
 import "./styles/palette.css"
 
@@ -21,7 +21,7 @@ const App = () => {
 	const logUserOut = () => setActiveUser(null)
 
 	return (
-		<ActiveUserContext.Provider value={{activeUser}}>
+		<GameContext.Provider value={{activeUser}}>
 			<PageHeader logUserOut={logUserOut}/>
 
 			{
@@ -48,7 +48,7 @@ const App = () => {
 			}
 
 			<PageFooter/>
-		</ActiveUserContext.Provider>
+		</GameContext.Provider>
 	)
 }
 
