@@ -1,35 +1,37 @@
 const { default: Canvas } = require("../components/Canvas")
-
 const ActiveGame = () => {
     return (
-        <main>
-            <h2>Active Game</h2>
-            <div className="container">
-
-                <h3>THE WORD</h3>
-
-                <h3>ROUND X OF 10</h3>
-
-                <h3>TIME REMAINING:</h3>
-
+        <div className="container ">
+            <main>
+                <h2>Active Game</h2>
+                <div class="container">
+                    <div class="row align-items-start">
+                    {/* Column1 */}
+                        <div class="col-sm">
+                        The WORD
+                        </div>
+                    {/* Column2 */}
+                        <div class="col-sm">
+                        ROUND 1 OF 5
+                        </div>
+                    {/* Column3 */}
+                        <div class="col-sm">
+                        TIME REMAINING
+                        </div>
+                    </div>
                 </div>
-
-            <div className="container">
-
-                <h3>DRAWING AREA</h3>
-
-            </div>
-
-            <div className="container">
-
-                <h3>CALL CHAT HERE</h3>
-
-            </div>
-
-
-            <Canvas width={500} height={500} active={true}/>
-        </main>
+                <div class="container">
+                    <div class="row align-items-center">
+                        <Canvas width={500} height={500} active={true}/>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row align-items-end">
+                        <div>Chat Box</div>
+                    </div>
+                </div>
+            </main>
+        </div>
     )
 }
-
 export default ActiveGame
