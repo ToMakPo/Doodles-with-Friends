@@ -1,6 +1,7 @@
 import '../styles/palette.css'
 import '../styles/ScoreBoard.css'
 
+
 const ScoreBoard = () => {
     return (
         <div className="container ">
