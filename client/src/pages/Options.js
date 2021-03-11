@@ -75,19 +75,24 @@ const Options = () => {
 
                 <div className="card-body">
                     <h5 className="card-title">Allow Custom Categories:</h5>
-                    <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                    {/* <div className="btn-group btn-group-toggle" data-toggle="buttons">
                     <label className="btn btn-secondary active">
                         <input type="radio" name="options" id="option1" autocomplete="off" checked/> Yes
                     </label>
                     <label className="btn btn-secondary">
                         <input type="radio" name="options" id="option3" autocomplete="off"/> No
                     </label>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="card-body">
-                    <button className="btn btn-outline-secondary" type="button">Start Game</button>
+                <label class="switch">
+                    <input type="checkbox"/>
+                    <span class="slider round"></span>
+                </label>
                 </div>
+
+
 
             </div>
             </div>
