@@ -1,11 +1,11 @@
 import ChatBox from "../components/ChatBox"
 const { default: Canvas } = require("../components/Canvas")
 
-const ActiveGame = () => {
+const ArtistView = () => {
     return (
         <div className="container ">
             <main>
-                <h2>Active Game</h2>
+                <h2>Artist View</h2>
                 <div className="card-deck">
 
                 <div className="card">
@@ -47,4 +47,4 @@ const ActiveGame = () => {
         </div>
     )
 }
-export default ActiveGame
+export default ArtistView

@@ -7,7 +7,8 @@ import Signup from './pages/Signup'
 import Home from './pages/Home'
 import Options from './pages/Options'
 import WaitingRoom from './pages/WaitingRoom'
-import ActiveGame from './pages/ActiveGame'
+import ArtistView from './pages/ArtistView'
+import ObserverView from './pages/ObserverView'
 import ScoreBoard from './pages/ScoreBoard'
 import GameContext from './utils/GameContext'
 import PageNotFound from './pages/PageNotFound'
@@ -26,7 +27,7 @@ const App = () => {
 
 			{
 				// If the user is not logged in, then direct the user to the login page. Other wise, take them to the page requested page.
-				true ? <ActiveGame/> :
+				true ? <ObserverView/> :
 				activeUser === null ? (
 					loginDisplay 
 						? <Login {...{logUserIn, setLoginDisplay}}/>
@@ -39,7 +40,8 @@ const App = () => {
 							<Route exact path='/home' component={Home}/>
 							<Route exact path='/options' component={Options}/>
 							<Route exact path='/waiting-room/:roomId' component={WaitingRoom}/>
-							<Route exact path='/active-game/:roomId' component={ActiveGame}/>
+							<Route exact path='/active-game/:roomId' component={ArtistView}/>
+							<Route exact path='/active-game/:roomId' component={ObserverView}/>
 							<Route exact path='/score-board/:roomId' component={ScoreBoard}/>
 							<Route path='/' component={PageNotFound}/>
 						</Switch>
