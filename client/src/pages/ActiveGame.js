@@ -6,33 +6,43 @@ const ActiveGame = () => {
         <div className="container ">
             <main>
                 <h2>Active Game</h2>
-                <div class="container">
-                    <div class="row align-items-start">
-                    {/* Column1 */}
-                        <div class="col-sm">
-                        The WORD
-                        </div>
-                    {/* Column2 */}
-                        <div class="col-sm">
-                        ROUND 1 OF 5
-                        </div>
-                    {/* Column3 */}
-                        <div class="col-sm">
-                        TIME REMAINING
-                        </div>
+                <div className="card-deck">
+
+                <div className="card">
+                    <div className="card-header">
+                        <span class="d-block p-2 bg-primary text-white text-center">THE WORD</span>
                     </div>
-                </div>
-                <div class="container">
-                    <div class="row align-items-center">
-                        <Canvas width={500} height={500} active={true}/>
+                    <div className="card-body">
+                        <div className="">
+                            <Canvas width={500} height={500} active={true}/>
+                        </div>
                     </div>
                 </div>
 
-                <div class="container">
-                    <div class="row align-items-end">
-                        <ChatBox/>
+                <div className="card">
+                    <div className="card-header">
+                        <div className="">
+                            <div className="d-flex justify-content-around align-items-center">
+
+                                <div className="d-inline p-2 bg-primary text-white">
+                                ROUND 1 OF 5
+                                </div>
+
+                                <div className="d-inline p-2 bg-primary text-white">
+                                TIME REMAINING
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="card-body">
+                        <div className="row align-items-end">
+                            <ChatBox/>
+                        </div>
                     </div>
                 </div>
+                </div>
+
             </main>
         </div>
     )
