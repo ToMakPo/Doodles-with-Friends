@@ -1,4 +1,6 @@
+import ChatBox from "../components/ChatBox"
 const { default: Canvas } = require("../components/Canvas")
+
 const ActiveGame = () => {
     return (
         <div className="container ">
@@ -25,9 +27,10 @@ const ActiveGame = () => {
                         <Canvas width={500} height={500} active={true}/>
                     </div>
                 </div>
+
                 <div class="container">
                     <div class="row align-items-end">
-                        <div>Chat Box</div>
+                        <ChatBox/>
                     </div>
                 </div>
             </main>
