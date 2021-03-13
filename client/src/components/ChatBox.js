@@ -1,9 +1,9 @@
 const ChatBox = ({width, height, active}) => {
     return (
-        <div class="container">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-end">
+        <div className="container">
+            <div className="card">
+                <div className="card-body">
+                    <div className="row align-items-end">
                     chatbox
                     </div>
                 </div>

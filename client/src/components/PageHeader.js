@@ -1,6 +1,5 @@
 import { useContext } from "react"
 import { Link } from 'react-router-dom'
-import ActiveUserContext from "../utils/ActiveUserContext"
 import Jumbotron from "./Jumbotron"
 import GameContext from "../utils/GameContext"
 

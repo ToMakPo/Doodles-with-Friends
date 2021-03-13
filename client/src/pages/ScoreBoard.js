@@ -6,7 +6,7 @@ import '../styles/ScoreBoard.css'
 const ScoreBoard = () => {
     return (
         <div className="container ">
-            <main className="container">
+            <main className="">
 
                 <h2>FINISHED</h2>
                 <div class="card-deck">

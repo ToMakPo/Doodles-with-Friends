@@ -61,11 +61,14 @@ const Canvas = ({width, height, active}) => {
                 </>}
             </div>
             {active &&
-                <div>
+                <div className="d-flex justify-content-around align-items-center">
                     <input id='color-picker' oninput="handleColorPickerOnInput(this.value)" type="color"/>
                     <input id='size-picker' oninput="handleSizePickerOnInput(this.value)" type="range" 
                         min={1} max={50} value={20}/>
-                    <button id='clear-drawing-button' onclick="handleClearDrawingButtonOnClick()">
+                    <button 
+                    type="button" 
+                    class="btn btn-primary"
+                    id='clear-drawing-button' onclick="handleClearDrawingButtonOnClick()">
                         Clear Drawing
                     </button>
                 </div>

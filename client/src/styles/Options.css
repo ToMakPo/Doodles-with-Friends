@@ -54,10 +54,19 @@ input:checked + .slider:before {
 
 /* Rounded sliders */
 .slider.round {
-    order-radius: 34px;
+    border-radius: 34px;
 }
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+.sliderContainer{
+    width: 185px;
+    align-items: center !important;
+}
+
+p{
+    margin-bottom: 0.5rem !important;
 }
 
