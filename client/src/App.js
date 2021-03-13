@@ -8,7 +8,7 @@ import Home from './pages/Home'
 import Options from './pages/Options'
 import WaitingRoom from './pages/WaitingRoom'
 import ArtistView from './pages/ArtistView'
-import ObserverView from './pages/ObserverView'
+
 import ScoreBoard from './pages/ScoreBoard'
 import GameContext from './utils/GameContext'
 import PageNotFound from './pages/PageNotFound'
@@ -27,7 +27,7 @@ const App = () => {
 
 			{
 				// If the user is not logged in, then direct the user to the login page. Other wise, take them to the page requested page.
-				true ? <ArtistView/> :
+				true ? <PageNotFound/> :
 				activeUser === null ? (
 					loginDisplay 
 						? <Login {...{logUserIn, setLoginDisplay}}/>
