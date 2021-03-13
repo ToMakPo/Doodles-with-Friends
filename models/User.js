@@ -1,8 +1,6 @@
 const mongoose = require("mongoose")
 
-const Schema = mongoose.Schema
-
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
     {
         username: {
             type: String,
@@ -13,6 +11,22 @@ const userSchema = new Schema(
         joinDate: {
             type: Date,
             default: Date.now
+        },
+        activeLobby: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: Lobby
+        },
+        gamesPlayed: {
+            type: Number,
+            default: 0
+        },
+        gamesWon: {
+            type: Number,
+            default: 0
+        },
+        totalPoints: {
+            type: Number,
+            default: 0
         }
     }
 )

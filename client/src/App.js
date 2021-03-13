@@ -7,9 +7,10 @@ import Signup from './pages/Signup'
 import Home from './pages/Home'
 import Options from './pages/Options'
 import WaitingRoom from './pages/WaitingRoom'
-import ActiveGame from './pages/ActiveGame'
+import ArtistView from './pages/ArtistView'
+
 import ScoreBoard from './pages/ScoreBoard'
-import ActiveUserContext from './utils/ActiveUserContext'
+import GameContext from './utils/GameContext'
 import PageNotFound from './pages/PageNotFound'
 import "./styles/palette.css"
 
@@ -21,12 +22,12 @@ const App = () => {
 	const logUserOut = () => setActiveUser(null)
 
 	return (
-		<ActiveUserContext.Provider value={{ activeUser }}>
+		<GameContext.Provider value={{ activeUser }}>
 			<PageHeader logUserOut={logUserOut} />
 
 			{
 				// If the user is not logged in, then direct the user to the login page. Other wise, take them to the page requested page.
-				true ? <ScoreBoard /> :
+				true ? <PageNotFound /> :
 					activeUser === null ? (
 						loginDisplay
 							? <Login {...{ logUserIn, setLoginDisplay }} />
@@ -39,7 +40,7 @@ const App = () => {
 								<Route exact path='/home' component={Home} />
 								<Route exact path='/options' component={Options} />
 								<Route exact path='/waiting-room/:roomId' component={WaitingRoom} />
-								<Route exact path='/active-game/:roomId' component={ActiveGame} />
+								<Route exact path='/active-game/:roomId' component={ArtistView} />
 								<Route exact path='/score-board/:roomId' component={ScoreBoard} />
 								<Route path='/' component={PageNotFound} />
 							</Switch>
@@ -48,7 +49,7 @@ const App = () => {
 			}
 
 			<PageFooter />
-		</ActiveUserContext.Provider>
+		</GameContext.Provider>
 	)
 }
 
