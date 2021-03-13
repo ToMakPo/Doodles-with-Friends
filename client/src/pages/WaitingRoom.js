@@ -79,11 +79,12 @@ const WaitingRoom = () => {
                         </div>
                     </div>
     {/* Column 3 */}
-                    <div className="card">
-                        <div className="card-body">
+                    {/* <div className="card"> */}
+                        {/* <h5 className="card-header">Chat Box:</h5>
+                        <div className="card-body"> */}
                             <ChatBox/>
-                        </div>
-                    </div>
+                        {/* </div> */}
+                    {/* </div> */}
                 </div>{/* end card deck div */}
             </main>
             <div className="containerBottom">
