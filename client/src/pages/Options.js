@@ -67,8 +67,6 @@ const Options = () => {
                             </div>
                         </div>
                     </div>
-                    
-
                 </div>
 {/* END OPTIONS CARD */}
                 <div className="card">

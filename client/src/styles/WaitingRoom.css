@@ -1,0 +1,13 @@
+.containerCol{
+    flex-direction: column;
+}
+.containerBottom{
+    margin-top: 10px;
+    width:100%
+}
+ol{
+    padding-left: 20px;
+}
+.form-control{
+    margin-right: 20px;
+}
