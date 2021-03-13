@@ -27,7 +27,7 @@ const App = () => {
 
 			{
 				// If the user is not logged in, then direct the user to the login page. Other wise, take them to the page requested page.
-				true ? <WaitingRoom/> :
+				true ? <ArtistView/> :
 				activeUser === null ? (
 					loginDisplay 
 						? <Login {...{logUserIn, setLoginDisplay}}/>
@@ -41,7 +41,6 @@ const App = () => {
 							<Route exact path='/options' component={Options}/>
 							<Route exact path='/waiting-room/:roomId' component={WaitingRoom}/>
 							<Route exact path='/active-game/:roomId' component={ArtistView}/>
-							<Route exact path='/active-game/:roomId' component={ObserverView}/>
 							<Route exact path='/score-board/:roomId' component={ScoreBoard}/>
 							<Route path='/' component={PageNotFound}/>
 						</Switch>
