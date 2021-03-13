@@ -73,7 +73,10 @@ const Options = () => {
 {/* END OPTIONS CARD */}
                 <div className="card">
                         <div className="card-body">
-                        <button type="button" className="btn btn-primary btn-lg btn-block">LET'S GO</button>
+                        <button 
+                        // style={{backgroundColor: "#337ca0" }}
+                        type="button" 
+                        className="btn btn-primary btn-lg btn-block">LET'S GO</button>
                         </div>
                     </div>
                 </div>

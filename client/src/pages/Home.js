@@ -20,7 +20,7 @@ const Home = () => {
                         <h5 class="card-title">JOIN AN EXISTING GAME</h5>
                         <p class="card-text">YOU'RE JOINING A GAME YOUR FRIEND ALREADY STARTED.</p>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+                            <input type="text" class="form-control" placeholder="Game Code" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button">JOIN NOW</button>
                             </div>
