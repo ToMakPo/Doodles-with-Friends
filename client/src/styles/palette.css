@@ -9,12 +9,20 @@
     --aeroBlue: #337ca0;
   }
 
+/* #bootstrap-overrides.sketchBackground{
+  background-image: url("./assets/brain-2789677.svg");
+  background-size: 300%;
+  background-position: center; 
+  padding-top: 10px;
+  padding-bottom: 10px;
+  } */
+
 #bootstrap-overrides .btn{
   background-color: var(--celadonBlue);
   border-color: var(--celadonBlue)
 }
 
-#bootstrap-overrides .card{
+#bootstrap-overrides .main{
   color: var(--spaceCadet);
   border-color: var(--xanadu);
 }
@@ -28,4 +36,10 @@
 
   border: 1px solid var(--mediumAquamarine);
   border-radius: 0.25em;
+}
+.jumbotron{
+  background-color: var(--cultured) !important;
+}
+#bootstrap-overrides footer{
+  background-color: var(--cultured) !important;
 }

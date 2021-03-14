@@ -7,7 +7,7 @@ const ScoreBoard = () => {
     return (
         <div 
         id="bootstrap-overrides" 
-        className="container ">
+        className="container sketchBackground">
             <main className="">
 
                 <div class="card-deck">

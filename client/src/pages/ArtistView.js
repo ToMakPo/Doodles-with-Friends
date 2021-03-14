@@ -5,7 +5,7 @@ const ArtistView = () => {
     return (
         <div 
         id="bootstrap-overrides" 
-        className="container ">
+        className="container sketchBackground">
             <main>
                 <h2 className="banner">
                     <div className="d-flex justify-content-around align-items-center">

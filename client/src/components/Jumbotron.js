@@ -4,7 +4,9 @@ import '../styles/palette.css'
 
 function Jumbotron() {
     return (
-        <div id="bootstrap-overrides" className="jumbotron jumbotron-fluid">
+        <div 
+        id="bootstrap-overrides" 
+        className="jumbotron jumbotron-fluid">
             <div className="container">
                 <h1 className="display-2">Doodles with Friends</h1>
             </div>

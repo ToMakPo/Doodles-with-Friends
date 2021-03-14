@@ -6,8 +6,8 @@ const WaitingRoom = () => {
     return (
         <div 
         id="bootstrap-overrides" 
-        className="container containerCol">
-            <main className="row">
+        className="container containerCol sketchBackground">
+            <main className="row sketchBackground">
                 <div className="card-deck">
 
     {/* Column 1 */}

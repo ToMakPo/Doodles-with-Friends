@@ -3,7 +3,8 @@ import '../styles/PageFooter.css'
 
 const PageFooter = () => {
     return (
-        <div>
+        <div 
+        id="bootstrap-overrides" >
                 <hr/>
             <footer>
                 <small>Made by Makai Post, Aaron Parnell, Danny Maier, & Mike Belliveau</small>
