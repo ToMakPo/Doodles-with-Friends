@@ -12,7 +12,7 @@ const WaitingRoom = () => {
 
     {/* Column 1 */}
                     <div className="card">
-                        <h5 className="card-header">Game Code: 8675309</h5>
+                        <h2 className="card-header">Game Code: 8675309</h2>
                         <div className="card-body">
                             <h5 className="card-title">Attending Players:</h5>
                             <ol>
@@ -27,7 +27,7 @@ const WaitingRoom = () => {
                     </div>
     {/* Column 2 */}
                     <div className="card">
-                        <h5 className="card-header">Options:</h5>
+                        <h2 className="card-header">Options:</h2>
                         <div style={{paddingRight:"10px"}}>
                             <div className="card-body row">
                                 <h5 className="card-title col">Category</h5>
@@ -42,6 +42,7 @@ const WaitingRoom = () => {
                                     <option value="Existential Crises">Existential Crises</option>
                                 </select>
                             </div>
+                            <hr></hr>
                             <div className="card-body row">
                                 <h5 className="card-title col "> Custom Categories:</h5>
                                 <div className="row sliderContainer">
@@ -53,6 +54,7 @@ const WaitingRoom = () => {
                                 <p className="col">YES</p>
                                 </div>
                             </div>
+                            <hr></hr>
                             <div className="card-body">
                                 <div>
                                     <input 
@@ -76,6 +78,16 @@ const WaitingRoom = () => {
                                     </ol>
                                 </div>
                             </div>
+                            <hr></hr>
+                            <div className="card-body">
+                                <input 
+                                type="text" 
+                                className="form-control col" 
+                                placeholder="Number of Rounds" 
+                                aria-label="Recipient's username" 
+                                aria-describedby="basic-addon2"
+                                />
+                            </div>
                         </div>
                     </div>
     {/* Column 3 */}
@@ -84,27 +96,24 @@ const WaitingRoom = () => {
             </main>
             <div className="containerBottom">
                 <div className="card-deck">
-                    <div className="card">
+                    {/* <div className="card"> */}
                         <div className="card-body row">
                         {/* <div className="col"> */}
-                                <h5 className="card-title col">Number of Rounds:</h5>
-                                <input 
+                                {/* <h5 className="card-title col">Number of Rounds:</h5> */}
+                                {/* <input 
                                 type="text" 
                                 className="form-control col" 
                                 placeholder="" 
                                 aria-label="Recipient's username" 
                                 aria-describedby="basic-addon2"
-                                />
-                            {/* </div> */}
-                            {/* <div className="col"> */}
+                                /> */}
                                 <button className="
                                 col
                                 btn btn-primary 
                                 btn-lg 
                                 btn-block" type="button">Start Game</button>
-                            {/* </div> */}
                             </div>
-                    </div>
+                    {/* </div> */}
                 </div>
             </div>
         </div>
