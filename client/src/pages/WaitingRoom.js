@@ -1,8 +1,41 @@
+import React, { useReducer, useRef } from "react";
 import ChatBox from "../components/ChatBox"
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
 
 const WaitingRoom = () => {
+
+    const customWordInputRef = useRef()  
+
+    const [listOfCustomWords, dispatch] = useReducer ((state,action) =>{
+        switch(action.type){
+            case "newWord":
+                return([...state,{
+                    name: action.name,
+                    id:Date.now()
+                }])
+            case "deleteWord":
+                return(state.filter((boop)=>{
+                    return boop.id !== action.id
+                }))
+            default:
+                return state
+        }
+    },[])
+
+    function handleSubmit(event) {
+        event.preventDefault();
+        dispatch({
+            type: "newWord",
+            name: customWordInputRef.current.value
+        });
+        customWordInputRef.current.value="";
+    }
+
+
+
+
+
     return (
         <div 
         id="bootstrap-overrides" 
@@ -56,26 +89,53 @@ const WaitingRoom = () => {
                             </div>
                             <hr></hr>
                             <div className="card-body">
-                                <div>
+                            <form 
+                            className="d-flex 
+                            justify-content-center 
+                            align-items-center"
+                            onSubmit={handleSubmit}
+                            >
+
+                                <div >
                                     <input 
                                     type="text" 
                                     className="form-control" 
                                     placeholder="Enter Custom Word" 
                                     aria-label="Recipient's username" 
                                     aria-describedby="basic-addon2"
+                                    ref = {customWordInputRef}
                                     />
                                 </div>
+                                <div>
+                                    <button className="
+                                    col
+                                    btn btn-primary 
+                                    btn-block" type="submit">+</button>
+                                </div>
+                            </form>
                                 <br></br>
                                 <div>
                                     <h5 className="card-title">Added Words:</h5>
-                                    <ol>
-                                        <li>Word 1</li>
-                                        <li>Word 2</li>
-                                        <li>Word 3</li>
-                                        <li>Word 4</li>
-                                        <li>Word 5</li>
-                                        <li>Word 6</li>
-                                    </ol>
+                                    <ul className="list-group">
+                                        {listOfCustomWords.map((boop)=>(
+
+                                            <li 
+                                            className="list-group-item"
+                                            key={boop.id}
+                                            > 
+                                            {boop.name}{" "}
+                                            <button 
+                                                className="btn"
+                                                onClick={
+                                                    ()=> dispatch({
+                                                        type:"deleteWord",
+                                                        id:boop.id
+                                                    })}
+                                            >X
+                                            </button>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
                             </div>
                             <hr></hr>
