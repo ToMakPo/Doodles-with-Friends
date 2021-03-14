@@ -23,14 +23,13 @@ const ArtistView = () => {
                     </div>
                 </h2>
                 <div className="card-deck">
-
-                <div className="card">
-                    <div className="card-body">
-                        <div className="">
-                            <Canvas width={500} height={500} active={true}/>
+                    <div className="card">
+                        <div className="card-body">
+                            <div className="">
+                                <Canvas width={500} height={500} active={true}/>
+                            </div>
                         </div>
                     </div>
-                </div>
                     <ChatBox/>
                 </div>
 
