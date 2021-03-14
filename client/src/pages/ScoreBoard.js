@@ -20,19 +20,19 @@ const ScoreBoard = () => {
                                 <li className="list-group-item">A second item</li>
                                 <li className="list-group-item">A third item</li>
                             </ol>
-                        </div>
-
-
-                    <div class="card">
-                        <div class="card-body">
                         <button type="button" class="btn btn-primary btn-lg btn-block">PLAY AGAIN</button>
                         </div>
-                    </div>
+
+                    {/* <div> */}
+                        <ChatBox/>
+                    {/* </div> */}
+
                 </div>
 <br></br>
-                <div>
-                    <ChatBox/>
-                </div>
+                    {/* <div class="card">
+                        <div class="card-body">
+                        </div>
+                    </div> */}
 
 
             </main>
