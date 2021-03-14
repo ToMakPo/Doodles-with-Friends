@@ -8,3 +8,24 @@
     --celadonBlue: #337ca0;
     --aeroBlue: #337ca0;
   }
+
+#bootstrap-overrides .btn{
+  background-color: var(--celadonBlue);
+  border-color: var(--celadonBlue)
+}
+
+#bootstrap-overrides .card{
+  color: var(--spaceCadet);
+  border-color: var(--xanadu);
+}
+
+#bootstrap-overrides .jumbotron{
+  background-color: var(--cultured);
+}
+
+#bootstrap-overrides .banner{
+  background-color: var(--mediumAquamarine);
+
+  border: 1px solid var(--mediumAquamarine);
+  border-radius: 0.25em;
+}

@@ -1,23 +1,26 @@
-.jumbotron-fluid{
-    padding:0em !important;
-
-
+.container{
+    justify-content: flex-start !important;
+    align-items: center !important;
 }
+
+h1{
+    font-family: 'Sedgwick Ave', cursive;
+    margin-bottom: 0rem !important;
+    /* text-align: center; */
+    padding-top: 20px;
+}
+
+
 .jumbotron{
+    display: block;
+    position: relative;
     padding:0em !important;
     margin-bottom:0px !important;
     background-image: url("./assets/brain-2789677.svg");
     background-size:cover;
     background-size: cover;
     background-position: center; 
-    
-}
-.container{
-    justify-content: flex-start !important;
-    align-items: center;
 
 }
-h1{
-    font-family: 'Sedgwick Ave', cursive;
-}
+
 

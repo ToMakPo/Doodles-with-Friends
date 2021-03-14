@@ -4,10 +4,10 @@ import '../styles/WaitingRoom.css'
 
 const WaitingRoom = () => {
     return (
-        <div className="container containerCol">
+        <div 
+        id="bootstrap-overrides" 
+        className="container containerCol">
             <main className="row">
-                <h2>Waiting Room</h2>
-
                 <div className="card-deck">
 
     {/* Column 1 */}
@@ -79,12 +79,7 @@ const WaitingRoom = () => {
                         </div>
                     </div>
     {/* Column 3 */}
-                    {/* <div className="card"> */}
-                        {/* <h5 className="card-header">Chat Box:</h5>
-                        <div className="card-body"> */}
                             <ChatBox/>
-                        {/* </div> */}
-                    {/* </div> */}
                 </div>{/* end card deck div */}
             </main>
             <div className="containerBottom">

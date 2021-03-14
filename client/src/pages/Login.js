@@ -36,11 +36,11 @@ const Login = ({logUserIn, setLoginDisplay}) => {
     }
 
     return (
-        <div className="container">
+        <div 
+        id="bootstrap-overrides" 
+        className="container">
         
-
-        <main>
-            <h2>ENTER PLAYER</h2>
+            <main>
 
                 <div className="card-deck">
                     <div class="card">

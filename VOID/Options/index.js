@@ -1,6 +1,6 @@
-import ChatBox from "../components/ChatBox"
-import '../styles/palette.css'
-import '../styles/Options.css'
+import ChatBox from "../../client/src/components/ChatBox"
+
+import './style.css'
 
 
 const Options = () => {

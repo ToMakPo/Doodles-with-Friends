@@ -5,10 +5,11 @@ import '../styles/ScoreBoard.css'
 
 const ScoreBoard = () => {
     return (
-        <div className="container ">
+        <div 
+        id="bootstrap-overrides" 
+        className="container ">
             <main className="">
 
-                <h2>FINISHED</h2>
                 <div class="card-deck">
                         <div className="card">
                             <h2 className="card-header">

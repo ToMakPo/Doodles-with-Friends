@@ -3,19 +3,21 @@ const { default: Canvas } = require("../components/Canvas")
 
 const ArtistView = () => {
     return (
-        <div className="container ">
+        <div 
+        id="bootstrap-overrides" 
+        className="container ">
             <main>
-                <h2>
+                <h2 className="banner">
                     <div className="d-flex justify-content-around align-items-center">
                         
-                        <div className="d-inline p-2 bg-primary text-white">
+                        <div className="d-inline p-2">
                         THE WORD
                         </div>
-                        <div className="d-inline p-2 bg-primary text-white">
+                        <div className="d-inline p-2 ">
                         ROUND 1 OF 5
                         </div>
 
-                        <div className="d-inline p-2 bg-primary text-white">
+                        <div className="d-inline p-2 ">
                         TIME REMAINING
                         </div>
                     </div>

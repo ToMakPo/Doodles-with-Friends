@@ -1,0 +1,22 @@
+:root{
+    --spaceCadet: #2B2D42;
+    --cinnabar:#db4c40;
+    --middleYellow: #f7e733;
+    --cultured: #f7f7f9;
+    --mediumAquamarine: #41e2ba;
+    --xanadu: #7e8d85;
+    --celadonBlue: #337ca0;
+    --aeroBlue: #337ca0;
+}
+
+
+footer{
+    background-image: url("./assets/brain-2789677.svg");
+    background-size:cover;
+    background-size: cover;
+    background-position: center; 
+    padding-top: 20px;
+}
+small{
+    background-color: var(--cultured);
+}
