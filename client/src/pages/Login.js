@@ -1,100 +1,42 @@
-import { useState, useRef } from "react"
+import { useRef } from "react"
+import { useLogin } from '../utils/auth'
 import '../styles/palette.css'
 import '../styles/Login.css'
 
-const Login = ({logUserIn, setLoginDisplay}) => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+const Login = () => {
+    const usernameRef = useRef();
+    const passwordRef = useRef();
 
-    const usernameInput = useRef('')
-    const passwordInput = useRef('')
+    // Get the helper login function from the `useLogin` hook.
+    const login = useLogin();
 
-    const login = event => {
-        event.preventDefault()
+    const handleSubmit = async e => {
+        e.preventDefault();
 
-        if (username === '') {
-            usernameInput.current.focus()
-            //TODO display message to let user know there was an issue.
-            return
-        }
+        const username = usernameRef.current.value;
+        const password = passwordRef.current.value;
 
-        if (password === '') {
-            passwordInput.current.focus()
-            //TODO display message to let user know there was an issue.
-            return
-        }
-        
-        const confirmed = true// TODO check username and password against database
-            
-        if (confirmed) {
-            const user = {}// TODO get user profile from database
+        try {
 
-            logUserIn(user)
-        } else {
-            //TODO display message to let user know that the username or password did not match.
+            await login({ username, password });
+
+            // User has been successfully logged in and added to state. Perform any additional actions you need here such as redirecting to a new page.
+
+        } catch (err) {
+
+            // Handle error responses from the API
+            if (err.response && err.response.data) console.log(err.response.data);
+
         }
     }
 
     return (
-        <div className="container">
-        
-
-        <main>
-            <h2>ENTER PLAYER</h2>
-
-                <div className="card-deck">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-body">
-
-                                <form onSubmit={login}>
-                                <div class="row ">
-                                        <div class="col">
-                                        {/* One of three columns */}
-                                            <span>
-                                                {/* <label htmlFor="username:">Username</label> */}
-                                                <input id='username' type="text" onBlur={event => setUsername(event.target.value)} autoComplete="username" ref={usernameInput} autoFocus
-                                                placeholder="USERNAME"
-                                                />
-                                            </span>
-                                        </div>
-                                        <div class="col">
-                                            {/* One of three columns */}
-                                            <span>
-                                                {/* <label htmlFor="password:">Password</label> */}
-                                                <input id='password' type="password" onBlur={event => setPassword(event.target.value)} ref={passwordInput} autoComplete="current-password"
-                                                placeholder="PASSWORD"
-                                                />
-                                            </span>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <div >
-                                <button type="button" className="btn btn-primary btn-lg btn-block">GET STARTED</button>
-                            </div>
-
-                        </div>
-                        
-                    </div>
-
-
-                    <div class="card">
-                        <div class="card-body">
-                            {/* <small>Already have an account?  */}
-                            <div class="card-body">
-                                <p>Already have an account?</p>
-
-                            </div>
-                                <button  type="button" className="btn btn-primary btn-lg btn-block"onClick={() => setLoginDisplay('login')}>SIGN IN</button>
-                            {/* </small> */}
-                        </div>
-                    </div>
-                </div>
-            
-            </main>
-        </div>
+        <form onSubmit={handleSubmit}>
+            <h2>Login</h2>
+            <input type="text" ref={usernameRef} placeholder="Your username" /><br />
+            <input type="password" ref={passwordRef} placeholder="Your password" /><br />
+            <button>Submit</button>
+        </form>
     )
 }
 
