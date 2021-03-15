@@ -27,25 +27,25 @@ const App = () => {
 
 			{
 				// If the user is not logged in, then direct the user to the login page. Other wise, take them to the page requested page.
-				true ? <PageNotFound /> :
-					activeUser === null ? (
-						loginDisplay
-							? <Login {...{ logUserIn, setLoginDisplay }} />
-							: <Signup {...{ logUserIn, setLoginDisplay }} />
-					) : (
-						<Router>
-							{ console.log('User is logged in:', activeUser)}
-							<Switch>
-								<Route exact path='/' component={Home} />
-								<Route exact path='/home' component={Home} />
-								<Route exact path='/options' component={Options} />
-								<Route exact path='/waiting-room/:roomId' component={WaitingRoom} />
-								<Route exact path='/active-game/:roomId' component={ArtistView} />
-								<Route exact path='/score-board/:roomId' component={ScoreBoard} />
-								<Route path='/' component={PageNotFound} />
-							</Switch>
-						</Router>
-					)
+				// true ? <PageNotFound /> :
+				activeUser === null ? (
+					loginDisplay
+						? <Signup {...{ logUserIn, setLoginDisplay }} />
+						: <Login {...{ logUserIn, setLoginDisplay }} />
+				) : (
+					<Router>
+						{ console.log('User is logged in:', activeUser)}
+						<Switch>
+							<Route exact path='/' component={Home} />
+							<Route exact path='/home' component={Home} />
+							<Route exact path='/options' component={Options} />
+							<Route exact path='/waiting-room/:roomId' component={WaitingRoom} />
+							<Route exact path='/active-game/:roomId' component={ArtistView} />
+							<Route exact path='/score-board/:roomId' component={ScoreBoard} />
+							<Route path='/' component={PageNotFound} />
+						</Switch>
+					</Router>
+				)
 			}
 
 			<PageFooter />
