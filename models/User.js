@@ -7,7 +7,10 @@ const userSchema = new mongoose.Schema(
             trim: true,
             required: "Enter a username"
         },
-        hash: String,
+        password: {
+            type: String,
+            required: true
+        },
         joinDate: {
             type: Date,
             default: Date.now
