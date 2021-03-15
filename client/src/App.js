@@ -13,6 +13,7 @@ import ScoreBoard from './pages/ScoreBoard'
 import GameContext from './utils/GameContext'
 import PageNotFound from './pages/PageNotFound'
 import "./styles/palette.css"
+import { useAuthTokenStore } from "./utils/auth";
 
 const App = () => {
 	const [activeUser, setActiveUser] = useState(null)
@@ -20,6 +21,7 @@ const App = () => {
 
 	const logUserIn = user => setActiveUser(user)
 	const logUserOut = () => setActiveUser(null)
+	useAuthTokenStore();
 
 	return (
 		<GameContext.Provider value={{ activeUser }}>
