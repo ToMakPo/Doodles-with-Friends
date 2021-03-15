@@ -1,27 +1,42 @@
-import React, { useReducer, useRef } from "react";
+import React, { useEffect, useState, useReducer, useRef } from "react";
+import {useWordBankContext} from "../utils/GlobalState"
 import ChatBox from "../components/ChatBox"
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
 
+
 const WaitingRoom = () => {
+    
+    // const [attendees, setAttendees] = useState({
+        
+    // });
+    // useEffect(()=>{
+    //     const peopleTestArray =["Danny", "Aaron", "Makai", "Mike"]//the below is just to test the setAttendees function
+    //     console.log(peopleTestArray)
+    //     setAttendees(peopleTestArray)
+    // },[])
 
+    //Functionality for the Add Words
     const customWordInputRef = useRef()  
-
-    const [listOfCustomWords, dispatch] = useReducer ((state,action) =>{
-        switch(action.type){
-            case "newWord":
-                return([...state,{
-                    name: action.name,
-                    id:Date.now()
-                }])
-            case "deleteWord":
-                return(state.filter((boop)=>{
-                    return boop.id !== action.id
-                }))
-            default:
-                return state
-        }
-    },[])
+    const [listOfCustomWords, dispatch] = 
+//Using the Global State:
+    useWordBankContext();
+//Using the local State:
+    // useReducer ((state,action) =>{
+    //     switch(action.type){
+    //         case "newWord":
+    //             return([...state,{
+    //                 name: action.name,
+    //                 id:Date.now()
+    //             }])
+    //         case "deleteWord":
+    //             return(state.filter((boop)=>{
+    //                 return boop.id !== action.id
+    //             }))
+    //         default:
+    //             return state
+    //     }
+    // },[])
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -49,12 +64,13 @@ const WaitingRoom = () => {
                         <div className="card-body">
                             <h5 className="card-title">Attending Players:</h5>
                             <ol>
-                                <li>Player 1</li>
-                                <li>Player 2</li>
-                                <li>Player 3</li>
-                                <li>Player 4</li>
-                                <li>Player 5</li>
-                                <li>Player 6</li>
+                                {/* {attendees.map((boop)=>(
+                                    <li>{boop}</li>
+                                ))} */}
+                                <li>Person1</li>
+                                <li>Person2</li>
+                                <li>Person3</li>
+
                             </ol>
                         </div>
                     </div>
@@ -65,7 +81,7 @@ const WaitingRoom = () => {
                             <div className="card-body row">
                                 <h5 className="card-title col">Category</h5>
                                 <select 
-                                    className="btn btn-primary col" 
+                                    className="btn btn-primary dropDN col" 
                                     name="categories" 
                                     id="categoriesEl"
                                     type="button">
@@ -109,7 +125,8 @@ const WaitingRoom = () => {
                                 <div>
                                     <button className="
                                     col
-                                    btn btn-primary 
+                                    btn 
+                                    btnAdd
                                     btn-block" type="submit">+</button>
                                 </div>
                             </form>
@@ -120,18 +137,18 @@ const WaitingRoom = () => {
                                         {listOfCustomWords.map((boop)=>(
 
                                             <li 
-                                            className="list-group-item"
+                                            className=""
                                             key={boop.id}
                                             > 
                                             {boop.name}{" "}
                                             <button 
-                                                className="btn"
+                                                className="btn btnDel"
                                                 onClick={
                                                     ()=> dispatch({
                                                         type:"deleteWord",
                                                         id:boop.id
                                                     })}
-                                            >X
+                                            >x
                                             </button>
                                             </li>
                                         ))}

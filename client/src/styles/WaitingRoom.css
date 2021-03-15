@@ -1,3 +1,14 @@
+:root{
+    --spaceCadet: #2B2D42;
+    --cinnabar:#db4c40;
+    --middleYellow: #f7e733;
+    --cultured: #f7f7f9;
+    --mediumAquamarine: #41e2ba;
+    --xanadu: #7e8d85;
+    --celadonBlue: #337ca0;
+    --aeroBlue: #337ca0;
+  }
+
 .containerCol{
     flex-direction: column;
 }
@@ -52,11 +63,11 @@ transition: .4s;
 }
 
 input:checked + .slider {
-background-color: #2196F3;
+background-color: var(--middleYellow);
 }
 
 input:focus + .slider {
-box-shadow: 0 0 1px #2196F3;
+box-shadow: 0 0 1px var(--middleYellow);
 }
 
 input:checked + .slider:before {
@@ -82,3 +93,4 @@ align-items: center !important;
 p{
 margin-bottom: 0.5rem !important;
 }
+

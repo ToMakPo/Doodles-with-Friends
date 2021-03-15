@@ -11,6 +11,7 @@ import ArtistView from './pages/ArtistView'
 
 import ScoreBoard from './pages/ScoreBoard'
 import GameContext from './utils/GameContext'
+import {WordBankProvider} from './utils/GlobalState'
 import PageNotFound from './pages/PageNotFound'
 import "./styles/palette.css"
 
@@ -22,6 +23,7 @@ const App = () => {
 	const logUserOut = () => setActiveUser(null)
 
 	return (
+		<WordBankProvider>
 		<GameContext.Provider value={{activeUser}}>
 			<PageHeader logUserOut={logUserOut}/>
 
@@ -49,6 +51,7 @@ const App = () => {
 
 			<PageFooter/>
 		</GameContext.Provider>
+		</WordBankProvider>
 	)
 }
 
