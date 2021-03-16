@@ -36,11 +36,11 @@ const Login = ({logUserIn, setLoginDisplay}) => {
     }
 
     return (
-        <div className="container">
+        <div 
+        id="bootstrap-overrides" 
+        className="container sketchBackground">
         
-
-        <main>
-            <h2>ENTER PLAYER</h2>
+            <main>
 
                 <div className="card-deck">
                     <div class="card">
@@ -72,7 +72,7 @@ const Login = ({logUserIn, setLoginDisplay}) => {
                             </div>
 
                             <div >
-                                <button type="button" className="btn btn-primary btn-lg btn-block">GET STARTED</button>
+                                <button type="button" className="btn btn-primary btn-lg btn-block">Log In</button>
                             </div>
 
                         </div>
@@ -84,10 +84,10 @@ const Login = ({logUserIn, setLoginDisplay}) => {
                         <div class="card-body">
                             {/* <small>Already have an account?  */}
                             <div class="card-body">
-                                <p>Already have an account?</p>
+                                <p>Are you new here?</p>
 
                             </div>
-                                <button  type="button" className="btn btn-primary btn-lg btn-block"onClick={() => setLoginDisplay('login')}>SIGN IN</button>
+                                <button  type="button" className="btn btn-primary btn-lg btn-block"onClick={() => setLoginDisplay('login')}>SIGN UP</button>
                             {/* </small> */}
                         </div>
                     </div>
