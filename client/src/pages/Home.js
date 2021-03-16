@@ -3,9 +3,10 @@ import '../styles/Home.css'
 
 const Home = () => {
     return (
-        <div className="container ">
+        <div 
+        id="bootstrap-overrides" 
+        className="container sketchBackground">
             <main>
-                <h2>CHOOSE AN OPTION</h2>
                 <div class="card-deck">
                     <div class="card">
                         <div class="card-body">
@@ -20,9 +21,12 @@ const Home = () => {
                         <h5 class="card-title">JOIN AN EXISTING GAME</h5>
                         <p class="card-text">YOU'RE JOINING A GAME YOUR FRIEND ALREADY STARTED.</p>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+                            <input type="text" class="form-control" placeholder="Game Code" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button">JOIN NOW</button>
+                                <button class="
+                                btn-primary 
+                                btn 
+                                btn-block" type="button">JOIN NOW</button>
                             </div>
                             </div>
                         </div>

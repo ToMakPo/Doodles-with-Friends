@@ -2,6 +2,8 @@ import { useContext } from "react"
 import { Link } from 'react-router-dom'
 import Jumbotron from "./Jumbotron"
 import GameContext from "../utils/GameContext"
+import '../styles/PageHeader.css'
+import '../styles/palette.css'
 
 const PageHeader = ({logUserOut}) => {
     const {user} = useContext(GameContext)

@@ -1,0 +1,10 @@
+input{
+    padding:5px;
+}
+.col{
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding:0px;
+}

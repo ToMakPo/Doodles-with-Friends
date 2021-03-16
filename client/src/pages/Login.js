@@ -1,4 +1,6 @@
 import { useState, useRef } from "react"
+import '../styles/palette.css'
+import '../styles/Login.css'
 
 const Login = ({logUserIn, setLoginDisplay}) => {
     const [username, setUsername] = useState('')
@@ -34,23 +36,65 @@ const Login = ({logUserIn, setLoginDisplay}) => {
     }
 
     return (
-        <main>
-            <h2>Sign Up</h2>
-            
-            <form onSubmit={login}>
-                <span>
-                    <label htmlFor="username:">Username</label>
-                    <input id='username' type="text" onBlur={event => setUsername(event.target.value)} autoComplete="username" ref={usernameInput} autoFocus/>
-                </span>
-                <span>
-                    <label htmlFor="password:">Password</label>
-                    <input id='password' type="password" onBlur={event => setPassword(event.target.value)} ref={passwordInput} autoComplete="current-password"/>
-                </span>
-                <button>Submit</button>
-            </form>
+        <div 
+        id="bootstrap-overrides" 
+        className="container sketchBackground">
+        
+            <main>
 
-            <small>Already have an account? <strong onClick={() => setLoginDisplay('login')}>Sign up</strong></small>
-        </main>
+                <div className="card-deck">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-body">
+
+                                <form onSubmit={login}>
+                                <div class="row ">
+                                        <div class="col">
+                                        {/* One of three columns */}
+                                            <span>
+                                                {/* <label htmlFor="username:">Username</label> */}
+                                                <input id='username' type="text" onBlur={event => setUsername(event.target.value)} autoComplete="username" ref={usernameInput} autoFocus
+                                                placeholder="USERNAME"
+                                                />
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            {/* One of three columns */}
+                                            <span>
+                                                {/* <label htmlFor="password:">Password</label> */}
+                                                <input id='password' type="password" onBlur={event => setPassword(event.target.value)} ref={passwordInput} autoComplete="current-password"
+                                                placeholder="PASSWORD"
+                                                />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div >
+                                <button type="button" className="btn btn-primary btn-lg btn-block">Log In</button>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+
+
+                    <div class="card">
+                        <div class="card-body">
+                            {/* <small>Already have an account?  */}
+                            <div class="card-body">
+                                <p>Are you new here?</p>
+
+                            </div>
+                                <button  type="button" className="btn btn-primary btn-lg btn-block"onClick={() => setLoginDisplay('login')}>SIGN UP</button>
+                            {/* </small> */}
+                        </div>
+                    </div>
+                </div>
+            
+            </main>
+        </div>
     )
 }
 

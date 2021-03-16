@@ -1,4 +1,17 @@
 /* The switch - the box around the slider */
+
+:root{
+    --spaceCadet: #2B2D42;
+    --cinnabar:#db4c40;
+    --middleYellow: #f7e733;
+    --cultured: #f7f7f9;
+    --mediumAquamarine: #41e2ba;
+    --xanadu: #7e8d85;
+    --celadonBlue: #337ca0;
+    --aeroBlue: #337ca0;
+  }
+
+
 .switch {
         position: relative;
         display: inline-block;
@@ -54,10 +67,19 @@ input:checked + .slider:before {
 
 /* Rounded sliders */
 .slider.round {
-    order-radius: 34px;
+    border-radius: 34px;
 }
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+.sliderContainer{
+    width: 185px;
+    align-items: center !important;
+}
+
+p{
+    margin-bottom: 0.5rem !important;
 }
 
