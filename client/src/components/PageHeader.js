@@ -14,12 +14,10 @@ const PageHeader = ({logUserOut}) => {
         <Jumbotron/>
             {/* <h1>Doodles with Friends</h1> */}
                 <div>
-                {user && (
-                    <>
+                {user && (<>
                     <span>{user.username}</span>
                     <Link to='/login' onClick={logUserOut}>Log out</Link>
-                    </>
-                )}
+                </>)}
                 </div>
         </header>
         <hr/>

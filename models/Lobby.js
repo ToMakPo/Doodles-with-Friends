@@ -96,21 +96,20 @@ lobbySchema.methods.randomizePlayerOrder = function() {
  * @returns {[String]} the list of words to add to the word bank.
  */
 lobbySchema.methods.buildWordBank = function(category) {
-    const list = [...this.userWords]
+    const set = new Set(this.userWords)
 
     const options = [...wordBank[category]]
 
-    while (list.length < 100 && options.length > 0) {
+    while (set.size < 100 && options.length > 0) {
         const rand = Math.floor(Math.random() * options.length - 1)
         const word = options.splice(rand, 1)
-        list.push(word)
+        set.add(word)
     }
 
     this.userWords = []
-
     this.save()
 
-    return list
+    return [...set]
 }
 
 /**
