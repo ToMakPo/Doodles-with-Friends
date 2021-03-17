@@ -1,6 +1,6 @@
-import ChatBox from "../components/ChatBox"
-import '../styles/palette.css'
-import '../styles/Options.css'
+import ChatBox from "../../client/src/components/ChatBox"
+
+import './style.css'
 
 
 const Options = () => {
@@ -67,13 +67,14 @@ const Options = () => {
                             </div>
                         </div>
                     </div>
-                    
-
                 </div>
 {/* END OPTIONS CARD */}
                 <div className="card">
                         <div className="card-body">
-                        <button type="button" className="btn btn-primary btn-lg btn-block">LET'S GO</button>
+                        <button 
+                        // style={{backgroundColor: "#337ca0" }}
+                        type="button" 
+                        className="btn btn-primary btn-lg btn-block">LET'S GO</button>
                         </div>
                     </div>
                 </div>

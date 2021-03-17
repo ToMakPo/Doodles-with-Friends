@@ -5,12 +5,14 @@ import PageFooter from './components/PageFooter'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Home from './pages/Home'
-import Options from './pages/Options'
+
 import WaitingRoom from './pages/WaitingRoom'
 import ArtistView from './pages/ArtistView'
 
 import ScoreBoard from './pages/ScoreBoard'
 // import GameContext from './utils/GameContext'
+import GameContext from './utils/GameContext'
+import { WordBankProvider } from './utils/GlobalState'
 import PageNotFound from './pages/PageNotFound'
 import "./styles/palette.css"
 import { useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
@@ -24,13 +26,9 @@ const App = () => {
 	useAuthTokenStore();
 	const isAuthenticated = useIsAuthenticated();
 	return (
-		// <GameContext.Provider value={{ activeUser }}logUserOut={logUserOut}>
-		<div>
-			<PageHeader />
-
-
-
-
+		<WordBankProvider>
+			{/* <GameContext.Provider value={{activeUser}}> */}
+			<PageHeader /*logUserOut={logUserOut}*/ />
 
 			<BrowserRouter>
 
@@ -40,7 +38,7 @@ const App = () => {
 					{!isAuthenticated && <Route exact path='/' component={Login} />}
 					{!isAuthenticated && <Route exact path='/signup' component={Signup} />}
 					{isAuthenticated && <Route exact path='/' component={Home} />}
-					{isAuthenticated && <Route exact path='/options' component={Options} />}
+					{/* {isAuthenticated && <Route exact path='/options' component={Options} />} */}
 					{isAuthenticated && <Route exact path='/waiting-room/:roomId' component={WaitingRoom} />}
 					{isAuthenticated && <Route exact path='/active-game/:roomId' component={ArtistView} />}
 					{isAuthenticated && <Route exact path='/score-board/:roomId' component={ScoreBoard} />}
@@ -50,8 +48,7 @@ const App = () => {
 
 			<PageFooter />
 			{/* </GameContext.Provider> */}
-		</div >
-
+		</WordBankProvider>
 	)
 }
 

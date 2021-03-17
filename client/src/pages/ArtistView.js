@@ -3,44 +3,34 @@ const { default: Canvas } = require("../components/Canvas")
 
 const ArtistView = () => {
     return (
-        <div className="container ">
+        <div 
+        id="bootstrap-overrides" 
+        className="container sketchBackground">
             <main>
-                <h2>Artist View</h2>
-                <div className="card-deck">
+                <h2 className="banner">
+                    <div className="d-flex justify-content-around align-items-center">
+                        
+                        <div className="d-inline p-2">
+                        THE WORD
+                        </div>
+                        <div className="d-inline p-2 ">
+                        ROUND 1 OF 5
+                        </div>
 
-                <div className="card">
-                    <div className="card-header">
-                        <span class="d-block p-2 bg-primary text-white text-center">THE WORD</span>
-                    </div>
-                    <div className="card-body">
-                        <div className="">
-                            <Canvas width={500} height={500} active={true}/>
+                        <div className="d-inline p-2 ">
+                        TIME REMAINING
                         </div>
                     </div>
-                </div>
-
-                <div className="card">
-                    <div className="card-header">
-                        <div className="">
-                            <div className="d-flex justify-content-around align-items-center">
-
-                                <div className="d-inline p-2 bg-primary text-white">
-                                ROUND 1 OF 5
-                                </div>
-
-                                <div className="d-inline p-2 bg-primary text-white">
-                                TIME REMAINING
-                                </div>
+                </h2>
+                <div className="card-deck">
+                    <div className="card">
+                        <div className="card-body">
+                            <div className="">
+                                <Canvas width={500} height={500} active={true}/>
                             </div>
                         </div>
                     </div>
-
-                    <div className="card-body">
-                        <div className="row align-items-end">
-                            <ChatBox/>
-                        </div>
-                    </div>
-                </div>
+                    <ChatBox/>
                 </div>
 
             </main>

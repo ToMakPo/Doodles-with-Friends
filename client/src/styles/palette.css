@@ -6,5 +6,62 @@
     --mediumAquamarine: #41e2ba;
     --xanadu: #7e8d85;
     --celadonBlue: #337ca0;
-    --aeroBlue: #337ca0;
+    --aeroBlue: #B5FFE9;
+    --fusciaCrayola: #CB48B7;
   }
+
+  /* for adding a background to the container but I think it gets too busy */
+/* #bootstrap-overrides.sketchBackground{
+  background-image: url("./assets/brain-2789677.svg");
+  background-size: 300%;
+  background-position: center; 
+  padding-top: 10px;
+  padding-bottom: 10px;
+  } */
+
+#bootstrap-overrides .btn-primary{
+  background-color: var(--celadonBlue);
+  border-color: var(--celadonBlue)
+}
+
+#bootstrap-overrides .main{
+  color: var(--spaceCadet);
+  border-color: var(--xanadu);
+}
+
+#bootstrap-overrides .jumbotron{
+  background-color: var(--cultured);
+}
+
+#bootstrap-overrides .banner{
+  background-color: var(--mediumAquamarine);
+
+  border: 1px solid var(--mediumAquamarine);
+  border-radius: 0.25em;
+}
+.jumbotron{
+  background-color: var(--cultured) !important;
+}
+#bootstrap-overrides footer{
+  background-color: var(--cultured) !important;
+}
+
+#bootstrap-overrides .card-header{
+  font-family: 'Sedgwick Ave', cursive;
+  margin-bottom: 0rem !important;
+  /* text-align: center; */
+  padding-top: 20px;
+  text-align:center;
+}
+#bootstrap-overrides .btnAdd{
+  background-color: var(--mediumAquamarine);
+}
+#bootstrap-overrides .btnDel{
+  text-align: center;
+  justify-content: center;
+  color: var(--cinnabar);
+}
+#bootstrap-overrides .dropDN{
+  background-color: var(--fusciaCrayola);
+  border-color: var(--fusciaCrayola);
+}

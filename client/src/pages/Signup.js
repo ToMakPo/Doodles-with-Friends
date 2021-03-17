@@ -1,6 +1,8 @@
 import { useState, useRef } from "react"
 import API from "../utils/API";
 import { useLogin } from "../utils/auth";
+import '../styles/palette.css'
+import '../styles/Signup.css'
 
 const Signup = ({ logUserIn, setLoginDisplay }) => {
     // const [username, setUsername] = useState('')
@@ -85,36 +87,57 @@ const Signup = ({ logUserIn, setLoginDisplay }) => {
     // } 
 
     return (
-        <main>
-            <h2>Sign Up</h2>
 
-            <form onSubmit={handleSubmit}>
-                <span>
-                    <label htmlFor="username:">Username</label>
-                    <input
-                        id='username'
-                        type="text"
-                        // onBlur={checkUsername}
-                        ref={usernameInput}
-                        autoComplete="username"
-                        autoFocus
-                    />
-                </span>
-                <span>
-                    <label htmlFor="password:">Password</label>
-                    <input
-                        id='password'
-                        type="password"
-                        // onBlur={checkPassword}
-                        ref={passwordInput}
-                        autoComplete="new-password"
-                    />
-                </span>
-                <button>Submit</button>
-            </form>
+        <div
+            id="bootstrap-overrides"
+            className=" sketchBackground">
+            <main className="container">
+                {/* <div className="card-deck"> */}
+                <div class="card">
+                    <h2 className="card-header">Sign Up</h2>
+                    <div class="card-body d-flex justify-content-around align-items-center">
+                        <form
+                            class="d-flex justify-content-around align-items-center"
+                            onSubmit={handleSubmit}>
+                            {/* <div class=" "> */}
+                            <div class="">
+                                <span>
+                                    <label htmlFor="username:"></label>
+                                    <input
+                                        id='username'
+                                        type="text"
+                                        placeholder="USERNAME"
+                                        // onBlur={checkUsername}
+                                        ref={usernameInput}
+                                        autoComplete="username" autoFocus />
+                                </span>
+                            </div>
+                            <br></br>
+                            <div className="">
+                                <span>
+                                    <label htmlFor="password:"></label>
+                                    <input
+                                        id='password' type="password"
+                                        placeholder="PASSWORD"
+                                        // onBlur={checkPassword}
+                                        ref={passwordInput}
+                                        autoComplete="new-password" />
+                                </span>
+                            </div>
 
-            <small>Already have an account? <strong onClick={() => setLoginDisplay('login')}>Sign up</strong></small>
-        </main>
+                            {/* <div className=""> */}
+                            <button className="btn btn-primary btn-block">Submit</button>
+                            {/* </div> */}
+                            {/* </div> */}
+                        </form>
+
+                    </div>
+                    {/* </div> */}
+                </div>
+                <br></br>
+                <small>Already have an account? <strong onClick={() => setLoginDisplay('login')}>Sign in</strong></small>
+            </main>
+        </div>
     )
 }
 

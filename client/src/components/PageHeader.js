@@ -3,6 +3,9 @@
 import Jumbotron from "./Jumbotron"
 // import GameContext from "../utils/GameContext"
 import LogoutButton from "./LogoutButton"
+import GameContext from "../utils/GameContext"
+import '../styles/PageHeader.css'
+import '../styles/palette.css'
 
 const PageHeader = () => {
     // const { user } = useContext(GameContext)
@@ -19,6 +22,10 @@ const PageHeader = () => {
                         <LogoutButton />
                     </>
 
+                    {/* {user && (<>
+                    <span>{user.username}</span>
+                    <Link to='/login' onClick={logUserOut}>Log out</Link>
+                </>)} */}
                 </div>
             </header>
             <hr />
