@@ -135,7 +135,7 @@ const Signup = ({ logUserIn, setLoginDisplay }) => {
                     {/* </div> */}
                 </div>
                 <br></br>
-                <small>Already have an account? <strong onClick={() => setLoginDisplay('login')}>Sign in</strong></small>
+                <small>Already have an account? <button type="button" className="btn btn-primary" onClick={() => window.location.assign('/')}>Login</button></small>
             </main>
         </div>
     )
