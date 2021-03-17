@@ -42,7 +42,7 @@ const App = () => {
 					{isAuthenticated && <Route exact path='/waiting-room/:roomId' component={WaitingRoom} />}
 					{isAuthenticated && <Route exact path='/active-game/:roomId' component={ArtistView} />}
 					{isAuthenticated && <Route exact path='/score-board/:roomId' component={ScoreBoard} />}
-					{isAuthenticated && <Route component={PageNotFound} />}
+					{!isAuthenticated && <Route component={PageNotFound} />}
 				</Switch>
 			</BrowserRouter>
 
