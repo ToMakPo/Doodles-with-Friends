@@ -96,9 +96,9 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
                                             </span>
                                         </div>
 
-                                        <div >
-                                            <button type="submit" className="btn btn-primary btn-lg btn-block">GET STARTED</button>
-                                        </div>
+
+                                        <button type="submit" className="btn btn-primary btn-lg btn-block mt-2">GET STARTED</button>
+
                                     </div>
                                 </form>
                             </div>
@@ -113,10 +113,10 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
                         <div class="card-body">
                             {/* <small>Already have an account?  */}
                             <div class="card-body">
-                                <p>Already have an account?</p>
+                                <p>Don't already have an account?</p>
 
                             </div>
-                            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => setLoginDisplay('login')}>SIGN IN</button>
+                            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => window.location.assign('/signup')}>Register</button>
                             {/* </small> */}
                         </div>
                     </div>
