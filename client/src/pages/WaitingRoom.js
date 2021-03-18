@@ -4,7 +4,8 @@ import ChatBox from "../components/ChatBox"
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
 import GameContext from "../utils/GameContext";
-
+import testPeopleAPI from "../utils/testPeopleAPI";
+import PlayerList from "../components/PlayerList";
 
 const WaitingRoom = () => {
     const { lobby } = useContext(GameContext)
@@ -18,6 +19,8 @@ const WaitingRoom = () => {
     //     console.log(peopleTestArray)
     //     setAttendees(peopleTestArray)
     // },[])
+  
+    const [players, setPlayers] = useState([])
 
     //Functionality for the Add Words
     const customWordInputRef = useRef()
@@ -50,9 +53,18 @@ const WaitingRoom = () => {
         customWordInputRef.current.value = "";
     }
 
+    const printPeople = event => {
+        event.preventDefault();
 
+        console.log("Getting people")
 
+        testPeopleAPI.getPeople()
+            .then( ({data})=>{
 
+                data.forEach(element => console.log(element.name))
+                setPlayers(data)
+            })
+    }
 
     return (
         <div
@@ -65,14 +77,15 @@ const WaitingRoom = () => {
                     <div className="card">
                         <h2 className="card-header">Game Code: {lobby} </h2>
                         <div className="card-body">
-                            <h5 className="card-title">Attending Players:</h5>
+                            
+                                <PlayerList playersProp={players}/>
                             <ol>
-                                {/* {attendees.map((boop)=>(
-                                    <li>{boop}</li>
-                                ))} */}
-                                <li>Person1</li>
-                                <li>Person2</li>
-                                <li>Person3</li>
+                                <button className="
+                                col container-lgbtn btn-primary btn-lg btn-block"  
+                                type="button"
+                                onClick ={printPeople}
+
+                                >printPeople</button>
 
                             </ol>
                         </div>
