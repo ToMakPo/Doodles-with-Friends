@@ -47,7 +47,7 @@ class API {
 
     createLobby(host) {
         const id = Math.floor(Math.random() * 36 ** 9).toString(36).padStart(9, '0').toUpperCase()
-        return this.axios.post(`/api/lobby`, id, host)
+        return this.axios.post(`/api/lobby`, { id, host: host._id })
 
     }
 

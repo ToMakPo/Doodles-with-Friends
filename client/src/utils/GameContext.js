@@ -5,8 +5,8 @@ import { createContext } from "react";
  * @property {Game} game The active game that is user is playing. Null if not in game.
  */
 const GameContext = createContext({
-    user: null,
-    lobby: null
+    lobby: {},
+    setLobby: () => null
 })
 
 export default GameContext

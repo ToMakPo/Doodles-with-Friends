@@ -18,18 +18,16 @@ import "./styles/palette.css"
 import { useAuthenticatedUser, useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
 
 const App = () => {
-	// const [activeUser, setActiveUser] = useState(null)
-	// const [loginDisplay, setLoginDisplay] = useState(true)
 
-	// const logUserIn = user => setActiveUser(user)
-	// const logUserOut = () => setActiveUser(null)
+	const [lobby, setLobby] = useState({})
+
 	useAuthTokenStore();
 	const isAuthenticated = useIsAuthenticated();
 	const AuthUser = useAuthenticatedUser()
 	console.log(AuthUser);
 	return (
 		<WordBankProvider>
-			<GameContext.Provider value={{ user: AuthUser, lobby: null }}>
+			<GameContext.Provider value={{ lobby, setLobby }}>
 				<BrowserRouter>
 					<PageHeader /*logUserOut={logUserOut}*/ />
 

@@ -8,6 +8,10 @@ const lobbySchema = new mongoose.Schema(
             type: String,
             trim: true
         },
+        host: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: User
+        },
         games: [{
             category: String,
             wordBank: [String],
