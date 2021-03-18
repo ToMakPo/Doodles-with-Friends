@@ -28,9 +28,9 @@ const App = () => {
 	return (
 		<WordBankProvider>
 			{/* <GameContext.Provider value={{activeUser}}> */}
-			<PageHeader /*logUserOut={logUserOut}*/ />
-
 			<BrowserRouter>
+				<PageHeader /*logUserOut={logUserOut}*/ />
+
 
 				{/* { console.log('User is logged in:', activeUser)} */}
 				<Switch>
