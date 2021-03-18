@@ -1,26 +1,34 @@
-import { useContext } from "react"
-import { Link } from 'react-router-dom'
+// import { useContext } from "react"
+// import { Link } from 'react-router-dom'
 import Jumbotron from "./Jumbotron"
+// import GameContext from "../utils/GameContext"
+import LogoutButton from "./LogoutButton"
 import GameContext from "../utils/GameContext"
 import '../styles/PageHeader.css'
 import '../styles/palette.css'
 
-const PageHeader = ({logUserOut}) => {
-    const {user} = useContext(GameContext)
+const PageHeader = () => {
+    // const { user } = useContext(GameContext)
 
     return (
         <>
-        <header>
-        <Jumbotron/>
-            {/* <h1>Doodles with Friends</h1> */}
+            <header>
+                <Jumbotron />
+
                 <div>
-                {user && (<>
+
+                    <>
+
+                        <LogoutButton />
+                    </>
+
+                    {/* {user && (<>
                     <span>{user.username}</span>
                     <Link to='/login' onClick={logUserOut}>Log out</Link>
-                </>)}
+                </>)} */}
                 </div>
-        </header>
-        <hr/>
+            </header>
+            <hr />
         </>
     )
 }
