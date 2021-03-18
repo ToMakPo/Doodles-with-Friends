@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express")
 const mongoose = require("mongoose")
 const apiRoutes = require("./routes/api")
@@ -7,6 +8,10 @@ const app = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+const passport = require("passport");
+app.use(passport.initialize());
+// Passport config
+passport.use(require("./config/jwtPassportStrategy"));
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
@@ -22,6 +27,8 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/doodle_db", {
 
 // routes
 app.use(apiRoutes)
+app.use("/api", require("./routes/authentication"));
+
 const server = app.listen(PORT, () => {
     console.log(`App running on http://localhost:${PORT}`)
 })
