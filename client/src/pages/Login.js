@@ -18,8 +18,8 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
         const password = passwordInput.current.value;
         console.log(username, password)
         try {
-            const res = await login({ username, password });
-            console.log(res)
+            login({ username, password });
+
             // User has been successfully logged in and added to state. Perform any additional actions you need here such as redirecting to a new page.
         } catch (err) {
             // Handle error responses from the API
@@ -60,13 +60,13 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
             <main>
 
                 <div className="card-deck">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-body">
+                    <div className="card">
+                        <div className="card-body">
+                            <div className="card-body">
 
                                 <form onSubmit={handleSubmit}>
-                                    <div class="row ">
-                                        <div class="col">
+                                    <div className="row ">
+                                        <div className="col">
                                             {/* One of three columns */}
                                             <span>
                                                 {/* <label htmlFor="username:">Username</label> */}
@@ -81,7 +81,7 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
                                                 />
                                             </span>
                                         </div>
-                                        <div class="col">
+                                        <div className="col">
                                             {/* One of three columns */}
                                             <span>
                                                 {/* <label htmlFor="password:">Password</label> */}
@@ -109,10 +109,10 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
                     </div>
 
 
-                    <div class="card">
-                        <div class="card-body">
+                    <div className="card">
+                        <div className="card-body">
                             {/* <small>Already have an account?  */}
-                            <div class="card-body">
+                            <div className="card-body">
                                 <p>Don't already have an account?</p>
 
                             </div>
