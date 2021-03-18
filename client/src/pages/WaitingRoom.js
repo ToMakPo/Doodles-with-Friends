@@ -1,20 +1,18 @@
-import React, { useEffect, useState, useReducer, useRef } from "react";
+import React, { useState, useReducer, useRef } from "react";
 import {useWordBankContext} from "../utils/GlobalState"
 import ChatBox from "../components/ChatBox"
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
+import testPeopleAPI from "../utils/testPeopleAPI";
+import PlayerList from "../components/PlayerList";
 
 
 const WaitingRoom = () => {
     
-    // const [attendees, setAttendees] = useState({
+    const [players, setPlayers] = useState([])
+        console.log("players State: ", players)
         
-    // });
-    // useEffect(()=>{
-    //     const peopleTestArray =["Danny", "Aaron", "Makai", "Mike"]//the below is just to test the setAttendees function
-    //     console.log(peopleTestArray)
-    //     setAttendees(peopleTestArray)
-    // },[])
+
 
     //Functionality for the Add Words
     const customWordInputRef = useRef()  
@@ -47,9 +45,18 @@ const WaitingRoom = () => {
         customWordInputRef.current.value="";
     }
 
+    const printPeople = event => {
+        event.preventDefault();
 
+        console.log("Getting people")
 
+        testPeopleAPI.getPeople()
+            .then( ({data})=>{
 
+                data.forEach(element => console.log(element.name))
+                setPlayers(data)
+            })
+    }
 
     return (
         <div 
@@ -62,14 +69,15 @@ const WaitingRoom = () => {
                     <div className="card">
                         <h2 className="card-header">Game Code: 8675309</h2>
                         <div className="card-body">
-                            <h5 className="card-title">Attending Players:</h5>
+                            
+                                <PlayerList playersProp={players}/>
                             <ol>
-                                {/* {attendees.map((boop)=>(
-                                    <li>{boop}</li>
-                                ))} */}
-                                <li>Person1</li>
-                                <li>Person2</li>
-                                <li>Person3</li>
+                                <button className="
+                                col container-lgbtn btn-primary btn-lg btn-block"  
+                                type="button"
+                                onClick ={printPeople}
+
+                                >printPeople</button>
 
                             </ol>
                         </div>
