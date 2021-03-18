@@ -45,6 +45,16 @@ class API {
         return this.axios.post("/api/authenticated");
     }
 
+    createLobby(host) {
+        const id = Math.floor(Math.random() * 36 ** 9).toString(36).padStart(9, '0').toUpperCase()
+        return this.axios.post(`/api/lobby`, id, host)
+
+    }
+
+    getLobby(id) {
+        return this.axios.get(`/api/lobby/${id}`)
+    }
+
 }
 
 export default new API();
