@@ -12,10 +12,16 @@ const Login = ({logUserIn, setLoginDisplay}) => {
     const login = event => {
         event.preventDefault()
 
-        if (username === '') {
-            usernameInput.current.focus()
-            //TODO display message to let user know there was an issue.
-            return
+        const username = usernameInput.current.value;
+        const password = passwordInput.current.value;
+        console.log(username, password)
+        try {
+            login({ username, password });
+
+            // User has been successfully logged in and added to state. Perform any additional actions you need here such as redirecting to a new page.
+        } catch (err) {
+            // Handle error responses from the API
+            if (err.response && err.response.data) console.log(err.response.data);
         }
 
         if (password === '') {
@@ -37,20 +43,20 @@ const Login = ({logUserIn, setLoginDisplay}) => {
 
     return (
         <div 
-        id="bootstrap-overrides" 
-        className="container sketchBackground">
+            id="bootstrap-overrides" 
+            className="container sketchBackground">
         
             <main>
 
                 <div className="card-deck">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-body">
+                    <div className="card">
+                        <div className="card-body">
+                            <div className="card-body">
 
-                                <form onSubmit={login}>
-                                <div class="row ">
-                                        <div class="col">
-                                        {/* One of three columns */}
+                                <form>
+                                    <div className="row ">
+                                        <div className="col">
+                                            {/* One of three columns */}
                                             <span>
                                                 {/* <label htmlFor="username:">Username</label> */}
                                                 <input id='username' type="text" onBlur={event => setUsername(event.target.value)} autoComplete="username" ref={usernameInput} autoFocus
@@ -58,7 +64,7 @@ const Login = ({logUserIn, setLoginDisplay}) => {
                                                 />
                                             </span>
                                         </div>
-                                        <div class="col">
+                                        <div className="col">
                                             {/* One of three columns */}
                                             <span>
                                                 {/* <label htmlFor="password:">Password</label> */}
@@ -80,8 +86,8 @@ const Login = ({logUserIn, setLoginDisplay}) => {
                     </div>
 
 
-                    <div class="card">
-                        <div class="card-body">
+                    <div className="card">
+                        <div className="card-body">
                             {/* <small>Already have an account?  */}
                             <div class="card-body">
                                 <p>Are you new here?</p>
