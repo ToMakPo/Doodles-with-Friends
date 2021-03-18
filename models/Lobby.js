@@ -4,11 +4,11 @@ const wordBank = './wordBank.json'
 
 const lobbySchema = new mongoose.Schema(
     {
+        id: { //The game id that will be displayed to the players. Not to be confused with _id used by the database.
+            type: String,
+            trim: true
+        },
         games: [{
-            id: { //The game id that will be displayed to the players. Not to be confused with _id used by the database.
-                type: String,
-                trim: true
-            },
             category: String,
             wordBank: [String],
             maxRotations: {
