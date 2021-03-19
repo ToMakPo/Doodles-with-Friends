@@ -7,6 +7,7 @@ import GameContext from "../utils/GameContext"
 import '../styles/PageHeader.css'
 import '../styles/palette.css'
 
+
 const PageHeader = () => {
     // const { user } = useContext(GameContext)
 
