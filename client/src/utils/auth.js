@@ -6,6 +6,7 @@ import API from "./API";
 import { useStoreContext } from "../store";
 import { LOGIN_USER, LOGOUT_USER } from "../store/actions";
 
+
 const setAuthToken = token => {
 
     storeAuthToken(token);
