@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const db = require('../models')
+const db = require('../models');
+const { findById } = require("../models/User");
 
 router.get('/lobby/:id', (req, res) => {
     db.Lobby
@@ -22,4 +23,10 @@ router.put('/lobby/:id', (req, res) => {
         .catch(err => res.status(422).json(err));
 })
 
+router.get('/user/:id', (req, res) => {
+    db.User
+        .findById(req.params.id)
+        .then(data => res.json(data))
+        .catch(err => res.status(422).json(err))
+})
 module.exports = router;
