@@ -5,6 +5,8 @@ import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
 import testPeopleAPI from "../utils/testPeopleAPI";
 import PlayerList from "../components/PlayerList";
+import CategoryList from "../components/CategoryList";
+import CustomSwitch from "../components/CustomSwitch";
 
 
 const WaitingRoom = () => {
@@ -71,7 +73,6 @@ const WaitingRoom = () => {
                         <div className="card-body">
                             
                                 <PlayerList playersProp={players}/>
-                            <ol>
                                 <button className="
                                 col container-lgbtn btn-primary btn-lg btn-block"  
                                 type="button"
@@ -79,38 +80,15 @@ const WaitingRoom = () => {
 
                                 >printPeople</button>
 
-                            </ol>
                         </div>
                     </div>
     {/* Column 2 */}
                     <div className="card">
                         <h2 className="card-header">Options:</h2>
-                        <div style={{paddingRight:"10px"}}>
-                            <div className="card-body row">
-                                <h5 className="card-title col">Category</h5>
-                                <select 
-                                    className="btn btn-primary dropDN col" 
-                                    name="categories" 
-                                    id="categoriesEl"
-                                    type="button">
-                                    <option value="Plants">Plants</option>
-                                    <option value="Celebrities">Animals</option>
-                                    <option value="Celebrities">Celebrities</option>
-                                    <option value="Existential Crises">Existential Crises</option>
-                                </select>
-                            </div>
-                            <hr></hr>
-                            <div className="card-body row">
-                                <h5 className="card-title col "> Custom Categories:</h5>
-                                <div className="row sliderContainer">
-                                <p className="col">NO</p>
-                                <label className="switch col">
-                                    <input type="checkbox"/>
-                                    <span className="slider round"></span>
-                                </label>
-                                <p className="col">YES</p>
-                                </div>
-                            </div>
+                        <div style={{padding:"0px 10px"}}>
+                            <CategoryList/>
+                            {/* <hr></hr> */}
+                            {/* <CustomSwitch/> */}
                             <hr></hr>
                             <div className="card-body">
                             <form 
