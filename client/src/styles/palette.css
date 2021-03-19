@@ -24,6 +24,11 @@
   border-color: var(--celadonBlue)
 }
 
+#bootstrap-overrides .logout{
+  background-color: var(--cinnabar);
+  border-color: var(--cinnabar);
+  color: white
+}
 #bootstrap-overrides .main{
   color: var(--spaceCadet);
   border-color: var(--xanadu);
