@@ -1,26 +1,25 @@
-const path = require("path");
 const router = require("express").Router();
 const db = require('../models')
-// const apiRoutes = require("./api");
 
-// // API Routes
-// router.use("/api", apiRoutes);
-router.get('/api/lobby/:id', (req, res) => {
+router.get('/lobby/:id', (req, res) => {
     db.Lobby
         .find({ id: req.params.id })
         .then(data => res.json(data))
-        .catch(err => console.error(err))
+        .catch(err => res.status(422).json(err))
 })
-router.post('/api/lobby', (req, res) => {
+
+router.post('/lobby', (req, res) => {
     db.Lobby
         .create(req.body)
         .then(data => res.json(data))
-        .catch(err => console.error(err))
+        .catch(err => res.status(422).json(err))
 })
 
-// If no API routes are hit, send the React app
-router.use(function (req, res) {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
+router.put('/lobby/:id', (req, res) => {
+    db.Lobby
+        .findOneAndUpdate({ id: req.params.id }, req.body)
+        .then(data => res.json(data))
+        .catch(err => res.status(422).json(err));
+})
 
 module.exports = router;
