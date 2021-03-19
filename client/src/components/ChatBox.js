@@ -30,7 +30,8 @@ const AnswerMessage = ({sender, answer}) => {
 }
 
 const ChatBox = ({width, height, active}) => {
-    const {lobby} = useContext(GameContext)
+    // const {lobby} = useContext(GameContext)
+    const lobby = {id: 'D5EA12C14'} // TODO: fix this 
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
     const [guessing, setGuessing] = useState(false)
@@ -39,6 +40,7 @@ const ChatBox = ({width, height, active}) => {
     const socketRef = useRef()
 
     useEffect(() => {
+        console.log({lobby});
         socketRef.current = io.connect('/')
 
         socketRef.current.on(`${lobby.id}-logMessage`, logMessage)
@@ -59,15 +61,8 @@ const ChatBox = ({width, height, active}) => {
 
     function chatSubmitOnClick(event) {
         event.preventDefault()
-
-        const data = {
-            datetime: Date.now(),
-            sender: activeUser
-        }
-
-        socketRef.emit('', lobby.id)
+        socketRef.emit(guessing ? 'logGuess' : 'logMessage', lobby.id, activeUser, message)
     }
-
 
     return (
         <div id='chat-component'>

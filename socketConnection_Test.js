@@ -1,44 +1,3 @@
-require("dotenv").config();
-const express = require("express")
-const mongoose = require("mongoose")
-const apiRoutes = require("./routes/api")
-const PORT = process.env.PORT || 3001
-
-const app = express()
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
-
-const passport = require("passport");
-app.use(passport.initialize());
-// Passport config
-passport.use(require("./config/jwtPassportStrategy"));
-
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static("client/build"));
-} else {
-    app.use(express.static("public"))
-}
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/doodle_db", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-})
-
-// routes
-app.use(apiRoutes)
-app.use("/api", require("./routes/authentication"));
-
-const server = app.listen(PORT, () => {
-    console.log(`App running on http://localhost:${PORT}`)
-})
-
-/// SOCKET.IO ///
-const socket = require('socket.io')
-const io = socket(server)
-
-io.on('connection', newConnection(socket))
-
 function newConnection(socket, io) {
     console.log('new connection:', socket.id)
 
@@ -83,3 +42,5 @@ function newConnection(socket, io) {
         io.emit(`${gameId}-consoleLog`, message)
     })
 }
+
+module.exports = newConnection
