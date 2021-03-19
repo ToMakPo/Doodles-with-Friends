@@ -88,14 +88,16 @@ const WaitingRoom = () => {
                             {/* <hr></hr> */}
                             {/* <CustomSwitch/> */}
                             <hr></hr>
-                            <div className="card-body">
+                            <div className="card-body ">
                                 <form
                                     className="d-flex 
-                            justify-content-center 
-                            align-items-center"
+                                    flex-grow-1
+                                    justify-content-center
+                            row"
                                     onSubmit={handleSubmit}
                                 >
-                                    <div >
+
+                                    <div className="" >
                                         <input
                                             type="text"
                                             className="form-control"
@@ -105,17 +107,21 @@ const WaitingRoom = () => {
                                             ref={customWordInputRef}
                                         />
                                     </div>
-                                    <div>
+                                    <div className="" >
+
                                         <button className="
                                     col
                                     btn 
                                     btnAdd
                                     btn-block" type="submit">+</button>
                                     </div>
+
                                 </form>
+
+
                                 <br></br>
                                 <div>
-                                    <h5 className="card-title">Added Words:</h5>
+                                    {/* <h5 className="card-title">Added Words:</h5> */}
                                     <ul className="list-group">
                                         {listOfCustomWords.map((boop) => (
 
