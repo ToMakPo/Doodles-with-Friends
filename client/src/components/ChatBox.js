@@ -1,10 +1,32 @@
 import { useState, useRef, useContext, useEffect } from 'react'
 import io from 'socket.io-client'
-// import PropTypes from 'prop-types'
 import GameContext from "../utils/GameContext"
+import { useAuthenticatedUser } from '../utils/'
 
-const ChatMessage = ({datetime, sender, message}) => {
-
+const ChatMessage = ({sender, message}) => {
+    return (
+        <div className='chat-message'>
+            <small>{sender.username}</small>
+            <span>{message}</span>
+        </div>
+    )
+}
+const GuessMessage = ({sender, guess}) => {
+    return (
+        <div className='guess-message'>
+            <small>{sender.username}</small>
+            <span>{guess}</span>
+        </div>
+    )
+}
+const AnswerMessage = ({sender, answer}) => {
+    return (
+        <div className='answer-message'>
+            <span><strong>{sender.username}</strong> got it!!!!</span>
+            <small>The answer is:</small>
+            <h3>{answer}</h3>
+        </div>
+    )
 }
 
 const ChatBox = ({width, height, active}) => {
@@ -12,6 +34,7 @@ const ChatBox = ({width, height, active}) => {
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
     const [guessing, setGuessing] = useState(false)
+    const activeUser = useAuthenticatedUser()
 
     const socketRef = useRef()
 
@@ -26,29 +49,49 @@ const ChatBox = ({width, height, active}) => {
         setMessages([...messages, data])
     }
 
-    function onInput(event) {
+    function chatInputOnInput(event) {
         const value = event.target.value
         const lastValue = message
 
         setMessage(value)
     }
 
+    function chatSubmitOnClick(event) {
+        event.preventDefault()
+
+        const data = {
+            datetime: Date.now(),
+            sender: activeUser
+        }
+
+        socketRef.emit(lobby.id)
+    }
+
+
     return (
         <div id='chat-component'>
             <div id='chat-log'>{
-                messages.map((data, i) => <ChatMessage key={i} {...data}/>)
+                messages.map((data, i) => {
+                    switch (data.type) {
+                        case 'chat': return <ChatMessage key={i} {...data}/>
+                        case 'quess': return <GuessMessage key={i} {...data}/>
+                        case 'answer': return <AnswerMessage key={i} {...data}/>
+                        default: return ''
+                    }
+                })
             }</div>
             <div id='chat-input-box'>
                 <input
                     id='chat-input'
                     type="text"
-                    onInput={onInput}
+                    onInput={chatInputOnInput}
                 />
                 <input
                     id='chat-submit'
                     type='submit'
                     className='chat-button'
                     value={guessing ? '❓' : '💬'}
+                    onClick={chatSubmitOnClick}
                 />
             </div>
         </div>
