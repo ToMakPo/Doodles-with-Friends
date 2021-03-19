@@ -10,19 +10,11 @@ import CategoryList from "../components/CategoryList";
 import CustomSwitch from "../components/CustomSwitch";
 
 const WaitingRoom = () => {
-    const { lobby } = useContext(GameContext)
-    console.log(lobby)
-    // const [attendees, setAttendees] = useState({
+    // const { lobby } = useContext(GameContext)
+    // console.log(lobby)
 
-    // });
-
-    // useEffect(()=>{
-    //     const peopleTestArray =["Danny", "Aaron", "Makai", "Mike"]//the below is just to test the setAttendees function
-    //     console.log(peopleTestArray)
-    //     setAttendees(peopleTestArray)
-    // },[])
-  
     const [players, setPlayers] = useState([])
+
 
     //Functionality for the Add Words
     const customWordInputRef = useRef()
@@ -77,7 +69,7 @@ const WaitingRoom = () => {
 
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code: {lobby} </h2>
+                        <h2 className="card-header">Game Code:  </h2>
                         <div className="card-body">
                             
                                 <PlayerList playersProp={players}/>
@@ -85,9 +77,7 @@ const WaitingRoom = () => {
                                 col container-lgbtn btn-primary btn-lg btn-block"  
                                 type="button"
                                 onClick ={printPeople}
-
                                 >printPeople</button>
-
                         </div>
                     </div>
                     {/* Column 2 */}
@@ -105,7 +95,6 @@ const WaitingRoom = () => {
                             align-items-center"
                                     onSubmit={handleSubmit}
                                 >
-
                                     <div >
                                         <input
                                             type="text"

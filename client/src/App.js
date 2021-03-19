@@ -31,8 +31,10 @@ const App = () => {
 				<BrowserRouter>
 					<PageHeader /*logUserOut={logUserOut}*/ />
 
+		{true ? <WaitingRoom/> : (
 
-					{/* { console.log('User is logged in:', activeUser)} */}
+
+
 					<Switch>
 						<Route exact path='/' component={isAuthenticated ? Home : Login} />
 						<Route exact path='/login' component={isAuthenticated ? Home : Login} />
@@ -42,6 +44,7 @@ const App = () => {
 						{isAuthenticated && <Route exact path='/score-board/:roomId' component={ScoreBoard} />}
 						<Route component={PageNotFound} />
 					</Switch>
+		)}
 				</BrowserRouter>
 
 				<PageFooter />

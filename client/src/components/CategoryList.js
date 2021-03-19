@@ -1,9 +1,9 @@
 import React from "react"
 
-const CategoryList = ({playersProp}) => {
+const CategoryList = () => {
     return(
     <div className="card-body row">
-        <h5 className="card-title col">Category:</h5>
+        <h5 className="card-title col">Category</h5>
         <select 
             className="btn btn-primary dropDN col" 
             name="categories" 
