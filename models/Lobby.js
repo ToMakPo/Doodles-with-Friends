@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const User = require("./User")
-import wordBank from './wordBank.json'
+const wordBank = require('./wordBank.json')
 
 const lobbySchema = new mongoose.Schema(
     {

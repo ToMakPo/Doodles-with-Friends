@@ -7,14 +7,13 @@ const userSchema = new mongoose.Schema(
             trim: true,
             required: "Enter a username"
         },
-        hash: String,
+        password: {
+            type: String,
+            required: true
+        },
         joinDate: {
             type: Date,
             default: Date.now
-        },
-        activeLobby: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: Lobby
         },
         gamesPlayed: {
             type: Number,
@@ -34,4 +33,3 @@ const userSchema = new mongoose.Schema(
 const User = mongoose.model("user", userSchema)
 
 module.exports = User
-
