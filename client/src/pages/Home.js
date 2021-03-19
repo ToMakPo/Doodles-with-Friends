@@ -66,6 +66,7 @@ const Home = () => {
                                         onClick={(event) => {
                                             event.preventDefault()
                                             joinLobby(gameCodeRef.current.value.trim().toUpperCase())
+                                            window.location.assign(`/waiting-room/${gameCodeRef}`)
                                         }}
                                     >JOIN NOW</button>
                                 </div>
