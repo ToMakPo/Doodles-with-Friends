@@ -9,8 +9,8 @@ import PlayerList from "../components/PlayerList";
 
 
 const WaitingRoom = () => {
-    const { lobby } = useContext(GameContext)
-    console.log(lobby)
+    // const { lobby } = useContext(GameContext)
+    // console.log(lobby)
     // const [attendees, setAttendees] = useState({
 
     // });
@@ -76,7 +76,7 @@ const WaitingRoom = () => {
 
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code: {lobby} </h2>
+                        <h2 className="card-header">Game Code:</h2>
                         <div className="card-body">
 
                             <PlayerList playersProp={players} />

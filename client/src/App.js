@@ -37,7 +37,7 @@ const App = () => {
 						<Route exact path='/' component={isAuthenticated ? Home : Login} />
 						<Route exact path='/login' component={isAuthenticated ? Home : Login} />
 						<Route exact path='/signup' component={isAuthenticated ? Home : Signup} />
-						{isAuthenticated && <Route exact path='/waiting-room/:roomId' component={WaitingRoom} />}
+						{isAuthenticated && <Route exact path='/waiting-room' component={WaitingRoom} />}
 						{isAuthenticated && <Route exact path='/active-game/:roomId' component={ArtistView} />}
 						{isAuthenticated && <Route exact path='/score-board/:roomId' component={ScoreBoard} />}
 						<Route component={PageNotFound} />
