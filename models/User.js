@@ -15,10 +15,6 @@ const userSchema = new mongoose.Schema(
             type: Date,
             default: Date.now
         },
-        // activeLobby: {
-        //     type: mongoose.Schema.Types.ObjectId,
-        //     ref: Lobby
-        // },
         gamesPlayed: {
             type: Number,
             default: 0
@@ -37,4 +33,3 @@ const userSchema = new mongoose.Schema(
 const User = mongoose.model("user", userSchema)
 
 module.exports = User
-

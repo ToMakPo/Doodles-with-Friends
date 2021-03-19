@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const User = require("./User")
-const wordBank = './wordBank.json'
+const wordBank = require('./wordBank.json')
 
 const lobbySchema = new mongoose.Schema(
     {
@@ -57,7 +57,7 @@ const lobbySchema = new mongoose.Schema(
  * 
  * @param {mongoose.Schema.Types.ObjectId} playerId
  */
-lobbySchema.methods.addPlayerToLobby = function (player) {
+lobbySchema.methods.addPlayerToLobby = function(player) {
     player.activeLobby = this
     player.save()
 
@@ -71,7 +71,7 @@ lobbySchema.methods.addPlayerToLobby = function (player) {
  * Words given by the users before the game starts.
  * @param {[String]} words An array of words that will be added to the word bank.
  */
-lobbySchema.method.addUserWordsToGame = function (words) {
+lobbySchema.method.addUserWordsToGame = function(words) {
     this.userWords.concat(words)
     this.save()
 
@@ -79,7 +79,7 @@ lobbySchema.method.addUserWordsToGame = function (words) {
 }
 
 /** Move to the next player in the queue */
-lobbySchema.methods.randomizePlayerOrder = function () {
+lobbySchema.methods.randomizePlayerOrder = function() {
     const tempList = [...this.players]
     this.players = []
 
@@ -99,7 +99,7 @@ lobbySchema.methods.randomizePlayerOrder = function () {
  * @param {String} category the catagory of the words being played. 
  * @returns {[String]} the list of words to add to the word bank.
  */
-lobbySchema.methods.buildWordBank = function (category) {
+lobbySchema.methods.buildWordBank = function(category) {
     const set = new Set(this.userWords)
 
     const options = [...wordBank[category]]
@@ -121,11 +121,11 @@ lobbySchema.methods.buildWordBank = function (category) {
  * @param {String} category The catagory of the words being played.
  * @param {Number} maxRotations The maximumn number of rotations.
  */
-lobbySchema.methods.startNewGame = function (category, maxRotations) {
+lobbySchema.methods.startNewGame = function(category, maxRotations) {
     this.randomizePlayerOrder()
 
     const newGame = {
-        id: Math.floor(Math.random() * 36 ** 9).toString(36).toUpperCase().padStart(9, '0'),
+        id: Math.floor(Math.random() * 36**9).toString(36).toUpperCase().padStart(9, '0'),
         category,
         wordBank: this.buildWordBank(),
         maxRotations,
@@ -145,7 +145,7 @@ lobbySchema.methods.startNewGame = function (category, maxRotations) {
  * Start the next round of the game.
  * @param {Lobby.game} game The game being played
  */
-lobbySchema.methods.startNextRound = function (game) {
+lobbySchema.methods.startNextRound = function(game) {
     game.activeIndex = (game.activeIndex + 1) % this.players.length
     if (game.activeIndex === 0) game.activeRotation++
     const artist = this.players[game.activeIndex]
@@ -161,7 +161,7 @@ lobbySchema.methods.startNextRound = function (game) {
         } else {
             //TODO: end the game.
         }
-
+        
         this.save()
         return this
     } else {
@@ -174,7 +174,7 @@ lobbySchema.methods.startNextRound = function (game) {
  * @param {Lobby.game} game The game being played
  * @param {mongoose.Schema.Types.ObjectId} winnerId The id of the winner for this round.
  */
-lobbySchema.methods.endRound = function (game, winnerId) {
+lobbySchema.methods.endRound = function(game, winnerId) {
     game.activeRound.winner = winnerId
     this.save()
     this.startNextRound(game)
@@ -185,7 +185,7 @@ lobbySchema.methods.endRound = function (game, winnerId) {
  * End the game.
  * @param {Lobby.game} game The game being played
  */
-lobbySchema.methods.endGame = function (game) {
+lobbySchema.methods.endGame = function(game) {
     const players = this.players.reduce((obj, player) => obj[player] = 0, {})
     for (const round of game.rounds) {
         if (game.winner != null) {
@@ -198,7 +198,7 @@ lobbySchema.methods.endGame = function (game) {
 
     const [gameWinner] = Object
         .entries(players)
-        .reduce(([current, max], { player, total }) =>
+        .reduce(([current, max], {player, total}) => 
             total > max ? [player, total] : [current, max], [null, 0])
 
     gameWinner.gamesWon++
@@ -213,7 +213,7 @@ lobbySchema.methods.endGame = function (game) {
 }
 
 /** Close this lobby */
-lobbySchema.methods.closeLobby = function () {
+lobbySchema.methods.closeLobby = function() {
     endDate = Date.now()
     this.save()
 

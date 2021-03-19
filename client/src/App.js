@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import PageHeader from './components/PageHeader'
 import PageFooter from './components/PageFooter'
 import Login from './pages/Login'
@@ -10,9 +10,8 @@ import WaitingRoom from './pages/WaitingRoom'
 import ArtistView from './pages/ArtistView'
 
 import ScoreBoard from './pages/ScoreBoard'
-// import GameContext from './utils/GameContext'
 import GameContext from './utils/GameContext'
-import { WordBankProvider } from './utils/GlobalState'
+import {WordBankProvider} from './utils/GlobalState'
 import PageNotFound from './pages/PageNotFound'
 import "./styles/palette.css"
 import { useAuthenticatedUser, useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
@@ -28,7 +27,7 @@ const App = () => {
 	return (
 		<WordBankProvider>
 			<GameContext.Provider value={{ lobby, setLobby }}>
-				<BrowserRouter>
+				<Router>
 					<PageHeader /*logUserOut={logUserOut}*/ />
 
 
@@ -42,7 +41,7 @@ const App = () => {
 						{isAuthenticated && <Route exact path='/score-board/:roomId' component={ScoreBoard} />}
 						<Route component={PageNotFound} />
 					</Switch>
-				</BrowserRouter>
+				</Router>
 
 				<PageFooter />
 			</GameContext.Provider>

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useRef } from "react"
 import '../styles/palette.css'
 import '../styles/Login.css'
 import { useLogin } from "../utils/auth"
