@@ -3,7 +3,6 @@
 import Jumbotron from "./Jumbotron"
 // import GameContext from "../utils/GameContext"
 import LogoutButton from "./LogoutButton"
-import GameContext from "../utils/GameContext"
 import '../styles/PageHeader.css'
 import '../styles/palette.css'
 

@@ -29,15 +29,9 @@
   "homepage": "https://postnet-doodles-with-friends.herokuapp.com/",
   "dependencies": {
     "axios": "^0.21.1",
-    "bcryptjs": "^2.4.3",
-    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "fastest-validator": "^1.10.0",
     "if-env": "^1.0.4",
     "mongoose": "^5.11.19",
-    "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0",
     "socket.io": "^3.1.2"
   },
   "devDependencies": {
