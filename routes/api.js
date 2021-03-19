@@ -29,4 +29,11 @@ router.get('/user/:id', (req, res) => {
         .then(data => res.json(data))
         .catch(err => res.status(422).json(err))
 })
+
+router.put('/user/:id', (req, res) => {
+    db.User
+        .findOneAndUpdate({ _id: req.params.id }, req.body)
+        .then(data => res.json(data))
+        .catch(err => res.status(422).json(err))
+})
 module.exports = router;
