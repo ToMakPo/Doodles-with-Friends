@@ -50,10 +50,11 @@ const ChatBox = ({width, height, active}) => {
     }
 
     function chatInputOnInput(event) {
-        const value = event.target.value
-        const lastValue = message
+        const isGuess = event.target.value[0] === '?'
+        const value = isGuess ? event.target.value.substr(1) : event.target.value
 
-        setMessage(value)
+        isGuess !== guessing && setGuessing(isGuess)
+        value !== message && setMessage(value)
     }
 
     function chatSubmitOnClick(event) {
@@ -64,7 +65,7 @@ const ChatBox = ({width, height, active}) => {
             sender: activeUser
         }
 
-        socketRef.emit(lobby.id)
+        socketRef.emit('', lobby.id)
     }
 
 
