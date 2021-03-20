@@ -77,10 +77,16 @@ const WaitingRoom = () => {
             })
             .catch(err => console.error(err))
     }, [])
-
-    // const updateLobby = () => {
-
-    // }
+    const numRoundsRef = useRef()
+    const startGame = (id, body) => {
+        id = lobby.id
+        const rounds = parseInt(numRoundsRef.current.value)
+        API.updateLobby(id, {
+            games: [{
+                maxRotations: rounds
+            }]
+        })
+    }
     console.log(lobby)
     return (
         <div
@@ -195,6 +201,7 @@ const WaitingRoom = () => {
                                     placeholder="Number of Rounds"
                                     aria-label="Recipient's username"
                                     aria-describedby="basic-addon2"
+                                    ref={numRoundsRef}
                                 />
                             </div>
                         </div>
@@ -220,7 +227,13 @@ const WaitingRoom = () => {
                                 col
                                 btn btn-primary 
                                 btn-lg 
-                                btn-block" type="button">Start Game</button>
+                                btn-block" type="button"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                startGame()
+                            }
+                            }
+                        >Start Game</button>
                     </div>
                     {/* </div> */}
                 </div>

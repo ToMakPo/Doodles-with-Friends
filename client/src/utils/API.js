@@ -54,7 +54,7 @@ class API {
         return this.axios.get(`/api/lobby/${id}`)
     }
     updateLobby(id, body) {
-        return this.axios.put(`/api/profile/${id}`, body);
+        return this.axios.put(`/api/lobby/${id}`, body);
     }
 }
 
