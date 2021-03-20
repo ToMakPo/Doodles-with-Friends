@@ -53,7 +53,9 @@ class API {
     getLobby(id) {
         return this.axios.get(`/api/lobby/${id}`)
     }
-
+    updateLobby(id, body) {
+        return this.axios.put(`/api/profile/${id}`, body);
+    }
 }
 
 export default new API();

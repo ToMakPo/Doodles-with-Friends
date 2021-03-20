@@ -3,7 +3,7 @@ import { useWordBankContext } from "../utils/GlobalState"
 import ChatBox from "../components/ChatBox"
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
-import { LobbyContext } from "../utils/GameContext";
+// import { LobbyContext } from "../utils/GameContext";
 import testPeopleAPI from "../utils/testPeopleAPI";
 import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
@@ -67,16 +67,20 @@ const WaitingRoom = () => {
                 setPlayers(data)
             })
     }
-    const lobbyId = window.location.pathname.split('room/')[1]
 
     useEffect(() => {
+        const lobbyId = window.location.pathname.split('room/')[1]
         API.getLobby(lobbyId)
             .then(data => {
                 setLobby(data.data[0])
 
             })
             .catch(err => console.error(err))
-    }, [lobbyId])
+    }, [])
+
+    // const updateLobby = () => {
+
+    // }
     console.log(lobby)
     return (
         <div
@@ -87,7 +91,7 @@ const WaitingRoom = () => {
 
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code: {lobby.id}</h2>
+                        <h2 className="card-header">Game Code: {lobby === undefined ? `no lobby` : lobby.id}</h2>
                         <div className="card-body">
 
                             <PlayerList playersProp={players} />
