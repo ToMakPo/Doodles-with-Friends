@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useRef } from "react"
 import '../styles/palette.css'
 import '../styles/Login.css'
 import { useLogin } from "../utils/auth"
@@ -18,8 +18,8 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
         const password = passwordInput.current.value;
         console.log(username, password)
         try {
-            const res = await login({ username, password });
-            console.log(res)
+            login({ username, password });
+
             // User has been successfully logged in and added to state. Perform any additional actions you need here such as redirecting to a new page.
         } catch (err) {
             // Handle error responses from the API
@@ -52,6 +52,7 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
     //     }
     // }
 
+
     return (
         <div
             id="bootstrap-overrides"
@@ -60,13 +61,13 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
             <main>
 
                 <div className="card-deck">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-body">
+                    <div className="card">
+                        <div className="card-body">
+                            <div className="card-body">
 
                                 <form onSubmit={handleSubmit}>
-                                    <div class="row ">
-                                        <div class="col">
+                                    <div className="row ">
+                                        <div className="col">
                                             {/* One of three columns */}
                                             <span>
                                                 {/* <label htmlFor="username:">Username</label> */}
@@ -81,7 +82,7 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
                                                 />
                                             </span>
                                         </div>
-                                        <div class="col">
+                                        <div className="col">
                                             {/* One of three columns */}
                                             <span>
                                                 {/* <label htmlFor="password:">Password</label> */}
@@ -97,7 +98,7 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
                                         </div>
 
 
-                                        <button type="submit" className="btn btn-primary btn-lg btn-block mt-2">GET STARTED</button>
+                                        <button type="submit" className="btn btn-primary btn-lg btn-block mt-2">Log In</button>
 
                                     </div>
                                 </form>
@@ -109,11 +110,11 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
                     </div>
 
 
-                    <div class="card">
-                        <div class="card-body">
+                    <div className="card">
+                        <div className="card-body">
                             {/* <small>Already have an account?  */}
-                            <div class="card-body">
-                                <p>Don't already have an account?</p>
+                            <div className="card-body">
+                                <p>Are you new to Doodles with Friends?</p>
 
                             </div>
                             <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => window.location.assign('/signup')}>Register</button>

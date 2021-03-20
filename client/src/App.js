@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import PageHeader from './components/PageHeader'
 import PageFooter from './components/PageFooter'
 import Login from './pages/Login'
@@ -10,44 +10,43 @@ import WaitingRoom from './pages/WaitingRoom'
 import ArtistView from './pages/ArtistView'
 
 import ScoreBoard from './pages/ScoreBoard'
-// import GameContext from './utils/GameContext'
 import GameContext from './utils/GameContext'
-import { WordBankProvider } from './utils/GlobalState'
+import {WordBankProvider} from './utils/GlobalState'
 import PageNotFound from './pages/PageNotFound'
 import "./styles/palette.css"
-import { useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
+import { useAuthenticatedUser, useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
 
 const App = () => {
-	// const [activeUser, setActiveUser] = useState(null)
-	// const [loginDisplay, setLoginDisplay] = useState(true)
 
-	// const logUserIn = user => setActiveUser(user)
-	// const logUserOut = () => setActiveUser(null)
+	const [lobby, setLobby] = useState({})
+
 	useAuthTokenStore();
 	const isAuthenticated = useIsAuthenticated();
+	const AuthUser = useAuthenticatedUser()
+	console.log(AuthUser);
 	return (
 		<WordBankProvider>
-			{/* <GameContext.Provider value={{activeUser}}> */}
-			<BrowserRouter>
-				<PageHeader /*logUserOut={logUserOut}*/ />
+			<GameContext.Provider value={{ lobby, setLobby }}>
+				<Router>
+					<PageHeader /*logUserOut={logUserOut}*/ />
+
+		{/* {true ? <WaitingRoom/> : ( */}
 
 
-				{/* { console.log('User is logged in:', activeUser)} */}
-				<Switch>
-					{/* {!isAuthenticated && <Login />} */}
-					{!isAuthenticated && <Route exact path='/' component={Login} />}
-					{!isAuthenticated && <Route exact path='/signup' component={Signup} />}
-					{isAuthenticated && <Route exact path='/' component={Home} />}
-					{/* {isAuthenticated && <Route exact path='/options' component={Options} />} */}
-					{isAuthenticated && <Route exact path='/waiting-room/:roomId' component={WaitingRoom} />}
-					{isAuthenticated && <Route exact path='/active-game/:roomId' component={ArtistView} />}
-					{isAuthenticated && <Route exact path='/score-board/:roomId' component={ScoreBoard} />}
-					{!isAuthenticated && <Route component={PageNotFound} />}
-				</Switch>
-			</BrowserRouter>
 
-			<PageFooter />
-			{/* </GameContext.Provider> */}
+					<Switch>
+						<Route exact path='/' component={isAuthenticated ? Home : Login} />
+						<Route exact path='/login' component={isAuthenticated ? Home : Login} />
+						<Route exact path='/signup' component={isAuthenticated ? Home : Signup} />
+						{isAuthenticated && <Route exact path='/waiting-room/:roomId' component={WaitingRoom} />}
+						{isAuthenticated && <Route exact path='/active-game/:roomId' component={ArtistView} />}
+						{isAuthenticated && <Route exact path='/score-board/:roomId' component={ScoreBoard} />}
+						<Route component={PageNotFound} />
+					</Switch>
+				</Router>
+
+				<PageFooter />
+			</GameContext.Provider>
 		</WordBankProvider>
 	)
 }

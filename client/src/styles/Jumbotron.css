@@ -17,9 +17,12 @@ h1{
     padding:0em !important;
     margin-bottom:0px !important;
     background-image: url("./assets/brain-2789677.svg");
-    background-size:65%;
+    /* -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; */
+    background-size: 65%;
     background-position: center; 
-    background-color: red;
+    /* background-color: red; */
 
 }
 

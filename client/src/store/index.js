@@ -5,6 +5,7 @@ import {
     LOGOUT_USER
 } from "./actions";
 
+
 const StoreContext = createContext({
     userAuth: {},
 });
