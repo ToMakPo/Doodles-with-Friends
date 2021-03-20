@@ -20,7 +20,11 @@ const WaitingRoom = () => {
     
     useEffect(()=>{
         testCategoriesAPI.getCategories()
+        
             .then( ({data}) => {
+                console.log("categories: ", categories)
+                console.log("data: ", data)
+                data.forEach(element => console.log("Category: ", element.category))
                 setCategories(data)
             })
     },[setCategories])
@@ -61,16 +65,18 @@ const WaitingRoom = () => {
                     <div className="card">
                         <h2 className="card-header">Game Code:  </h2>
                         <div className="card-body">
+
                             <PlayerList playersProp={players}/>
+
                         </div>
                     </div>
                     {/* Column 2 */}
                     <div className="card">
                         <h2 className="card-header">Options:</h2>
                         <div style={{padding:"0px 10px"}}>
+
                             <CategoryList categoriesProp={categories}
                             
-
                             />
                             <hr></hr>
                             <div className="card-body ">

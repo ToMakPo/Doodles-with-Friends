@@ -21,10 +21,7 @@ const testCategoriesAPI = {
                     category: "Existential Crises",
 
                 },
-                //                 {
-                //     id:5,
-                //     name: ["Testy McTesterson"],
-                // },
+
             ]
         }
         //END TEST DATA
