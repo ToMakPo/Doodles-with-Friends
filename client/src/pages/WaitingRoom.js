@@ -6,22 +6,15 @@ import '../styles/WaitingRoom.css'
 import GameContext from "../utils/GameContext";
 import testPeopleAPI from "../utils/testPeopleAPI";
 import PlayerList from "../components/PlayerList";
-
+import CategoryList from "../components/CategoryList";
+import CustomSwitch from "../components/CustomSwitch";
 
 const WaitingRoom = () => {
-    const { lobby } = useContext(GameContext)
-    console.log(lobby)
-    // const [attendees, setAttendees] = useState({
-
-    // });
-
-    // useEffect(()=>{
-    //     const peopleTestArray =["Danny", "Aaron", "Makai", "Mike"]//the below is just to test the setAttendees function
-    //     console.log(peopleTestArray)
-    //     setAttendees(peopleTestArray)
-    // },[])
+    // const { lobby } = useContext(GameContext)
+    // console.log(lobby)
 
     const [players, setPlayers] = useState([])
+
 
     //Functionality for the Add Words
     const customWordInputRef = useRef()
@@ -60,7 +53,7 @@ const WaitingRoom = () => {
         console.log("Getting people")
 
         testPeopleAPI.getPeople()
-            .then(({ data }) => {
+            .then( ({data})=>{
 
                 data.forEach(element => console.log(element.name))
                 setPlayers(data)
@@ -76,60 +69,35 @@ const WaitingRoom = () => {
 
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code: {lobby} </h2>
+                        <h2 className="card-header">Game Code:  </h2>
                         <div className="card-body">
-
-                            <PlayerList playersProp={players} />
-                            <ol>
+                            
+                                <PlayerList playersProp={players}/>
                                 <button className="
-                                col container-lgbtn btn-primary btn-lg btn-block"
-                                    type="button"
-                                    onClick={printPeople}
-
+                                col container-lgbtn btn-primary btn-lg btn-block"  
+                                type="button"
+                                onClick ={printPeople}
                                 >printPeople</button>
-
-                            </ol>
                         </div>
                     </div>
                     {/* Column 2 */}
                     <div className="card">
                         <h2 className="card-header">Options:</h2>
-                        <div style={{ paddingRight: "10px" }}>
-                            <div className="card-body row">
-                                <h5 className="card-title col">Category</h5>
-                                <select
-                                    className="btn btn-primary dropDN col"
-                                    name="categories"
-                                    id="categoriesEl"
-                                    type="button">
-                                    <option value="Plants">Plants</option>
-                                    <option value="Celebrities">Animals</option>
-                                    <option value="Celebrities">Celebrities</option>
-                                    <option value="Existential Crises">Existential Crises</option>
-                                </select>
-                            </div>
+                        <div style={{padding:"0px 10px"}}>
+                            <CategoryList/>
+                            {/* <hr></hr> */}
+                            {/* <CustomSwitch/> */}
                             <hr></hr>
-                            <div className="card-body row">
-                                <h5 className="card-title col "> Custom Categories:</h5>
-                                <div className="row sliderContainer">
-                                    <p className="col">NO</p>
-                                    <label className="switch col">
-                                        <input type="checkbox" />
-                                        <span className="slider round"></span>
-                                    </label>
-                                    <p className="col">YES</p>
-                                </div>
-                            </div>
-                            <hr></hr>
-                            <div className="card-body">
+                            <div className="card-body ">
                                 <form
                                     className="d-flex 
-                            justify-content-center 
-                            align-items-center"
+                                    flex-grow-1
+                                    justify-content-center
+                            row"
                                     onSubmit={handleSubmit}
                                 >
 
-                                    <div >
+                                    <div className="" >
                                         <input
                                             type="text"
                                             className="form-control"
@@ -139,17 +107,21 @@ const WaitingRoom = () => {
                                             ref={customWordInputRef}
                                         />
                                     </div>
-                                    <div>
+                                    <div className="" >
+
                                         <button className="
                                     col
                                     btn 
                                     btnAdd
                                     btn-block" type="submit">+</button>
                                     </div>
+
                                 </form>
+
+
                                 <br></br>
                                 <div>
-                                    <h5 className="card-title">Added Words:</h5>
+                                    {/* <h5 className="card-title">Added Words:</h5> */}
                                     <ul className="list-group">
                                         {listOfCustomWords.map((boop) => (
 

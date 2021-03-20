@@ -39,6 +39,7 @@ const App = () => {
 						{isAuthenticated && <Route exact path='/score-board/:roomId' component={ScoreBoard} />}
 						<Route component={PageNotFound} />
 					</Switch>
+					
 				</Router>
 				}
 
@@ -47,5 +48,4 @@ const App = () => {
 		</WordBankProvider>
 	)
 }
-
 export default App
