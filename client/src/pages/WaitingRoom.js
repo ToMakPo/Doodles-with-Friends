@@ -6,10 +6,11 @@ import '../styles/WaitingRoom.css'
 import { LobbyContext } from "../utils/GameContext";
 import testPeopleAPI from "../utils/testPeopleAPI";
 import PlayerList from "../components/PlayerList";
+import API from "../utils/API";
 
 
 const WaitingRoom = () => {
-    // const [lobby, setLobby] = useContext(LobbyContext)
+    const [lobby, setLobby] = useState()
     // console.log(lobby)
     // const [attendees, setAttendees] = useState({
 
@@ -66,7 +67,17 @@ const WaitingRoom = () => {
                 setPlayers(data)
             })
     }
+    const lobbyId = window.location.pathname.split('room/')[1]
 
+    useEffect(() => {
+        API.getLobby(lobbyId)
+            .then(data => {
+                setLobby(data.data[0])
+
+            })
+            .catch(err => console.error(err))
+    }, [lobbyId])
+    console.log(lobby)
     return (
         <div
             id="bootstrap-overrides"
@@ -76,7 +87,7 @@ const WaitingRoom = () => {
 
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code:</h2>
+                        <h2 className="card-header">Game Code: {lobby.id}</h2>
                         <div className="card-body">
 
                             <PlayerList playersProp={players} />
