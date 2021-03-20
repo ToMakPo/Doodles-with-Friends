@@ -70,6 +70,9 @@ const ChatBox = ({width, height, active}) => {
 
 
     return (
+    <div className="card">
+        <h2 className="card-header">Chat:  </h2>
+        <div className="card-body">
         <div id='chat-component'>
             <div id='chat-log'>{
                 messages.map((data, i) => {
@@ -95,7 +98,10 @@ const ChatBox = ({width, height, active}) => {
                     onClick={chatSubmitOnClick}
                 />
             </div>
+            </div>
+            </div>
         </div>
+
     )
 }
 
