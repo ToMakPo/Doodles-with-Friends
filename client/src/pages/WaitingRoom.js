@@ -38,6 +38,15 @@ const WaitingRoom = () => {
     //     }
     // },[])
 
+    useEffect(() =>{
+        testPeopleAPI.getPeople()
+        .then( ({data})=>{
+            data.forEach(element => console.log(element.name))
+            setPlayers(data)
+        })
+
+    },[setPlayers])
+
     function handleSubmit(event) {
         event.preventDefault();
         dispatch({
@@ -73,11 +82,11 @@ const WaitingRoom = () => {
                         <div className="card-body">
                             
                                 <PlayerList playersProp={players}/>
-                                <button className="
+                                {/* <button className="
                                 col container-lgbtn btn-primary btn-lg btn-block"  
                                 type="button"
                                 onClick ={printPeople}
-                                >printPeople</button>
+                                >printPeople</button> */}
                         </div>
                     </div>
                     {/* Column 2 */}
