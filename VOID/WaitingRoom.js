@@ -1,3 +1,5 @@
+//this is the version that changed from using a click event to useEffect and local state to global state. im saving this in the void folder for record code. see commented out content.
+
 import React, { useEffect, useState, useReducer, useRef, useContext } from "react";
 import { useWordBankContext } from "../utils/GlobalState"
 import ChatBox from "../components/ChatBox"
@@ -5,37 +7,43 @@ import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
 import GameContext from "../utils/GameContext";
 import testPeopleAPI from "../utils/testPeopleAPI";
-import testCategoriesAPI from "../utils/testCategoriesAPI";
 import PlayerList from "../components/PlayerList";
 import CategoryList from "../components/CategoryList";
-
+import CustomSwitch from "../components/CustomSwitch";
 
 const WaitingRoom = () => {
     // const { lobby } = useContext(GameContext)
     // console.log(lobby)
 
-    
-    //Populate Categories function
-    const [categories, setCategories] = useState([])
-    
-    useEffect(()=>{
-        testCategoriesAPI.getCategories()
-            .then( ({data}) => {
-                setCategories(data)
-            })
-    },[setCategories])
-    
-    //Functionality for the Add Words using the GlobalState
+    const [players, setPlayers] = useState([])
+
+
+    //Functionality for the Add Words
     const customWordInputRef = useRef()
     const [listOfCustomWords, dispatch] =
-    useWordBankContext();
-    
-    //Functionality to render the PlayerList    
-    const [players, setPlayers] = useState([])
+        //Using the Global State:
+        useWordBankContext();
+    //Using the local State:
+    // useReducer ((state,action) =>{
+    //     switch(action.type){
+    //         case "newWord":
+    //             return([...state,{
+    //                 name: action.name,
+    //                 id:Date.now()
+    //             }])
+    //         case "deleteWord":
+    //             return(state.filter((boop)=>{
+    //                 return boop.id !== action.id
+    //             }))
+    //         default:
+    //             return state
+    //     }
+    // },[])
+
     useEffect(() =>{
         testPeopleAPI.getPeople()
-        .then( ({data}) => {
-            data.forEach(element => console.log(element.name))
+        .then( ({data})=>{
+            // data.forEach(element => console.log(element.name))
             setPlayers(data)
         })
 
@@ -50,6 +58,19 @@ const WaitingRoom = () => {
         customWordInputRef.current.value = "";
     }
 
+    // const printPeople = event => {
+    //     event.preventDefault();
+
+    //     console.log("Getting people")
+
+    //     testPeopleAPI.getPeople()
+    //         .then( ({data})=>{
+
+    //             data.forEach(element => console.log(element.name))
+    //             setPlayers(data)
+    //         })
+    // }
+
     return (
         <div
             id="bootstrap-overrides"
@@ -61,17 +82,22 @@ const WaitingRoom = () => {
                     <div className="card">
                         <h2 className="card-header">Game Code:  </h2>
                         <div className="card-body">
-                            <PlayerList playersProp={players}/>
+                            
+                                <PlayerList playersProp={players}/>
+                                {/* <button className="
+                                col container-lgbtn btn-primary btn-lg btn-block"  
+                                type="button"
+                                onClick ={printPeople}
+                                >printPeople</button> */}
                         </div>
                     </div>
                     {/* Column 2 */}
                     <div className="card">
                         <h2 className="card-header">Options:</h2>
                         <div style={{padding:"0px 10px"}}>
-                            <CategoryList categoriesProp={categories}
-                            
-
-                            />
+                            <CategoryList/>
+                            {/* <hr></hr> */}
+                            {/* <CustomSwitch/> */}
                             <hr></hr>
                             <div className="card-body ">
                                 <form
