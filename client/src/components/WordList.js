@@ -1,6 +1,6 @@
 import React from "react"
 
-const PlayerList = ({playersProp}) => {
+const WordList = ({playersProp}) => {
     return(
         <div>
             <h5 className="card-title">Attending Players:</h5>
@@ -20,4 +20,4 @@ const PlayerList = ({playersProp}) => {
         </div>
     )
 }
-export default PlayerList
+export default WordList

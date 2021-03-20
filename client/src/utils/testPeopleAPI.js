@@ -18,8 +18,12 @@ const testPeopleAPI = {
                     name: ["MIKE BELLEVUE"],
                 },
                 {
-                    id:3,
+                    id:4,
                     name: ["DAN ZOS'AIER"],
+                },
+                                {
+                    id:5,
+                    name: ["Testy McTesterson"],
                 },
             ]
         }
