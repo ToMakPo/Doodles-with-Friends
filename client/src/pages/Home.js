@@ -2,30 +2,22 @@ import '../styles/palette.css'
 import '../styles/Home.css'
 import API from '../utils/API'
 import { useAuthenticatedUser } from '../utils/auth'
-import { useContext, useEffect, useRef } from 'react'
-import GameContext from '../utils/GameContext'
-import { Link } from 'react-router-dom'
+import { useContext, useRef } from 'react'
+import { LobbyContext } from '../utils/GameContext'
 
 const Home = () => {
     const gameCodeRef = useRef()
-    const hostGameRef = useRef()
     const AuthUser = useAuthenticatedUser()
-    const { setLobby, lobby } = useContext(GameContext)
+    const [lobby, setLobby] = useContext(LobbyContext)
+
     const joinLobby = (id) => {
         API.getLobby(id)
             .then(({ data }) => {
                 const newLobby = data[0]
                 setLobby(newLobby)
-                console.log(lobby);
-                console.log(newLobby);
-
+                console.log(lobby)
             })
     }
-    useEffect(() => {
-        console.log('useEffect', lobby);
-        //  && window.location.assign(`/waiting-room/${lobby.id}`)
-        hostGameRef.current.to = `/waiting-room/${lobby.id}`
-    }, [lobby])
 
     const hostGame = () => {
         API.createLobby(AuthUser)
@@ -47,8 +39,14 @@ const Home = () => {
                         <div className="card-body">
                             <h5 className="card-title">START A NEW GAME</h5>
                             <p className="card-text">YOU'LL BE THE HOST.</p>
-                            <Link onClick={hostGame} ref={hostGameRef}>Host Game</Link>
-                            {/* <button type="button" onClick={hostGame} className="btn btn-primary btn-lg btn-block"></button> */}
+
+                            <button type="button"
+                                onClick={() => {
+                                    hostGame()
+                                    window.location.assign(`/waiting-room/${lobby.id}`)
+                                }
+                                }
+                                className="btn btn-primary btn-lg btn-block">Host Game</button>
                         </div>
                     </div>
 

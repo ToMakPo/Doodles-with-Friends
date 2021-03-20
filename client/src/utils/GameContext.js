@@ -5,9 +5,9 @@ import { createContext, useState } from "react";
  * @property {Lobby} lobby The active lobby that is user is playing. Null if not in lobby.
  */
 
-const LobbyContext = createContext({})
+export const LobbyContext = createContext('')
 const LobbyProvider = ({ children }) => {
-    const [lobby, setLobby] = useState({})
+    const [lobby, setLobby] = useState('')
 
     return (
         <LobbyContext.Provider value={[lobby, setLobby]}>

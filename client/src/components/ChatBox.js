@@ -1,6 +1,6 @@
 import { useState, useRef, useContext, useEffect } from 'react'
 import io from 'socket.io-client'
-import GameContext from "../utils/GameContext"
+import LobbyContext from "../utils/GameContext"
 import { useAuthenticatedUser } from '../utils/auth'
 
 const ChatMessage = ({ sender, message }) => {
@@ -30,7 +30,7 @@ const AnswerMessage = ({ sender, answer }) => {
 }
 
 const ChatBox = ({ width, height, active }) => {
-    const { lobby } = useContext(GameContext)
+    const { lobby } = useContext(LobbyContext)
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
     const [guessing, setGuessing] = useState(false)
