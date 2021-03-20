@@ -27,11 +27,9 @@ const App = () => {
 	return (
 		<WordBankProvider>
 			<GameContext.Provider value={{ lobby, setLobby }}>
+				<PageHeader /*logUserOut={logUserOut}*/ />
+				{true ? <ArtistView/>:
 				<Router>
-					<PageHeader /*logUserOut={logUserOut}*/ />
-
-
-					{/* { console.log('User is logged in:', activeUser)} */}
 					<Switch>
 						<Route exact path='/' component={isAuthenticated ? Home : Login} />
 						<Route exact path='/login' component={isAuthenticated ? Home : Login} />
@@ -42,6 +40,7 @@ const App = () => {
 						<Route component={PageNotFound} />
 					</Switch>
 				</Router>
+				}
 
 				<PageFooter />
 			</GameContext.Provider>

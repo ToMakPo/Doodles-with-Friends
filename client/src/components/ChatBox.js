@@ -1,7 +1,8 @@
-import { useState, useRef, useContext, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import io from 'socket.io-client'
-import GameContext from "../utils/GameContext"
+// import GameContext from "../utils/GameContext"
 import { useAuthenticatedUser } from '../utils/auth'
+import '../styles/Chat.css'
 
 const ChatMessage = ({sender, message}) => {
     return (
@@ -29,13 +30,14 @@ const AnswerMessage = ({sender, answer}) => {
     )
 }
 
-const ChatBox = ({width, height, active}) => {
+const ChatBox = ({lobby, user}) => {
     // const {lobby} = useContext(GameContext)
-    const lobby = {id: 'D5EA12C14'} // TODO: fix this 
+    // const activeUser = useAuthenticatedUser()
+    // const lobby = {id: 'D5EA12C14'} // TODO: fix this 
+    // const activeUser = {username: 'ToMakPo'}
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
     const [guessing, setGuessing] = useState(false)
-    const activeUser = useAuthenticatedUser()
 
     const socketRef = useRef()
 
@@ -43,7 +45,7 @@ const ChatBox = ({width, height, active}) => {
         console.log({lobby});
         socketRef.current = io.connect('/')
 
-        socketRef.current.on(`${lobby.id}-logMessage`, logMessage)
+        // socketRef.current.on(`${lobby.id}-logMessage`, logMessage)
     }, [lobby])
 
     /// EVENT HANDLERS ///
@@ -61,7 +63,7 @@ const ChatBox = ({width, height, active}) => {
 
     function chatSubmitOnClick(event) {
         event.preventDefault()
-        socketRef.emit(guessing ? 'logGuess' : 'logMessage', lobby.id, activeUser, message)
+        socketRef.emit(guessing ? 'logGuess' : 'logMessage', lobby.id, user, message)
     }
 
     return (

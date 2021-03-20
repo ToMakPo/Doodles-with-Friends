@@ -22,17 +22,22 @@ const ArtistView = () => {
                         </div>
                     </div>
                 </h2>
-                <div className="card-deck">
+                <div className="card-deck" style={{
+                    display: 'flex',
+                    alignItems: "stretch",
+                    // flexDirection: 'row'
+                    // flexWrap: 'wrap'
+                }}>
                     <div className="card">
                         <div className="card-body">
                             <div className="">
-                                <Canvas width={500} height={500} active={true}/>
+                                {/* TODO: Check if this is the active player */}
+                                <Canvas active={true}/> 
                             </div>
                         </div>
                     </div>
-                    <ChatBox/>
+                    <ChatBox lobby={{id: 'D5EA12C14'}} user={{username: 'ToMakPo'}}/>
                 </div>
-
             </main>
         </div>
     )

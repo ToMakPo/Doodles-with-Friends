@@ -41,7 +41,7 @@ const Canvas = ({active}) => {
                 <canvas
                     width={600}
                     height={500}
-                    onMouseMove={canvasOnMouseMove}
+                    // onMouseMove={canvasOnMouseMove}
                 ></canvas>
                 {active && <>
                     <span id='canvas-cursor' ref={canvasCursor}></span>
