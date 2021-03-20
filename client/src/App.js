@@ -11,7 +11,7 @@ import ArtistView from './pages/ArtistView'
 
 import ScoreBoard from './pages/ScoreBoard'
 // import GameContext from './utils/GameContext'
-import GameContext from './utils/GameContext'
+import LobbyProvider from './utils/GameContext'
 import { WordBankProvider } from './utils/GlobalState'
 import PageNotFound from './pages/PageNotFound'
 import "./styles/palette.css"
@@ -19,15 +19,13 @@ import { useAuthenticatedUser, useAuthTokenStore, useIsAuthenticated } from "./u
 
 const App = () => {
 
-	const [lobby, setLobby] = useState({})
-
 	useAuthTokenStore();
 	const isAuthenticated = useIsAuthenticated();
 	const AuthUser = useAuthenticatedUser()
 	console.log(AuthUser);
 	return (
-		<WordBankProvider>
-			<GameContext.Provider value={{ lobby, setLobby }}>
+		<LobbyProvider>
+			<WordBankProvider>
 				<BrowserRouter>
 					<PageHeader /*logUserOut={logUserOut}*/ />
 
@@ -45,8 +43,8 @@ const App = () => {
 				</BrowserRouter>
 
 				<PageFooter />
-			</GameContext.Provider>
-		</WordBankProvider>
+			</WordBankProvider>
+		</LobbyProvider>
 	)
 }
 
