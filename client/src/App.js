@@ -28,9 +28,6 @@ const App = () => {
 			<WordBankProvider>
 				<BrowserRouter>
 					<PageHeader /*logUserOut={logUserOut}*/ />
-
-
-					{/* { console.log('User is logged in:', activeUser)} */}
 					<Switch>
 						<Route exact path='/' component={isAuthenticated ? Home : Login} />
 						<Route exact path='/login' component={isAuthenticated ? Home : Login} />
@@ -47,5 +44,4 @@ const App = () => {
 		</LobbyProvider>
 	)
 }
-
 export default App

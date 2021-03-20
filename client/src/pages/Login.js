@@ -98,7 +98,7 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
                                         </div>
 
 
-                                        <button type="submit" className="btn btn-primary btn-lg btn-block mt-2">GET STARTED</button>
+                                        <button type="submit" className="btn btn-primary btn-lg btn-block mt-2">Log In</button>
 
                                     </div>
                                 </form>
@@ -114,7 +114,7 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
                         <div className="card-body">
                             {/* <small>Already have an account?  */}
                             <div className="card-body">
-                                <p>Don't already have an account?</p>
+                                <p>Are you new to Doodles with Friends?</p>
 
                             </div>
                             <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => window.location.assign('/signup')}>Register</button>

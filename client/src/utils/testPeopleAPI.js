@@ -21,6 +21,10 @@ const testPeopleAPI = {
                     id: 4,
                     name: ["DAN ZOS'AIER"],
                 },
+                {
+                    id: 5,
+                    name: ["Testy McTesterson"],
+                },
             ]
         }
         //END TEST DATA
