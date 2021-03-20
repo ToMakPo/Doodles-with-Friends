@@ -15,10 +15,6 @@ const userSchema = new mongoose.Schema(
             type: Date,
             default: Date.now
         },
-        // activeLobby: {
-        //     type: mongoose.Schema.Types.ObjectId,
-        //     ref: Lobby
-        // },
         gamesPlayed: {
             type: Number,
             default: 0

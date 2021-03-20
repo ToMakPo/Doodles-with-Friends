@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useRef } from "react"
 import '../styles/palette.css'
 import '../styles/Login.css'
 import { useLogin } from "../utils/auth"
@@ -51,6 +51,7 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
     //         //TODO display message to let user know that the username or password did not match.
     //     }
     // }
+
 
     return (
         <div

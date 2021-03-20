@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import "bootstrap.bundle.min.js";
-import { StoreProvider } from "./store";
+import { StoreProvider } from './store'
 
 ReactDOM.render(
     <React.StrictMode>

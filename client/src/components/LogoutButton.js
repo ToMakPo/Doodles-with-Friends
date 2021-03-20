@@ -3,6 +3,7 @@ import { useLogout } from '../utils/auth'
 import '../styles/PageHeader.css'
 import '../styles/palette.css'
 
+
 function LogoutButton() {
     const logout = useLogout();
     return (
