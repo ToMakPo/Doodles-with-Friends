@@ -2,32 +2,47 @@ import '../styles/palette.css'
 import '../styles/Home.css'
 import API from '../utils/API'
 import { useAuthenticatedUser } from '../utils/auth'
-import { useContext, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { LobbyContext } from '../utils/GameContext'
+import { useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
     const gameCodeRef = useRef()
     const AuthUser = useAuthenticatedUser()
-    const [lobby, setLobby] = useContext(LobbyContext)
+    // let { lobby } = useContext(LobbyContext)
 
     const joinLobby = (id) => {
         API.getLobby(id)
             .then(({ data }) => {
-                const newLobby = data[0]
-                setLobby(newLobby)
-                console.log(lobby)
+                const lobby = data[0]
+                nextPage(lobby)
             })
     }
+    // useEffect(() => {
+    //     console.log(lobby)
+    //     lobby !== null && 
+    // }, [lobby])
+
+    // console.log(lobby)
 
     const hostGame = () => {
         API.createLobby(AuthUser)
             .then(({ data }) => {
                 joinLobby(data.id)
+                // console.log(lobby)
+
+
             })
             .catch(err => console.error(err))
 
     }
+    const history = useHistory()
+    const nextPage = (lobby) => {
+        console.log(lobby)
+        history.push(`/waiting-room/${lobby.id}`);
 
+    }
 
     return (
         <div
@@ -43,7 +58,7 @@ const Home = () => {
                             <button type="button"
                                 onClick={() => {
                                     hostGame()
-                                    window.location.assign(`/waiting-room/${lobby.id}`)
+                                    // window.location.assign(`/waiting-room/${lobby.id}`)
                                 }
                                 }
                                 className="btn btn-primary btn-lg btn-block">Host Game</button>
@@ -64,7 +79,7 @@ const Home = () => {
                                         onClick={(event) => {
                                             event.preventDefault()
                                             joinLobby(gameCodeRef.current.value.trim().toUpperCase())
-                                            window.location.assign(`/waiting-room/${gameCodeRef}`)
+                                            window.location.assign(`/waiting-room/${gameCodeRef.current.value}`)
                                         }}
                                     >JOIN NOW</button>
                                 </div>

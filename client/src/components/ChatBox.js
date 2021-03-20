@@ -1,6 +1,6 @@
 import { useState, useRef, useContext, useEffect } from 'react'
 import io from 'socket.io-client'
-import LobbyContext from "../utils/GameContext"
+import { LobbyContext } from "../utils/GameContext"
 import { useAuthenticatedUser } from '../utils/auth'
 
 const ChatMessage = ({ sender, message }) => {
@@ -29,8 +29,8 @@ const AnswerMessage = ({ sender, answer }) => {
     )
 }
 
-const ChatBox = ({ width, height, active }) => {
-    const { lobby } = useContext(LobbyContext)
+const ChatBox = ({ width, height, active, lobby }) => {
+    // const [lobby] = useContext(LobbyContext)
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
     const [guessing, setGuessing] = useState(false)
@@ -38,11 +38,11 @@ const ChatBox = ({ width, height, active }) => {
 
     const socketRef = useRef()
 
-    useEffect(() => {
-        socketRef.current = io.connect('/')
+    // useEffect(() => {
+    //     socketRef.current = io.connect('/')
 
-        socketRef.current.on(`${lobby.id}-logMessage`, logMessage)
-    }, [lobby])
+    //     socketRef.current.on(`${lobby.id}-logMessage`, logMessage)
+    // }, [lobby])
 
     /// EVENT HANDLERS ///
     function logMessage(data) {

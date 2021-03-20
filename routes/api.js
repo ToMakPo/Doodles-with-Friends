@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const db = require('../models');
-const { findById } = require("../models/User");
 
 router.get('/lobby/:id', (req, res) => {
     db.Lobby

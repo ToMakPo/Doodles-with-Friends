@@ -3,13 +3,13 @@ import { useWordBankContext } from "../utils/GlobalState"
 import ChatBox from "../components/ChatBox"
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
-import LobbyContext from "../utils/GameContext";
+import { LobbyContext } from "../utils/GameContext";
 import testPeopleAPI from "../utils/testPeopleAPI";
 import PlayerList from "../components/PlayerList";
 
 
 const WaitingRoom = () => {
-    // const { lobby } = useContext(GameContext)
+    // const [lobby, setLobby] = useContext(LobbyContext)
     // console.log(lobby)
     // const [attendees, setAttendees] = useState({
 
