@@ -1,7 +1,7 @@
 import { useState, useRef, useContext, useEffect } from 'react'
 import io from 'socket.io-client'
 import GameContext from "../utils/GameContext"
-import { useAuthenticatedUser } from '../utils/'
+import { useAuthenticatedUser } from '../utils/auth'
 
 const ChatMessage = ({sender, message}) => {
     return (

@@ -29,11 +29,7 @@ const App = () => {
 			<GameContext.Provider value={{ lobby, setLobby }}>
 				<Router>
 					<PageHeader /*logUserOut={logUserOut}*/ />
-
-		{/* {true ? <WaitingRoom/> : ( */}
-
-
-
+					{true ? <WaitingRoom/> : (
 					<Switch>
 						<Route exact path='/' component={isAuthenticated ? Home : Login} />
 						<Route exact path='/login' component={isAuthenticated ? Home : Login} />
@@ -43,6 +39,7 @@ const App = () => {
 						{isAuthenticated && <Route exact path='/score-board/:roomId' component={ScoreBoard} />}
 						<Route component={PageNotFound} />
 					</Switch>
+					)}
 				</Router>
 
 				<PageFooter />
@@ -50,5 +47,4 @@ const App = () => {
 		</WordBankProvider>
 	)
 }
-
 export default App
