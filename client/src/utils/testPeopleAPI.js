@@ -1,10 +1,10 @@
 // import axios from "axios";
 
 const testPeopleAPI = {
-    async getPeople(){
+    async getPeople() {
         //START TEST DATA
-        return{
-            data:[
+        return {
+            data: [
                 {
                     id:1,
                     name: ["Makai Post"],

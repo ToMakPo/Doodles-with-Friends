@@ -3,16 +3,28 @@ import { useWordBankContext } from "../utils/GlobalState"
 import ChatBox from "../components/ChatBox"
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
-import GameContext from "../utils/GameContext";
+// import { LobbyContext } from "../utils/GameContext";
 import testPeopleAPI from "../utils/testPeopleAPI";
 import testCategoriesAPI from "../utils/testCategoriesAPI";
 import testGameCodeAPI from "../utils/testGameCodeAPI";
 import PlayerList from "../components/PlayerList";
+import API from "../utils/API";
 import CategoryList from "../components/CategoryList";
 import GameCode from "../components/GameCode";
 
 
 const WaitingRoom = () => {
+    const [lobby, setLobby] = useState()
+    // console.log(lobby)
+    // const [attendees, setAttendees] = useState({
+
+    // });
+
+    // useEffect(()=>{
+    //     const peopleTestArray =["Danny", "Aaron", "Makai", "Mike"]//the below is just to test the setAttendees function
+    //     console.log(peopleTestArray)
+    //     setAttendees(peopleTestArray)
+    // },[])
     // const { lobby } = useContext(GameContext)
     // console.log(lobby)
 
@@ -69,6 +81,39 @@ const WaitingRoom = () => {
         customWordInputRef.current.value = "";
     }
 
+    const printPeople = event => {
+        event.preventDefault();
+
+        console.log("Getting people")
+
+        testPeopleAPI.getPeople()
+            .then(({ data }) => {
+
+                data.forEach(element => console.log(element.name))
+                setPlayers(data)
+            })
+    }
+
+    useEffect(() => {
+        const lobbyId = window.location.pathname.split('room/')[1]
+        API.getLobby(lobbyId)
+            .then(data => {
+                setLobby(data.data[0])
+
+            })
+            .catch(err => console.error(err))
+    }, [])
+    const numRoundsRef = useRef()
+    const startGame = (id, body) => {
+        id = lobby.id
+        const rounds = parseInt(numRoundsRef.current.value)
+        API.updateLobby(id, {
+            games: [{
+                maxRotations: rounds
+            }]
+        })
+    }
+    console.log(lobby)
     return (
         <div
             id="bootstrap-overrides"
@@ -78,11 +123,15 @@ const WaitingRoom = () => {
 
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code: <GameCode gameCodeProps={gameCode}/> </h2>
+                        <h2 className="card-header">Game Code: {lobby === undefined ? `no lobby` : lobby.id}</h2>
                         <div className="card-body">
 
-                            <PlayerList playersProp={players}/>
-
+                            <PlayerList playersProp={players} />
+                            <button className="
+                                col container-lgbtn btn-primary btn-lg btn-block"
+                                type="button"
+                                onClick={printPeople}
+                            >printPeople</button>
                         </div>
                     </div>
                     {/* Column 2 */}
@@ -158,6 +207,7 @@ const WaitingRoom = () => {
                                     placeholder="Number of Rounds"
                                     aria-label="Recipient's username"
                                     aria-describedby="basic-addon2"
+                                    ref={numRoundsRef}
                                 />
                             </div>
                         </div>
@@ -183,7 +233,13 @@ const WaitingRoom = () => {
                                 col
                                 btn btn-primary 
                                 btn-lg 
-                                btn-block" type="button">Start Game</button>
+                                btn-block" type="button"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                startGame()
+                            }
+                            }
+                        >Start Game</button>
                     </div>
                     {/* </div> */}
                 </div>
