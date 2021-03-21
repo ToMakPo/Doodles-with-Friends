@@ -16,7 +16,7 @@ const Home = () => {
         API.getLobby(id)
             .then(({ data }) => {
                 const lobby = data[0]
-                nextPage(lobby)
+                // nextPage(lobby)
             })
     }
     // useEffect(() => {
@@ -38,11 +38,11 @@ const Home = () => {
 
     }
     const history = useHistory()
-    const nextPage = (lobby) => {
-        console.log(lobby)
-        history.push(`/waiting-room/${lobby.id}`);
+    // const nextPage = (lobby) => {
+    //     console.log(lobby)
+    //     history.push(`/waiting-room/${lobby.id}`);
 
-    }
+    // }
 
     return (
         <div
