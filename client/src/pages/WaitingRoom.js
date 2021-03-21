@@ -185,7 +185,7 @@ const WaitingRoom = () => {
                         </div>
                     </div>
                     {/* Column 3 */}
-                    <ChatBox />
+                            <ChatBox />
                 </div>{/* end card deck div */}
             </main>
             <div className="containerBottom">
