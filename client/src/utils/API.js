@@ -48,13 +48,17 @@ class API {
     createLobby(host) {
         const id = Math.floor(Math.random() * 36 ** 9).toString(36).padStart(9, '0').toUpperCase()
         return this.axios.post(`/api/lobby`, { id, host: host._id })
-
     }
 
     getLobby(id) {
         return this.axios.get(`/api/lobby/${id}`)
     }
-
+    updateLobby(id, body) {
+        return this.axios.put(`/api/lobby/${id}`, body);
+    }
+    getPlayer(id){
+        return this.axios.get(`/api/user/${id}`)
+    }
 }
 
 export default new API();
