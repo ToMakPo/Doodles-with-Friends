@@ -11,12 +11,13 @@ import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
 import CategoryList from "../components/CategoryList";
 import GameCode from "../components/GameCode";
+import { useAuthenticatedUser } from "../utils/auth";
 
 
 const WaitingRoom = () => {
     const [lobby, setLobby] = useState()
 
-
+    const AuthUser = useAuthenticatedUser()
     
     //Populate Categories function
     const [categories, setCategories] = useState([])
@@ -40,11 +41,22 @@ const WaitingRoom = () => {
     //Functionality to render the PlayerList    
     const [players, setPlayers] = useState([])
     useEffect(() =>{
-        testPeopleAPI.getPeople()
+        //OLD DEVELOPMENT CODE START
+        // testPeopleAPI.getPeople()
+        // .then( ({data}) => {
+            //     data.forEach(element => console.log(element.name))
+            //     setPlayers(data)
+            // })
+        //OLD DEVELOPMENT CODE END
+        
+        API.getPlayer(AuthUser._id)
         .then( ({data}) => {
-            data.forEach(element => console.log(element.name))
+            // data.forEach(element => console.log(element.name))
             setPlayers(data)
         })
+        .catch(err => console.log(err))
+
+    
 
     },[setPlayers])
 
@@ -77,6 +89,7 @@ const WaitingRoom = () => {
         })
     }
     console.log(lobby)
+    console.log("players: ",players)
     return (
         <div
             id="bootstrap-overrides"

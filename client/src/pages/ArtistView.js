@@ -26,7 +26,7 @@ const ArtistView = () => {
                     <div className="card">
                         <div className="card-body">
                             <div className="">
-                                <Canvas width={500} height={500} active={true}/>
+                                {/* <Canvas width={500} height={500} active={true}/> */}
                             </div>
                         </div>
                     </div>
