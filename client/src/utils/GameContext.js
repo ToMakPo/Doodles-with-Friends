@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext } from "react";
 
 /**
  * @property {User} user The user profile of the person logged in on this client. Null if not logged in.
