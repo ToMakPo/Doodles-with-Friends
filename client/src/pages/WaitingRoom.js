@@ -15,32 +15,8 @@ import GameCode from "../components/GameCode";
 
 const WaitingRoom = () => {
     const [lobby, setLobby] = useState()
-    // console.log(lobby)
-    // const [attendees, setAttendees] = useState({
 
-    // });
 
-    // useEffect(()=>{
-    //     const peopleTestArray =["Danny", "Aaron", "Makai", "Mike"]//the below is just to test the setAttendees function
-    //     console.log(peopleTestArray)
-    //     setAttendees(peopleTestArray)
-    // },[])
-    // const { lobby } = useContext(GameContext)
-    // console.log(lobby)
-
-    //Populate GameCode function
-        const [gameCode, setGameCode] = useState([])
-    
-        useEffect(()=>{
-            testGameCodeAPI.getGameCode()
-            
-                .then( ({data}) => {
-                    console.log("data: ", data)
-                    
-                    setGameCode(data[0].gameCode)
-                    console.log("gameCode: ", gameCode)
-                })
-        },[setGameCode])
     
     //Populate Categories function
     const [categories, setCategories] = useState([])
@@ -81,19 +57,6 @@ const WaitingRoom = () => {
         customWordInputRef.current.value = "";
     }
 
-    const printPeople = event => {
-        event.preventDefault();
-
-        console.log("Getting people")
-
-        testPeopleAPI.getPeople()
-            .then(({ data }) => {
-
-                data.forEach(element => console.log(element.name))
-                setPlayers(data)
-            })
-    }
-
     useEffect(() => {
         const lobbyId = window.location.pathname.split('room/')[1]
         API.getLobby(lobbyId)
@@ -127,11 +90,7 @@ const WaitingRoom = () => {
                         <div className="card-body">
 
                             <PlayerList playersProp={players} />
-                            <button className="
-                                col container-lgbtn btn-primary btn-lg btn-block"
-                                type="button"
-                                onClick={printPeople}
-                            >printPeople</button>
+
                         </div>
                     </div>
                     {/* Column 2 */}
