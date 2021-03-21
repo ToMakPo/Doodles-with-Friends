@@ -94,14 +94,14 @@ const Signup = ({ logUserIn, setLoginDisplay }) => {
             className=" sketchBackground">
             <main className="container">
                 {/* <div className="card-deck"> */}
-                <div class="card">
+                <div className="card">
                     <h2 className="card-header">Sign Up</h2>
-                    <div class="card-body d-flex justify-content-around align-items-center">
+                    <div className="card-body d-flex justify-content-around align-items-center">
                         <form
-                            class="d-flex justify-content-around align-items-center"
+                            className="d-flex justify-content-around align-items-center"
                             onSubmit={handleSubmit}>
-                            {/* <div class=" "> */}
-                            <div class="">
+                            {/* <div className=" "> */}
+                            <div className="">
                                 <span>
                                     <label htmlFor="username:"></label>
                                     <input
