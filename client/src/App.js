@@ -12,15 +12,14 @@ import ScoreBoard from './pages/ScoreBoard'
 
 import LobbyProvider from './utils/GameContext'
 import { WordBankProvider } from './utils/GlobalState'
-import { useAuthenticatedUser, useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
+import { useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
 
 import "./styles/palette.css"
 
 const App = () => {
 	useAuthTokenStore();
 	const isAuthenticated = useIsAuthenticated();
-	const AuthUser = useAuthenticatedUser()
-	console.log(AuthUser);
+
 	return (
 		<LobbyProvider>
 			<WordBankProvider>
