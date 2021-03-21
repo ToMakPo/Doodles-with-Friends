@@ -2,10 +2,8 @@ import '../styles/palette.css'
 import '../styles/Home.css'
 import API from '../utils/API'
 import { useAuthenticatedUser } from '../utils/auth'
-import { useContext, useEffect, useRef } from 'react'
-import { LobbyContext } from '../utils/GameContext'
+import { useRef } from 'react'
 import { useHistory } from 'react-router'
-import { Link } from 'react-router-dom'
 
 const Home = () => {
     const gameCodeRef = useRef()
@@ -19,12 +17,6 @@ const Home = () => {
                 // nextPage(lobby)
             })
     }
-    // useEffect(() => {
-    //     console.log(lobby)
-    //     lobby !== null && 
-    // }, [lobby])
-
-    // console.log(lobby)
 
     const hostGame = () => {
         API.createLobby(AuthUser)

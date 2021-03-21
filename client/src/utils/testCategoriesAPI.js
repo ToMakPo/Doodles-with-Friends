@@ -1,23 +1,27 @@
 // import axios from "axios";
 
 const testCategoriesAPI = {
-    async getCategories(){
+    async getCategories() {
         //START TEST DATA
-        return{
-            data:[
+        return {
+            data: [
                 {
+                    id: 1,
                     category: "plants",
 
                 },
                 {
+                    id: 2,
                     category: "Celebrities",
 
                 },
                 {
+                    id: 3,
                     category: "Animals",
 
                 },
                 {
+                    id: 4,
                     category: "Existential Crises",
 
                 },
