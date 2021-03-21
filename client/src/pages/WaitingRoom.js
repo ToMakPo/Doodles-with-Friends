@@ -1,16 +1,13 @@
-import React, { useEffect, useState, useReducer, useRef, useContext } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useWordBankContext } from "../utils/GlobalState"
 import ChatBox from "../components/ChatBox"
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
 // import { LobbyContext } from "../utils/GameContext";
-import testPeopleAPI from "../utils/testPeopleAPI";
 import testCategoriesAPI from "../utils/testCategoriesAPI";
-import testGameCodeAPI from "../utils/testGameCodeAPI";
 import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
 import CategoryList from "../components/CategoryList";
-import GameCode from "../components/GameCode";
 import { useAuthenticatedUser } from "../utils/auth";
 
 
@@ -18,47 +15,46 @@ const WaitingRoom = () => {
     const [lobby, setLobby] = useState()
 
     const AuthUser = useAuthenticatedUser()
-    
+
     //Populate Categories function
     const [categories, setCategories] = useState([])
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         testCategoriesAPI.getCategories()
-        
-            .then( ({data}) => {
+
+            .then(({ data }) => {
                 console.log("categories: ", categories)
                 console.log("data: ", data)
-                data.forEach(element => console.log("Category: ", element.category))
                 setCategories(data)
             })
-    },[setCategories])
-    
+    }, [setCategories, categories])
+
     //Functionality for the Add Words using the GlobalState
     const customWordInputRef = useRef()
     const [listOfCustomWords, dispatch] =
-    useWordBankContext();
-    
+        useWordBankContext();
+
     //Functionality to render the PlayerList    
     const [players, setPlayers] = useState([])
-    useEffect(() =>{
+    useEffect(() => {
         //OLD DEVELOPMENT CODE START
         // testPeopleAPI.getPeople()
         // .then( ({data}) => {
-            //     data.forEach(element => console.log(element.name))
-            //     setPlayers(data)
-            // })
+        //     data.forEach(element => console.log(element.name))
+        //     setPlayers(data)
+        // })
         //OLD DEVELOPMENT CODE END
-        
+
         API.getPlayer(AuthUser._id)
-        .then( ({data}) => {
-            // data.forEach(element => console.log(element.name))
-            setPlayers(data)
-        })
-        .catch(err => console.log(err))
+            .then(({ data }) => {
+                // data.forEach(element => console.log(element.name))
+                setPlayers(data)
+            })
+            .catch(err => console.log(err))
 
-    
 
-    },[setPlayers])
+
+    }, [setPlayers, AuthUser])
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -79,7 +75,7 @@ const WaitingRoom = () => {
             .catch(err => console.error(err))
     }, [])
     const numRoundsRef = useRef()
-    const startGame = (id, body) => {
+    const startGame = (id) => {
         id = lobby.id
         const rounds = parseInt(numRoundsRef.current.value)
         API.updateLobby(id, {
@@ -89,7 +85,7 @@ const WaitingRoom = () => {
         })
     }
     console.log(lobby)
-    console.log("players: ",players)
+    console.log("players: ", players)
     return (
         <div
             id="bootstrap-overrides"
@@ -109,10 +105,10 @@ const WaitingRoom = () => {
                     {/* Column 2 */}
                     <div className="card">
                         <h2 className="card-header">Options:</h2>
-                        <div style={{padding:"0px 10px"}}>
+                        <div style={{ padding: "0px 10px" }}>
 
                             <CategoryList categoriesProp={categories}
-                            
+
                             />
                             <hr></hr>
                             <div className="card-body ">

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import PageHeader from './components/PageHeader'
 import PageFooter from './components/PageFooter'
