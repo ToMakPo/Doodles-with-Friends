@@ -10,7 +10,7 @@ import ArtistView from './pages/ArtistView'
 import PageNotFound from './pages/PageNotFound'
 import ScoreBoard from './pages/ScoreBoard'
 
-import LobbyProvider from './utils/LobbyProvider'
+import { LobbyProvider } from './utils/LobbyState'
 import { WordBankProvider } from './utils/GlobalState'
 import { useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
 

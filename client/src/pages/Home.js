@@ -3,7 +3,7 @@ import '../styles/Home.css'
 import API from '../utils/API'
 import { useAuthenticatedUser } from '../utils/auth'
 import { useContext, useEffect, useRef } from 'react'
-import { LobbyProvider } from '../utils/LobbyProvider'
+import { LobbyContext } from '../utils/LobbyState'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 

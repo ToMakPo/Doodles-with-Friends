@@ -2,7 +2,7 @@
 import { useRef } from 'react'
 // import io from 'socket.io-client'
 import PropTypes from 'prop-types'
-// import LobbyProvider from "../utils/LobbyProvider"
+// import { LobbyContext } from "../utils/LobbyState"
 
 import '../styles/Canvas.css'
 
@@ -17,7 +17,7 @@ const Canvas = ({active}) => {
     const eraserTool = useRef()
     const canvasCursor = useRef()
     
-    // const {user, lobby} = useContext(LobbyProvider)
+    // const {user, lobby} = useContext(LobbyContext)
     // const [activeTool, setActiveTool] = useState(penTool)
 
     // let lastPoint = null

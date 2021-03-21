@@ -12,4 +12,4 @@ const LobbyProvider = ({ children }) => {
     )
 }
 
-export default LobbyProvider
+export default {LobbyProvider, LobbyContext}

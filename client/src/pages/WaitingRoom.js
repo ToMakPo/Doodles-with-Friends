@@ -3,7 +3,7 @@ import { useWordBankContext } from "../utils/GlobalState"
 import ChatBox from "../components/ChatBox"
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
-// import { LobbyProvider } from "../utils/LobbyProvider";
+// import { LobbyContext } from "../utils/LobbyState";
 import testPeopleAPI from "../utils/testPeopleAPI";
 import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
@@ -22,7 +22,7 @@ const WaitingRoom = () => {
     //     console.log(peopleTestArray)
     //     setAttendees(peopleTestArray)
     // },[])
-    // const { lobby } = useContext(LobbyProvider)
+    // const { lobby } = useContext(LobbyContext)
     // console.log(lobby)
 
     const [players, setPlayers] = useState([])

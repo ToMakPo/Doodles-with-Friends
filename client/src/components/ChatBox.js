@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import io from 'socket.io-client'
-import { LobbyProvider } from "../utils/LobbyProvider"
+import { LobbyContext } from "../utils/LobbyState"
 import { useAuthenticatedUser } from '../utils/auth'
 import '../styles/Chat.css'
 
@@ -31,10 +31,14 @@ const AnswerMessage = ({ sender, answer }) => {
 }
 
 const ChatBox = ({lobby, user}) => {
-    // const {lobby} = useContext(LobbyProvider)
+    // const {lobby} = useContext(LobbyContext)
     // const activeUser = useAuthenticatedUser()
     // const lobby = {id: 'D5EA12C14'} // TODO: fix this 
     // const activeUser = {username: 'ToMakPo'}
+
+    console.log('In Chat!!!');
+    console.log(LobbyContext);
+
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
     const [guessing, setGuessing] = useState(false)
