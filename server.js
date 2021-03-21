@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express")
 const mongoose = require("mongoose")
-const apiRoutes = require("./routes/api")
+const apiRoutes = require("./routes")
 const PORT = process.env.PORT || 3001
 
 const app = express()
@@ -26,8 +26,8 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/doodle_db", {
 })
 
 // routes
-app.use(apiRoutes)
 app.use("/api", require("./routes/authentication"));
+app.use(apiRoutes)
 
 const server = app.listen(PORT, () => {
     console.log(`App running on http://localhost:${PORT}`)

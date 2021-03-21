@@ -3,39 +3,46 @@ import '../styles/Home.css'
 import API from '../utils/API'
 import { useAuthenticatedUser } from '../utils/auth'
 import { useContext, useEffect, useRef } from 'react'
-import GameContext from '../utils/GameContext'
+import { LobbyContext } from '../utils/GameContext'
+import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 
 const Home = () => {
     const gameCodeRef = useRef()
-    const hostGameRef = useRef()
     const AuthUser = useAuthenticatedUser()
-    const { setLobby, lobby } = useContext(GameContext)
+    // let { lobby } = useContext(LobbyContext)
+
     const joinLobby = (id) => {
         API.getLobby(id)
             .then(({ data }) => {
-                const newLobby = data[0]
-                setLobby(newLobby)
-                console.log(lobby);
-                console.log(newLobby);
-
+                const lobby = data[0]
+                nextPage(lobby)
             })
     }
-    useEffect(() => {
-        console.log('useEffect', lobby);
-        //  && window.location.assign(`/waiting-room/${lobby.id}`)
-        hostGameRef.current.to = `/waiting-room/${lobby.id}`
-    }, [lobby])
+    // useEffect(() => {
+    //     console.log(lobby)
+    //     lobby !== null && 
+    // }, [lobby])
+
+    // console.log(lobby)
 
     const hostGame = () => {
         API.createLobby(AuthUser)
             .then(({ data }) => {
                 joinLobby(data.id)
+                // console.log(lobby)
+
+
             })
             .catch(err => console.error(err))
 
     }
+    const history = useHistory()
+    const nextPage = (lobby) => {
+        console.log(lobby)
+        history.push(`/waiting-room/${lobby.id}`);
 
+    }
 
     return (
         <div
@@ -47,8 +54,14 @@ const Home = () => {
                         <div className="card-body">
                             <h5 className="card-title">START A NEW GAME</h5>
                             <p className="card-text">YOU'LL BE THE HOST.</p>
-                            <Link onClick={hostGame} ref={hostGameRef}>Host Game</Link>
-                            {/* <button type="button" onClick={hostGame} className="btn btn-primary btn-lg btn-block"></button> */}
+
+                            <button type="button"
+                                onClick={() => {
+                                    hostGame()
+                                    // window.location.assign(`/waiting-room/${lobby.id}`)
+                                }
+                                }
+                                className="btn btn-primary btn-lg btn-block">Host Game</button>
                         </div>
                     </div>
 
@@ -66,7 +79,7 @@ const Home = () => {
                                         onClick={(event) => {
                                             event.preventDefault()
                                             joinLobby(gameCodeRef.current.value.trim().toUpperCase())
-                                            window.location.assign(`/waiting-room/${gameCodeRef}`)
+                                            window.location.assign(`/waiting-room/${gameCodeRef.current.value}`)
                                         }}
                                     >JOIN NOW</button>
                                 </div>

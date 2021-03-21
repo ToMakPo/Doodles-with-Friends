@@ -5,9 +5,9 @@ import '../styles/ScoreBoard.css'
 
 const ScoreBoard = () => {
     return (
-        <div 
-        id="bootstrap-overrides" 
-        className="container sketchBackground">
+        <div
+            id="bootstrap-overrides"
+            className="container sketchBackground">
             <main className="">
 
                 <div className="card-deck">
@@ -20,9 +20,9 @@ const ScoreBoard = () => {
                             <li className="list-group-item">A second item</li>
                             <li className="list-group-item">A third item</li>
                         </ol>
-                    <button type="button" className="btn btn-primary btn-lg btn-block">PLAY AGAIN</button>
+                        <button type="button" className="btn btn-primary btn-lg btn-block">PLAY AGAIN</button>
                     </div>
-                    <ChatBox/>
+                    <ChatBox />
                 </div>
             </main>
         </div>

@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
 import io from 'socket.io-client'
-// import GameContext from "../utils/GameContext"
+import { LobbyContext } from "../utils/GameContext"
 import { useAuthenticatedUser } from '../utils/auth'
 import '../styles/Chat.css'
 
-const ChatMessage = ({sender, message}) => {
+const ChatMessage = ({ sender, message }) => {
     return (
         <div className='chat-message'>
             <small>{sender.username}</small>
@@ -12,7 +12,7 @@ const ChatMessage = ({sender, message}) => {
         </div>
     )
 }
-const GuessMessage = ({sender, guess}) => {
+const GuessMessage = ({ sender, guess }) => {
     return (
         <div className='guess-message'>
             <small>{sender.username}</small>
@@ -20,7 +20,7 @@ const GuessMessage = ({sender, guess}) => {
         </div>
     )
 }
-const AnswerMessage = ({sender, answer}) => {
+const AnswerMessage = ({ sender, answer }) => {
     return (
         <div className='answer-message'>
             <span><strong>{sender.username}</strong> got it!!!!</span>
@@ -41,12 +41,11 @@ const ChatBox = ({lobby, user}) => {
 
     const socketRef = useRef()
 
-    useEffect(() => {
-        console.log({lobby});
-        socketRef.current = io.connect('/')
+    // useEffect(() => {
+    //     socketRef.current = io.connect('/')
 
-        // socketRef.current.on(`${lobby.id}-logMessage`, logMessage)
-    }, [lobby])
+    //     socketRef.current.on(`${lobby.id}-logMessage`, logMessage)
+    // }, [lobby])
 
     /// EVENT HANDLERS ///
     function logMessage(data) {
@@ -71,9 +70,9 @@ const ChatBox = ({lobby, user}) => {
             <div id='chat-log'>{
                 messages.map((data, i) => {
                     switch (data.type) {
-                        case 'chat': return <ChatMessage key={i} {...data}/>
-                        case 'quess': return <GuessMessage key={i} {...data}/>
-                        case 'answer': return <AnswerMessage key={i} {...data}/>
+                        case 'chat': return <ChatMessage key={i} {...data} />
+                        case 'quess': return <GuessMessage key={i} {...data} />
+                        case 'answer': return <AnswerMessage key={i} {...data} />
                         default: return ''
                     }
                 })
