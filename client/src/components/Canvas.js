@@ -2,7 +2,7 @@
 import { useRef } from 'react'
 // import io from 'socket.io-client'
 import PropTypes from 'prop-types'
-// import GameContext from "../utils/GameContext"
+// import LobbyProvider from "../utils/LobbyProvider"
 
 import '../styles/Canvas.css'
 
@@ -17,7 +17,7 @@ const Canvas = ({active}) => {
     const eraserTool = useRef()
     const canvasCursor = useRef()
     
-    // const {user, lobby} = useContext(GameContext)
+    // const {user, lobby} = useContext(LobbyProvider)
     // const [activeTool, setActiveTool] = useState(penTool)
 
     // let lastPoint = null

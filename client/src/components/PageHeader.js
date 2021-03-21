@@ -1,14 +1,14 @@
 // import { useContext } from "react"
 // import { Link } from 'react-router-dom'
 import Jumbotron from "./Jumbotron"
-// import GameContext from "../utils/GameContext"
+// import LobbyProvider from "../utils/LobbyProvider"
 import LogoutButton from "./LogoutButton"
 import '../styles/PageHeader.css'
 import '../styles/palette.css'
 
 
 const PageHeader = () => {
-    // const { user } = useContext(GameContext)
+    // const { user } = useContext(LobbyProvider)
 
     return (
         <>
