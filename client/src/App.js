@@ -17,11 +17,12 @@ import { useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
 import "./styles/palette.css"
 
 const App = () => {
+	console.log(LobbyProvider);
 	useAuthTokenStore();
 	const isAuthenticated = useIsAuthenticated();
 
 	return (
-		<LobbyProvider>
+		// <LobbyProvider>
 			<WordBankProvider>
 				<PageHeader/>
 
@@ -41,7 +42,7 @@ const App = () => {
 				}
 				<PageFooter />
 			</WordBankProvider>
-		</LobbyProvider>
+		// </LobbyProvider>
 	)
 }
 export default App

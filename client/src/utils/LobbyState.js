@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 
-export const LobbyContext = createContext('')
+const LobbyContext = createContext('')
 
 const LobbyProvider = ({ children }) => {
     const [lobby, setLobby] = useState('')
@@ -12,4 +12,6 @@ const LobbyProvider = ({ children }) => {
     )
 }
 
-export default {LobbyProvider, LobbyContext}
+const LobbyState = {LobbyProvider, LobbyContext}
+
+export default LobbyState
