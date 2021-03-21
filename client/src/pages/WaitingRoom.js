@@ -6,14 +6,29 @@ import '../styles/WaitingRoom.css'
 import GameContext from "../utils/GameContext";
 import testPeopleAPI from "../utils/testPeopleAPI";
 import testCategoriesAPI from "../utils/testCategoriesAPI";
+import testGameCodeAPI from "../utils/testGameCodeAPI";
 import PlayerList from "../components/PlayerList";
 import CategoryList from "../components/CategoryList";
+import GameCode from "../components/GameCode";
 
 
 const WaitingRoom = () => {
     // const { lobby } = useContext(GameContext)
     // console.log(lobby)
 
+    //Populate GameCode function
+        const [gameCode, setGameCode] = useState([])
+    
+        useEffect(()=>{
+            testGameCodeAPI.getGameCode()
+            
+                .then( ({data}) => {
+                    console.log("data: ", data)
+                    
+                    setGameCode(data[0].gameCode)
+                    console.log("gameCode: ", gameCode)
+                })
+        },[setGameCode])
     
     //Populate Categories function
     const [categories, setCategories] = useState([])
@@ -63,7 +78,7 @@ const WaitingRoom = () => {
 
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code:  </h2>
+                        <h2 className="card-header">Game Code: <GameCode gameCodeProps={gameCode}/> </h2>
                         <div className="card-body">
 
                             <PlayerList playersProp={players}/>
