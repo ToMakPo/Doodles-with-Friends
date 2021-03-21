@@ -27,11 +27,11 @@ const App = () => {
 	return (
 		<LobbyContext.Provider value={lobby}>
 			<WordBankProvider>
-				<PageHeader/>
-
 				{
 				// false ? <ArtistView/>: //TODO: remove this line
 				<Router>
+					<PageHeader/>
+
 					<Switch>
 						<Route exact path='/' render={_ => isAuthenticated ? home : <Login/>} />
 						<Route exact path='/login' render={_ => isAuthenticated ? home : <Login/>} />
