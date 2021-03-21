@@ -27,7 +27,7 @@ const WaitingRoom = () => {
                 console.log("data: ", data)
                 setCategories(data)
             })
-    }, [setCategories, categories])
+    }, [setCategories])
 
     //Functionality for the Add Words using the GlobalState
     const customWordInputRef = useRef()

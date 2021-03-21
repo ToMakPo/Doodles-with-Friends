@@ -4,8 +4,9 @@ const CategoryList = ({ categoriesProp }) => {
     const categoryRef = useRef()
     function handleCategoryChange() {
 
+        // console.log(categoryRef.target.value)
         console.log("categoryRef: ", categoryRef.current)
-        console.log(categoryRef.target.options[categoryRef.target.selectedIndex].text)
+        console.log(categoryRef.current.value)
     }
 
     return (
@@ -20,9 +21,9 @@ const CategoryList = ({ categoriesProp }) => {
                 type="button"
                 ref={categoryRef}>
 
-                <option value>Select Category</option>
+                <option value=''>Select Category</option>
                 {categoriesProp.map((category) => (
-                    <option key={category.id} >{category.category}</option>
+                    <option value={category.category} key={category.id} >{category.category}</option>
                 ))}
 
             </select>
