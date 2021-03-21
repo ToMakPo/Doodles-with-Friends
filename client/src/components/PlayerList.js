@@ -5,17 +5,17 @@ const PlayerList = ({ playersProp }) => {
         <div>
             <h5 className="card-title">Attending Players:</h5>
             <ol>
-                {playersProp.length
-                    ? (
-                        playersProp.map((player) => (
+                {/* {playersProp
+                    ? ( */}
+                        {/* playersProp.map((player) => ( */}
+                            
+                            <li key={playersProp.id}>{playersProp.username}</li>
+                        {/* )) */}
 
-                            <li key={player.id}>{player.name}</li>
-                        ))
 
-
-                    ) : (
+                    {/* ) : (
                         <li> No Players Yet</li>
-                    )}
+                    )} */}
             </ol>
         </div>
     )

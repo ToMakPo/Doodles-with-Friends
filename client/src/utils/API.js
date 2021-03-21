@@ -56,6 +56,9 @@ class API {
     updateLobby(id, body) {
         return this.axios.put(`/api/lobby/${id}`, body);
     }
+    getPlayer(id){
+        return this.axios.get(`/api/user/${id}`)
+    }
 }
 
 export default new API();
