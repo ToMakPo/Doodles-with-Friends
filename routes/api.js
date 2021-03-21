@@ -23,6 +23,7 @@ router.put('/lobby/:id', (req, res) => {
 })
 
 router.get('/user/:id', (req, res) => {
+    console.log('getting user:', req.params.id);
     db.User
         .findById(req.params.id)
         .then(data => res.json(data))

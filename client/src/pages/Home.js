@@ -1,47 +1,42 @@
-import '../styles/palette.css'
-import '../styles/Home.css'
+import { useRef } from 'react'
 import API from '../utils/API'
 import { useAuthenticatedUser } from '../utils/auth'
-import { useContext, useEffect, useRef } from 'react'
-import { LobbyContext } from '../utils/LobbyState'
-import { useHistory } from 'react-router'
-import { Link } from 'react-router-dom'
+// import { useHistory } from 'react-router'
+// import { Link } from 'react-router-dom'
 
-const Home = () => {
+import '../styles/palette.css'
+import '../styles/Home.css'
+
+const Home = ({setLobby}) => {
     const gameCodeRef = useRef()
     const AuthUser = useAuthenticatedUser()
-    // let { lobby } = useContext(LobbyContext)
+    // const history = useHistory()
 
-    const joinLobby = (id) => {
-        API.getLobby(id)
-            .then(({ data }) => {
-                const lobby = data[0]
-                nextPage(lobby)
-            })
-    }
-    // useEffect(() => {
-    //     console.log(lobby)
-    //     lobby !== null && 
-    // }, [lobby])
-
-    // console.log(lobby)
-
-    const hostGame = () => {
+    function hostGame(event) {
+        event.preventDefault()
         API.createLobby(AuthUser)
-            .then(({ data }) => {
-                joinLobby(data.id)
-                // console.log(lobby)
-
-
+            .then(({data}) => {
+                loadLobby(data.id)
             })
             .catch(err => console.error(err))
-
     }
-    const history = useHistory()
-    const nextPage = (lobby) => {
-        console.log(lobby)
-        history.push(`/waiting-room/${lobby.id}`);
+    
+    function joinLobby(event) {
+        event.preventDefault()
+        const id = gameCodeRef.current.value.toUpperCase().trim()
+        loadLobby(id)
+        window.location.assign(`/waiting-room/${gameCodeRef.current.value}`)
+    }
 
+    function loadLobby(id) {
+        API.getLobby(id)
+            .then(({data}) => {
+                const lobby = data[0]
+                setLobby(lobby)
+                window.history.replaceState(null, 'Waiting Room', `/waiting-room/${lobby.id}`);
+                // history.push(`/waiting-room/${lobby.id}`);
+            })
+            .catch(err => console.error(err))
     }
 
     return (
@@ -56,11 +51,7 @@ const Home = () => {
                             <p className="card-text">YOU'LL BE THE HOST.</p>
 
                             <button type="button"
-                                onClick={() => {
-                                    hostGame()
-                                    // window.location.assign(`/waiting-room/${lobby.id}`)
-                                }
-                                }
+                                onClick={hostGame}
                                 className="btn btn-primary btn-lg btn-block">Host Game</button>
                         </div>
                     </div>
@@ -76,11 +67,7 @@ const Home = () => {
                                 btn-primary 
                                 btn 
                                 btn-block" type="button"
-                                        onClick={(event) => {
-                                            event.preventDefault()
-                                            joinLobby(gameCodeRef.current.value.trim().toUpperCase())
-                                            window.location.assign(`/waiting-room/${gameCodeRef.current.value}`)
-                                        }}
+                                        onClick={joinLobby}
                                     >JOIN NOW</button>
                                 </div>
                             </div>

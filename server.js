@@ -34,13 +34,13 @@ const server = app.listen(PORT, () => {
 })
 
 /// SOCKET.IO ///
-const socket = require('socket.io')
-const io = socket(server)
+// const socket = require('socket.io')
+// const io = socket(server)
 
-io.on('connection', newConnection(socket))
+// io.on('connection', newConnection(socket))
 
 function newConnection(socket, io) {
-    console.log('new connection:', socket.id)
+    // console.log('new connection:', socket.id)
 
     // socket.on('setColor', (lobbyId, color) => {
     //     id.emit(`${lobbyId}-setColor`, color)

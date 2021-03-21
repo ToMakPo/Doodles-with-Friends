@@ -1,18 +1,18 @@
-import React, { useEffect, useState, useReducer, useRef, useContext } from "react";
+import React, { /*useEffect,*/ useState, /*useReducer, */useRef, useContext } from "react";
 import { useWordBankContext } from "../utils/GlobalState"
 import ChatBox from "../components/ChatBox"
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
-// import { LobbyContext } from "../utils/LobbyState";
+import LobbyContext from "../utils/LobbyContext";
 import testPeopleAPI from "../utils/testPeopleAPI";
 import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
 import CategoryList from "../components/CategoryList";
-import CustomSwitch from "../components/CustomSwitch";
+// import CustomSwitch from "../components/CustomSwitch";
 
 const WaitingRoom = () => {
-    const [lobby, setLobby] = useState()
-    // console.log(lobby)
+    const {lobby} = useContext(LobbyContext)
+    console.log(lobby)
     // const [attendees, setAttendees] = useState({
 
     // });
@@ -22,8 +22,6 @@ const WaitingRoom = () => {
     //     console.log(peopleTestArray)
     //     setAttendees(peopleTestArray)
     // },[])
-    // const { lobby } = useContext(LobbyContext)
-    // console.log(lobby)
 
     const [players, setPlayers] = useState([])
 
@@ -72,15 +70,15 @@ const WaitingRoom = () => {
             })
     }
 
-    useEffect(() => {
-        const lobbyId = window.location.pathname.split('room/')[1]
-        API.getLobby(lobbyId)
-            .then(data => {
-                setLobby(data.data[0])
+    // useEffect(() => {
+    //     const lobbyId = window.location.pathname.split('room/')[1]
+    //     API.getLobby(lobbyId)
+    //         .then(data => {
+    //             setLobby(data.data[0])
 
-            })
-            .catch(err => console.error(err))
-    }, [])
+    //         })
+    //         .catch(err => console.error(err))
+    // }, [])
     const numRoundsRef = useRef()
     const startGame = (id, body) => {
         id = lobby.id

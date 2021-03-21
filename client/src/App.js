@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import PageHeader from './components/PageHeader'
@@ -10,31 +11,34 @@ import ArtistView from './pages/ArtistView'
 import PageNotFound from './pages/PageNotFound'
 import ScoreBoard from './pages/ScoreBoard'
 
-import { LobbyProvider } from './utils/LobbyState'
+import LobbyContext from './utils/LobbyContext'
 import { WordBankProvider } from './utils/GlobalState'
 import { useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
 
 import "./styles/palette.css"
 
 const App = () => {
-	console.log(LobbyProvider);
+    const [lobby, setLobby] = useState({id: 'D5EA12C14'})
 	useAuthTokenStore();
 	const isAuthenticated = useIsAuthenticated();
 
+	const home = <Home setLobby={setLobby}/>
+
 	return (
-		// <LobbyProvider>
+		<LobbyContext.Provider value={lobby}>
 			<WordBankProvider>
 				<PageHeader/>
 
-				{true ? <ArtistView/>: //TODO: remove this line
+				{
+				// false ? <ArtistView/>: //TODO: remove this line
 				<Router>
 					<Switch>
-						<Route exact path='/' component={isAuthenticated ? Home : Login} />
-						<Route exact path='/login' component={isAuthenticated ? Home : Login} />
-						<Route exact path='/signup' component={isAuthenticated ? Home : Signup} />
-						{isAuthenticated && <Route path='/waiting-room/:roomId' component={WaitingRoom} />}
-						{isAuthenticated && <Route path='/active-game/:roomId' component={ArtistView} />}
-						{isAuthenticated && <Route path='/score-board/:roomId' component={ScoreBoard} />}
+						<Route exact path='/' render={_ => isAuthenticated ? home : <Login/>} />
+						<Route exact path='/login' render={_ => isAuthenticated ? home : <Login/>} />
+						<Route exact path='/signup' render={_ => isAuthenticated ? home : <Signup/>} />
+						<Route exact path='/waiting-room/:roomId' component={isAuthenticated ? WaitingRoom : Login} />
+						<Route exact path='/active-game/:roomId' component={isAuthenticated ? ArtistView : Login} />
+						<Route exact path='/score-board/:roomId' component={isAuthenticated ? ScoreBoard : Login} />
 						<Route component={PageNotFound} />
 					</Switch>
 					
@@ -42,7 +46,7 @@ const App = () => {
 				}
 				<PageFooter />
 			</WordBankProvider>
-		// </LobbyProvider>
+		</LobbyContext.Provider>
 	)
 }
 export default App

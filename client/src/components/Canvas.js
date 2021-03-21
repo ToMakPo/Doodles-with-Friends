@@ -1,9 +1,9 @@
 // import { useState, useRef, useContext } from 'react'
 import { useRef } from 'react'
+// import LobbyContext from '../utils/LobbyContext'
 // import io from 'socket.io-client'
-import PropTypes from 'prop-types'
-// import { LobbyContext } from "../utils/LobbyState"
 
+import PropTypes from 'prop-types'
 import '../styles/Canvas.css'
 
 /**
@@ -12,12 +12,13 @@ import '../styles/Canvas.css'
  * @param {Boolean} active True if this is the active player (Required)
  */
 const Canvas = ({active}) => {
+    // const {lobby} = useContext(LobbyContext)
+
     const penTool = useRef()
     const penBody = useRef()
     const eraserTool = useRef()
     const canvasCursor = useRef()
-    
-    // const {user, lobby} = useContext(LobbyContext)
+
     // const [activeTool, setActiveTool] = useState(penTool)
 
     // let lastPoint = null

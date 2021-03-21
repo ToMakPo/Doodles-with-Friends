@@ -1,14 +1,13 @@
 import { useRef } from "react"
-import '../styles/palette.css'
-import '../styles/Login.css'
 import { useLogin } from "../utils/auth"
 
-const Login = ({ logUserIn, setLoginDisplay }) => {
-    // const [username, setUsername] = useState('')
-    // const [password, setPassword] = useState('')
+import '../styles/palette.css'
+import '../styles/Login.css'
 
+const Login = _ => {
     const usernameInput = useRef('')
     const passwordInput = useRef('')
+
     const login = useLogin();
 
     const handleSubmit = async e => {
@@ -19,7 +18,6 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
         console.log(username, password)
         try {
             login({ username, password });
-
             // User has been successfully logged in and added to state. Perform any additional actions you need here such as redirecting to a new page.
         } catch (err) {
             // Handle error responses from the API
@@ -52,19 +50,15 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
     //     }
     // }
 
-
     return (
         <div
             id="bootstrap-overrides"
             className="container sketchBackground">
-
             <main>
-
                 <div className="card-deck">
                     <div className="card">
                         <div className="card-body">
                             <div className="card-body">
-
                                 <form onSubmit={handleSubmit}>
                                     <div className="row ">
                                         <div className="col">
@@ -97,32 +91,24 @@ const Login = ({ logUserIn, setLoginDisplay }) => {
                                             </span>
                                         </div>
 
-
                                         <button type="submit" className="btn btn-primary btn-lg btn-block mt-2">Log In</button>
-
                                     </div>
                                 </form>
                             </div>
-
-
                         </div>
-
                     </div>
-
 
                     <div className="card">
                         <div className="card-body">
                             {/* <small>Already have an account?  */}
                             <div className="card-body">
                                 <p>Are you new to Doodles with Friends?</p>
-
                             </div>
                             <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => window.location.assign('/signup')}>Register</button>
                             {/* </small> */}
                         </div>
                     </div>
                 </div>
-
             </main>
         </div>
     )

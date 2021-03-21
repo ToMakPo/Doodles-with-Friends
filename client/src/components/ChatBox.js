@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from 'react'
-import io from 'socket.io-client'
-import { LobbyContext } from "../utils/LobbyState"
+import { useState, useRef, useContext } from 'react'
+// import io from 'socket.io-client'
+import LobbyContext from '../utils/LobbyContext'
 import { useAuthenticatedUser } from '../utils/auth'
 import '../styles/Chat.css'
 
@@ -30,16 +30,17 @@ const AnswerMessage = ({ sender, answer }) => {
     )
 }
 
-const ChatBox = ({lobby, user}) => {
-    // const {lobby} = useContext(LobbyContext)
-    // const activeUser = useAuthenticatedUser()
+const ChatBox = () => {
+    const lobby = useContext(LobbyContext)
+    const user = useAuthenticatedUser()
     // const lobby = {id: 'D5EA12C14'} // TODO: fix this 
     // const activeUser = {username: 'ToMakPo'}
 
     console.log('In Chat!!!');
-    console.log(LobbyContext);
+    console.log('lobby:', lobby);
+    console.log('user:', user);
 
-    const [messages, setMessages] = useState([])
+    const [messages/*, setMessages*/] = useState([])
     const [message, setMessage] = useState('')
     const [guessing, setGuessing] = useState(false)
 
@@ -52,9 +53,9 @@ const ChatBox = ({lobby, user}) => {
     // }, [lobby])
 
     /// EVENT HANDLERS ///
-    function logMessage(data) {
-        setMessages([...messages, data])
-    }
+    // function logMessage(data) {
+    //     setMessages([...messages, data])
+    // }
 
     function chatInputOnInput(event) {
         const isGuess = event.target.value[0] === '?'
