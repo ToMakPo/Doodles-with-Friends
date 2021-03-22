@@ -27,8 +27,8 @@ const App = () => {
 			<WordBankProvider>
 				<BrowserRouter>
 					<PageHeader /*logUserOut={logUserOut}*/ />
-					{true ? <WaitingRoom/> : (
-					<Login>
+					{/* {true ? <WaitingRoom/> : ( */}
+					<Switch>
 						<Route exact path='/' component={isAuthenticated ? Home : Login} />
 						<Route exact path='/login' component={isAuthenticated ? Home : Login} />
 						<Route exact path='/signup' component={isAuthenticated ? Home : Signup} />
@@ -36,8 +36,8 @@ const App = () => {
 						{isAuthenticated && <Route path='/active-game/:roomId' component={ArtistView} />}
 						{isAuthenticated && <Route path='/score-board/:roomId' component={ScoreBoard} />}
 						<Route component={PageNotFound} />
-					</Login>
-					)}
+					</Switch>
+					{/* )} */}
 				</BrowserRouter>
 
 				<PageFooter />
