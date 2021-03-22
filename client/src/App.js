@@ -28,7 +28,7 @@ const App = () => {
 				<BrowserRouter>
 					<PageHeader /*logUserOut={logUserOut}*/ />
 					{/* {true ? <WaitingRoom/> : ( */}
-					<Switch>
+					<Login>
 						<Route exact path='/' component={isAuthenticated ? Home : Login} />
 						<Route exact path='/login' component={isAuthenticated ? Home : Login} />
 						<Route exact path='/signup' component={isAuthenticated ? Home : Signup} />
@@ -36,7 +36,7 @@ const App = () => {
 						{isAuthenticated && <Route path='/active-game/:roomId' component={ArtistView} />}
 						{isAuthenticated && <Route path='/score-board/:roomId' component={ScoreBoard} />}
 						<Route component={PageNotFound} />
-					</Switch>
+					</Login>
 					{/* )} */}
 				</BrowserRouter>
 

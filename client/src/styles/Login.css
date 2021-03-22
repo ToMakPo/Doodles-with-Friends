@@ -8,3 +8,10 @@ input{
     align-content: center;
     padding:0px;
 }
+
+button{
+    margin-left: 5px;
+}
+input{
+    height:38px
+}
