@@ -1,67 +1,53 @@
-import React, { useEffect, useState, /*useReducer, */useRef, useContext } from "react";
+//this is the version that changed from using a click event to useEffect and local state to global state. im saving this in the void folder for record code. see commented out content.
+
+import React, { useEffect, useState, useReducer, useRef, useContext } from "react";
 import { useWordBankContext } from "../utils/GlobalState"
 import ChatBox from "../components/ChatBox"
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
-import LobbyContext from "../utils/LobbyContext";
+import GameContext from "../utils/GameContext";
 import testPeopleAPI from "../utils/testPeopleAPI";
-import testCategoriesAPI from '../utils/testCategoriesAPI';
 import PlayerList from "../components/PlayerList";
-import API from "../utils/API";
 import CategoryList from "../components/CategoryList";
-import { useAuthenticatedUser } from "../utils/auth";
-import { useHistory } from "react-router";
+import CustomSwitch from "../components/CustomSwitch";
 
 const WaitingRoom = () => {
-    const {lobby} = useContext(LobbyContext)
-    console.log(lobby)
-    const AuthUser = useAuthenticatedUser()
-    // const [attendees, setAttendees] = useState({
+    // const { lobby } = useContext(GameContext)
+    // console.log(lobby)
 
-    // });
+    const [players, setPlayers] = useState([])
 
-    // useEffect(()=>{
-    //     const peopleTestArray =["Danny", "Aaron", "Makai", "Mike"]//the below is just to test the setAttendees function
-    //     console.log(peopleTestArray)
-    //     setAttendees(peopleTestArray)
-    // },[])
 
-    //Populate Categories function
-    const [categories, setCategories] = useState([])
-    const [selectedCategory, setSelectedCategory] = useState('')
-    useEffect(() => {
-        testCategoriesAPI.getCategories()
-
-            .then(({ data }) => {
-                console.log("data: ", data)
-                setCategories(data)
-            })
-    }, [setCategories])
-
-    //Functionality for the Add Words using the GlobalState
+    //Functionality for the Add Words
     const customWordInputRef = useRef()
     const [listOfCustomWords, dispatch] =
+        //Using the Global State:
         useWordBankContext();
+    //Using the local State:
+    // useReducer ((state,action) =>{
+    //     switch(action.type){
+    //         case "newWord":
+    //             return([...state,{
+    //                 name: action.name,
+    //                 id:Date.now()
+    //             }])
+    //         case "deleteWord":
+    //             return(state.filter((boop)=>{
+    //                 return boop.id !== action.id
+    //             }))
+    //         default:
+    //             return state
+    //     }
+    // },[])
 
-    //Functionality to render the PlayerList    
-    const [players, setPlayers] = useState([])
-    useEffect(() => {
-        //OLD DEVELOPMENT CODE START
-        // testPeopleAPI.getPeople()
-        // .then( ({data}) => {
-        //     data.forEach(element => console.log(element.name))
-        //     setPlayers(data)
-        // })
-        //OLD DEVELOPMENT CODE END
+    useEffect(() =>{
+        testPeopleAPI.getPeople()
+        .then( ({data})=>{
+            // data.forEach(element => console.log(element.name))
+            setPlayers(data)
+        })
 
-        API.getPlayer(AuthUser._id)
-            .then(({ data }) => {
-                // data.forEach(element => console.log(element.name))
-                setPlayers(data)
-            })
-            .catch(err => console.log(err))
-
-    }, [setPlayers, AuthUser])
+    },[setPlayers])
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -72,51 +58,19 @@ const WaitingRoom = () => {
         customWordInputRef.current.value = "";
     }
 
-    const printPeople = event => {
-        event.preventDefault();
+    // const printPeople = event => {
+    //     event.preventDefault();
 
-        console.log("Getting people")
+    //     console.log("Getting people")
 
-        testPeopleAPI.getPeople()
-            .then(({ data }) => {
+    //     testPeopleAPI.getPeople()
+    //         .then( ({data})=>{
 
-                data.forEach(element => console.log(element.name))
-                setPlayers(data)
-            })
-    }
-    // useEffect(() => {
-    //     const lobbyId = window.location.pathname.split('room/')[1]
-    //     API.getLobby(lobbyId)
-    //         .then(data => {
-    //             setLobby(data.data[0])
+    //             data.forEach(element => console.log(element.name))
+    //             setPlayers(data)
     //         })
-    //         .catch(err => console.error(err))
-    // }, [])
-    const numRoundsRef = useRef()
-    const startGame = (id) => {
-        id = lobby.id
-        const rounds = parseInt(numRoundsRef.current.value)
-        API.updateLobby(id, {
-            games: [{
-                category: selectedCategory,
-                maxRotations: rounds
-            }]
-        })
-            .then(data => {
-                console.log(data)
-                nextPage()
-            })
-    }
+    // }
 
-    const history = useHistory()
-    const nextPage = () => {
-        console.log(lobby)
-        history.push(`/active-game/${lobby.id}`);
-
-    }
-    console.log(lobby)
-    console.log("players: ", players)
-    console.log(selectedCategory)
     return (
         <div
             id="bootstrap-overrides"
@@ -126,22 +80,24 @@ const WaitingRoom = () => {
 
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code: {lobby === undefined ? `no lobby` : lobby.id}</h2>
+                        <h2 className="card-header">Game Code:  </h2>
                         <div className="card-body">
-
-                            <PlayerList playersProp={players} />
-
+                            
+                                <PlayerList playersProp={players}/>
+                                {/* <button className="
+                                col container-lgbtn btn-primary btn-lg btn-block"  
+                                type="button"
+                                onClick ={printPeople}
+                                >printPeople</button> */}
                         </div>
                     </div>
                     {/* Column 2 */}
                     <div className="card">
                         <h2 className="card-header">Options:</h2>
-                        <div style={{ padding: "0px 10px" }}>
-
-                            <CategoryList
-                                categoriesProp={categories}
-                                setSelectedCategory={setSelectedCategory}
-                            />
+                        <div style={{padding:"0px 10px"}}>
+                            <CategoryList/>
+                            {/* <hr></hr> */}
+                            {/* <CustomSwitch/> */}
                             <hr></hr>
                             <div className="card-body ">
                                 <form
@@ -207,7 +163,6 @@ const WaitingRoom = () => {
                                     placeholder="Number of Rounds"
                                     aria-label="Recipient's username"
                                     aria-describedby="basic-addon2"
-                                    ref={numRoundsRef}
                                 />
                             </div>
                         </div>
@@ -233,13 +188,7 @@ const WaitingRoom = () => {
                                 col
                                 btn btn-primary 
                                 btn-lg 
-                                btn-block" type="button"
-                            onClick={(e) => {
-                                e.preventDefault()
-                                startGame()
-                            }
-                            }
-                        >Start Game</button>
+                                btn-block" type="button">Start Game</button>
                     </div>
                     {/* </div> */}
                 </div>

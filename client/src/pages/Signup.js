@@ -34,7 +34,8 @@ const Signup = _ => {
             id="bootstrap-overrides"
             className=" sketchBackground">
             <main className="container">
-                <div className="card">
+                <div className="card-deck">
+                    <div className="card">
                     <h2 className="card-header">Sign Up</h2>
                     <div className="card-body d-flex justify-content-around align-items-center">
                         <form
@@ -67,9 +68,10 @@ const Signup = _ => {
                         </form>
 
                     </div>
+                    </div>
                 </div>
                 <br></br>
-                <small>Already have an account? <button type="button" className="btn btn-primary" onClick={() => window.location.assign('/')}>Login</button></small>
+                <p>Already have an account? <button type="button" className="btn btn-primary" onClick={() => window.location.assign('/')}>Login</button></p>
             </main>
         </div>
     )

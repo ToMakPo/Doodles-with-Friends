@@ -53,15 +53,19 @@ const Login = _ => {
     return (
         <div
             id="bootstrap-overrides"
-            className="container sketchBackground">
-            <main>
+            className=" sketchBackground">
+            <main className="container" >
                 <div className="card-deck">
                     <div className="card">
-                        <div className="card-body">
-                            <div className="card-body">
-                                <form onSubmit={handleSubmit}>
-                                    <div className="row ">
-                                        <div className="col">
+                        <h2 className="card-header">Existing Users</h2>
+                        {/* <div className="card-body"> */}
+                            <div className="card-body d-flex justify-content-around align-items-center">
+
+                                <form 
+                                className="d-flex justify-content-around align-items-center"
+                                onSubmit={handleSubmit}>
+                                    {/* <div className=" "> */}
+                                        <div className="">
                                             {/* One of three columns */}
                                             <span>
                                                 {/* <label htmlFor="username:">Username</label> */}
@@ -76,7 +80,8 @@ const Login = _ => {
                                                 />
                                             </span>
                                         </div>
-                                        <div className="col">
+                                        <br></br>
+                                        <div className="">
                                             {/* One of three columns */}
                                             <span>
                                                 {/* <label htmlFor="password:">Password</label> */}
@@ -90,25 +95,34 @@ const Login = _ => {
                                                 />
                                             </span>
                                         </div>
-
-                                        <button type="submit" className="btn btn-primary btn-lg btn-block mt-2">Log In</button>
-                                    </div>
+                                        <button type="submit" className="btn btn-primary btn-block ">Log In</button>
+                                    {/* </div> */}
                                 </form>
                             </div>
-                        </div>
-                    </div>
-
-                    <div className="card">
-                        <div className="card-body">
-                            {/* <small>Already have an account?  */}
-                            <div className="card-body">
-                                <p>Are you new to Doodles with Friends?</p>
+                            {/* </div> */}
                             </div>
-                            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => window.location.assign('/signup')}>Register</button>
-                            {/* </small> */}
-                        </div>
                     </div>
-                </div>
+                    <br></br>
+
+                    {/* <div className="card"> */}
+                        {/* <h2 className="card-header">New Users</h2> */}
+                        {/* <div className="card-body"> */}
+                            {/* <div className="card-body d-flex justify-content-around align-items-center"> */}
+                                {/* <div> */}
+                                    {/* <div className="row"> */}
+                                        {/* <div className="col"> */}
+
+                                            <p>New User? <button type="button" 
+                                        className="btn btn-primary " onClick={() => window.location.assign('/signup')}>Register</button>
+                                            </p>
+                                        {/* </div> */}
+                                    {/* </div> */}
+                                {/* </div> */}
+                            {/* </div> */}
+                        {/* </div> */}
+                    {/* </div> */}
+                {/* </div> */}
+
             </main>
         </div>
     )

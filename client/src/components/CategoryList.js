@@ -1,21 +1,33 @@
-import React from "react"
+import React, { useRef } from "react"
 
-const CategoryList = () => {
-    return(
-    <div className="card-body">
-        {/* <h5 className="card-title col">Category</h5> */}
-        <select 
-            className="btn btn-primary dropDN col flex-grow-1" 
-            name="categories" 
-            id="categoriesEl"
-            type="button"> 
-            <option disabled selected value>Select Category</option>
-            <option value="Plants">Plants</option>
-            <option value="Celebrities">Animals</option>
-            <option value="Celebrities">Celebrities</option>
-            <option value="Existential Crises">Existential Crises</option>
-        </select>
-    </div>
+const CategoryList = ({ categoriesProp, setSelectedCategory }) => {
+    const categoryRef = useRef()
+    function handleCategoryChange() {
+        setSelectedCategory(categoryRef.current.value)
+        // console.log(categoryRef.target.value)
+        console.log("categoryRef: ", categoryRef.current)
+        console.log()
+    }
+
+    return (
+        <div className="card-body">
+            {/* <h5 className="card-title col">Category</h5> */}
+            <select
+                // ref = {categoryRef}
+                onChange={handleCategoryChange}
+                className="btn btn-primary dropDN col flex-grow-1"
+                name="categories"
+                id="categoriesEl"
+                type="button"
+                ref={categoryRef}>
+
+                <option value=''>Select Category</option>
+                {categoriesProp.map((category) => (
+                    <option value={category.category} key={category.id} >{category.category}</option>
+                ))}
+
+            </select>
+        </div>
     )
 }
 export default CategoryList
