@@ -9,6 +9,7 @@ import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
 import CategoryList from "../components/CategoryList";
 import { useAuthenticatedUser } from "../utils/auth";
+import { useHistory } from "react-router";
 
 
 const WaitingRoom = () => {
@@ -23,7 +24,6 @@ const WaitingRoom = () => {
         testCategoriesAPI.getCategories()
 
             .then(({ data }) => {
-                console.log("categories: ", categories)
                 console.log("data: ", data)
                 setCategories(data)
             })
@@ -82,6 +82,17 @@ const WaitingRoom = () => {
                 maxRotations: rounds
             }]
         })
+            .then(data => {
+                console.log(data)
+                nextPage()
+            })
+    }
+
+    const history = useHistory()
+    const nextPage = () => {
+        console.log(lobby)
+        history.push(`/active-game/${lobby.id}`);
+
     }
     console.log(lobby)
     console.log("players: ", players)
@@ -182,7 +193,7 @@ const WaitingRoom = () => {
                         </div>
                     </div>
                     {/* Column 3 */}
-                            <ChatBox />
+                    <ChatBox />
                 </div>{/* end card deck div */}
             </main>
             <div className="containerBottom">
