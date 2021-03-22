@@ -1,12 +1,12 @@
 import React, { useRef } from "react"
 
-const CategoryList = ({ categoriesProp }) => {
+const CategoryList = ({ categoriesProp, setSelectedCategory }) => {
     const categoryRef = useRef()
     function handleCategoryChange() {
-
+        setSelectedCategory(categoryRef.current.value)
         // console.log(categoryRef.target.value)
         console.log("categoryRef: ", categoryRef.current)
-        console.log(categoryRef.current.value)
+        console.log()
     }
 
     return (
