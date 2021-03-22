@@ -32,7 +32,7 @@ const Signup = _ => {
     }
 
     return (
-        <div className='signup-page'
+        <div
             id="bootstrap-overrides"
             className=" sketchBackground">
             <div className="main container">
