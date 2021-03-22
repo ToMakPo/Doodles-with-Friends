@@ -16,7 +16,6 @@ router.post("/authenticated", authenticateUser, (req, res) => {
 });
 
 router.post("/login", validateBodyWith(loginValidator), async (req, res) => {
-
     const { username, password } = req.body;
 
     try {
@@ -36,11 +35,7 @@ router.post("/login", validateBodyWith(loginValidator), async (req, res) => {
             ...secureUser
         } = user._doc;
 
-        console.log('user._doc:',user._doc);
-        console.log('secureUser:',secureUser);
-
         const isMatch = await bcrypt.compare(password, encryptedPassword);
-        console.log({isMatch});
 
         if (!isMatch) {
             // User's password is invalid.
