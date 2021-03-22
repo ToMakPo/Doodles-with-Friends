@@ -7,22 +7,42 @@ const testCategoriesAPI = {
             data: [
                 {
                     id: 1,
-                    category: "plants",
+                    category: "actions",
 
                 },
                 {
                     id: 2,
-                    category: "Celebrities",
+                    category: "animal",
 
                 },
                 {
                     id: 3,
-                    category: "Animals",
+                    category: "body",
 
                 },
                 {
                     id: 4,
-                    category: "Existential Crises",
+                    category: "character",
+
+                },
+                {
+                    id: 5,
+                    category: "food",
+
+                },
+                {
+                    id: 6,
+                    category: "nouns",
+
+                },
+                {
+                    id: 7,
+                    category: "object",
+
+                },
+                {
+                    id: 8,
+                    category: "places",
 
                 },
 

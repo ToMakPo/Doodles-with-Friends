@@ -17,7 +17,7 @@ const Signup = ({ logUserIn, setLoginDisplay }) => {
         e.preventDefault();
 
         const username = usernameInput.current.value;
-        const password = usernameInput.current.value;
+        const password = passwordInput.current.value;
 
         try {
 

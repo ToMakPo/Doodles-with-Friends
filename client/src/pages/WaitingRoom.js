@@ -18,7 +18,7 @@ const WaitingRoom = () => {
 
     //Populate Categories function
     const [categories, setCategories] = useState([])
-
+    const [selectedCategory, setSelectedCategory] = useState('')
     useEffect(() => {
         testCategoriesAPI.getCategories()
 
@@ -52,8 +52,6 @@ const WaitingRoom = () => {
             })
             .catch(err => console.log(err))
 
-
-
     }, [setPlayers, AuthUser])
 
     function handleSubmit(event) {
@@ -80,12 +78,14 @@ const WaitingRoom = () => {
         const rounds = parseInt(numRoundsRef.current.value)
         API.updateLobby(id, {
             games: [{
+                category: selectedCategory,
                 maxRotations: rounds
             }]
         })
     }
     console.log(lobby)
     console.log("players: ", players)
+    console.log(selectedCategory)
     return (
         <div
             id="bootstrap-overrides"
@@ -107,8 +107,9 @@ const WaitingRoom = () => {
                         <h2 className="card-header">Options:</h2>
                         <div style={{ padding: "0px 10px" }}>
 
-                            <CategoryList categoriesProp={categories}
-
+                            <CategoryList
+                                categoriesProp={categories}
+                                setSelectedCategory={setSelectedCategory}
                             />
                             <hr></hr>
                             <div className="card-body ">
