@@ -18,11 +18,16 @@ import { useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
 import "./styles/palette.css"
 
 const App = () => {
-    const [lobby, setLobby] = useState({id: 'D5EA12C14'})
+    const [lobby, setLobby] = useState()
+
 	useAuthTokenStore();
 	const isAuthenticated = useIsAuthenticated();
 
-	const home = <Home setLobby={setLobby}/>
+	const home = _ => <Home setLobby={setLobby}/>
+	const pathname = window.location.pathname.split('/')[1]
+	function fixURL(...ifs) {
+		ifs.includes(pathname) && window.history.replaceState(null, '', '/')
+	}
 
 	return (
 		<LobbyContext.Provider value={lobby}>
@@ -33,15 +38,25 @@ const App = () => {
 					<PageHeader/>
 
 					<main>
-					<Switch>
-						<Route exact path='/' render={_ => isAuthenticated ? home : <Login/>} />
-						<Route exact path='/login' render={_ => isAuthenticated ? home : <Login/>} />
-						<Route exact path='/signup' render={_ => isAuthenticated ? home : <Signup/>} />
-						<Route exact path='/waiting-room/:roomId' component={isAuthenticated ? WaitingRoom : Login} />
-						<Route exact path='/active-game/:roomId' component={isAuthenticated ? ArtistView : Login} />
-						<Route exact path='/score-board/:roomId' component={isAuthenticated ? ScoreBoard : Login} />
-						<Route component={PageNotFound} />
-					</Switch>
+						{!isAuthenticated ? (
+							<Switch>
+								{fixURL('home', 'waiting-room', 'active-game', 'score-board')}
+								<Route exact path='/' component={Login} />
+								<Route exact path='/login' component={Login} />
+								<Route exact path='/signup' component={Signup} />
+								<Route component={PageNotFound} />
+							</Switch>
+						) : (
+							<Switch>
+								{fixURL('login', 'signup')}
+								<Route exact path='/' render={home}/>
+								<Route exact path='/home' render={home} />
+								<Route exact path='/waiting-room/:roomId' component={WaitingRoom} />
+								<Route exact path='/active-game/:roomId' component={ArtistView} />
+								<Route exact path='/score-board/:roomId' component={ScoreBoard} />
+								<Route render={PageNotFound} />
+							</Switch>
+						)}
 					</main>
 					
 				</Router>
