@@ -8,9 +8,11 @@ import '../styles/palette.css'
 import '../styles/Home.css'
 
 const Home = ({setLobby}) => {
-    const gameCodeRef = useRef()
+    console.log(setLobby);
     const AuthUser = useAuthenticatedUser()
+
     // const history = useHistory()
+    const gameCodeRef = useRef()
 
     function hostGame(event) {
         event.preventDefault()
@@ -43,12 +45,12 @@ const Home = ({setLobby}) => {
         <div
             id="bootstrap-overrides"
             className="container sketchBackground">
-            <main>
+            <div className='main'>
                 <div className="card-deck">
                     <div className="card">
                         <div className="card-body">
                             <h5 className="card-title">START A NEW GAME</h5>
-                            <p className="card-text">YOU'LL BE THE HOST.</p>
+                            <sup className="card-text">You will be the host.</sup>
 
                             <button type="button"
                                 onClick={hostGame}
@@ -59,23 +61,20 @@ const Home = ({setLobby}) => {
                     <div className="card">
                         <div className="card-body">
                             <h5 className="card-title">JOIN AN EXISTING GAME</h5>
-                            <p className="card-text">YOU'RE JOINING A GAME YOUR FRIEND ALREADY STARTED.</p>
+                            <sup className="card-text">You are joining a game your friend already started</sup>
                             <div className="input-group mb-3">
                                 <input type="text" className="form-control" ref={gameCodeRef} placeholder="Game Code" aria-label="Recipient's username" aria-describedby="basic-addon2" />
                                 <div className="input-group-append">
-                                    <button className="
-                                btn-primary 
-                                btn 
-                                btn-block" type="button"
+                                    <button className="btn-primary btn btn-block"
+                                        type="button"
                                         onClick={joinLobby}
-                                    >JOIN NOW</button>
+                                    >JOIN GAME</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-            </main>
+            </div>
         </div>
     )
 }

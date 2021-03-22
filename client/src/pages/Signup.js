@@ -1,6 +1,8 @@
 import { useRef } from "react"
-import API from "../utils/API";
 import { useLogin } from "../utils/auth";
+import { Link } from "react-router-dom";
+import API from "../utils/API";
+
 import '../styles/palette.css'
 import '../styles/Signup.css'
 
@@ -30,10 +32,10 @@ const Signup = _ => {
     }
 
     return (
-        <div
+        <div className='signup-page'
             id="bootstrap-overrides"
             className=" sketchBackground">
-            <main className="container">
+            <div className="main container">
                 <div className="card-deck">
                     <div className="card">
                     <h2 className="card-header">Sign Up</h2>
@@ -70,9 +72,10 @@ const Signup = _ => {
                     </div>
                     </div>
                 </div>
-                <br></br>
-                <p>Already have an account? <button type="button" className="btn btn-primary" onClick={() => window.location.assign('/')}>Login</button></p>
-            </main>
+                <p>Already have an account? 
+                    <Link to='/'> Login</Link>
+                </p>
+            </div>
         </div>
     )
 }

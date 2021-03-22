@@ -32,6 +32,7 @@ const App = () => {
 				<Router>
 					<PageHeader/>
 
+					<main>
 					<Switch>
 						<Route exact path='/' render={_ => isAuthenticated ? home : <Login/>} />
 						<Route exact path='/login' render={_ => isAuthenticated ? home : <Login/>} />
@@ -41,6 +42,7 @@ const App = () => {
 						<Route exact path='/score-board/:roomId' component={isAuthenticated ? ScoreBoard : Login} />
 						<Route component={PageNotFound} />
 					</Switch>
+					</main>
 					
 				</Router>
 				}

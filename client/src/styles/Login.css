@@ -1,7 +1,9 @@
-input{
-    padding:5px;
+input {
+    margin: 3px !important;
+    height:38px
 }
-.col{
+
+.col {
     justify-items: center;
     justify-content: center;
     align-items: center;
@@ -9,9 +11,10 @@ input{
     padding:0px;
 }
 
-button{
-    margin-left: 5px;
+.main {
+    flex-direction: column;
 }
-input{
-    height:38px
+
+button {
+    margin: 3px !important;
 }

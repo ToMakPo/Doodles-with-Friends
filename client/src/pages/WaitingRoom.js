@@ -120,8 +120,8 @@ const WaitingRoom = () => {
     return (
         <div
             id="bootstrap-overrides"
-            className="container containerCol sketchBackground">
-            <main className="row sketchBackground">
+            className="main container containerCol sketchBackground">
+            <div className="row sketchBackground">
                 <div className="card-deck">
 
                     {/* Column 1 */}
@@ -146,13 +146,12 @@ const WaitingRoom = () => {
                             <div className="card-body ">
                                 <form
                                     className="d-flex 
-                                    flex-grow-1
-                                    justify-content-center
-                            row"
+                                        flex-grow-1
+                                        justify-content-center
+                                        row"
                                     onSubmit={handleSubmit}
                                 >
-
-                                    <div className="" >
+                                    <div>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -162,38 +161,27 @@ const WaitingRoom = () => {
                                             ref={customWordInputRef}
                                         />
                                     </div>
-                                    <div className="" >
-
-                                        <button className="
-                                    col
-                                    btn 
-                                    btnAdd
-                                    btn-block" type="submit">+</button>
+                                    <div>
+                                        <button
+                                            className="col btn btnAdd btn-block" 
+                                            type="submit">
+                                                +
+                                        </button>
                                     </div>
-
                                 </form>
-
-
                                 <br></br>
                                 <div>
-                                    {/* <h5 className="card-title">Added Words:</h5> */}
                                     <ul className="list-group">
-                                        {listOfCustomWords.map((boop) => (
-
-                                            <li
-                                                className=""
-                                                key={boop.id}
-                                            >
-                                                {boop.name}{" "}
+                                        {listOfCustomWords.map(word => (
+                                            <li className="" key={word.id}>
+                                                {word.name + " "}
                                                 <button
                                                     className="btn btnDel"
-                                                    onClick={
-                                                        () => dispatch({
+                                                    onClick={_ => dispatch({
                                                             type: "deleteWord",
-                                                            id: boop.id
+                                                            id: word.id
                                                         })}
-                                                >x
-                                            </button>
+                                                >x</button>
                                             </li>
                                         ))}
                                     </ul>
@@ -215,33 +203,21 @@ const WaitingRoom = () => {
                     {/* Column 3 */}
                     <ChatBox />
                 </div>{/* end card deck div */}
-            </main>
+            </div>
             <div className="containerBottom">
                 <div className="card-deck">
-                    {/* <div className="card"> */}
                     <div className="card-body row">
-                        {/* <div className="col"> */}
-                        {/* <h5 className="card-title col">Number of Rounds:</h5> */}
-                        {/* <input 
-                                type="text" 
-                                className="form-control col" 
-                                placeholder="" 
-                                aria-label="Recipient's username" 
-                                aria-describedby="basic-addon2"
-                                /> */}
                         <button className="
                                 col
                                 btn btn-primary 
                                 btn-lg 
                                 btn-block" type="button"
-                            onClick={(e) => {
-                                e.preventDefault()
+                            onClick={event => {
+                                event.preventDefault()
                                 startGame()
-                            }
-                            }
+                            }}
                         >Start Game</button>
                     </div>
-                    {/* </div> */}
                 </div>
             </div>
         </div>

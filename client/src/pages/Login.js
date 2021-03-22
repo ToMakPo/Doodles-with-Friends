@@ -1,5 +1,6 @@
 import { useRef } from "react"
 import { useLogin } from "../utils/auth"
+import { Link } from "react-router-dom"
 
 import '../styles/palette.css'
 import '../styles/Login.css'
@@ -24,106 +25,52 @@ const Login = _ => {
             if (err.response && err.response.data) console.log(err.response.data);
         }
     }
-    // const login = event => {
-    //     event.preventDefault()
-
-    //     if (username === '') {
-    //         usernameInput.current.focus()
-    //         //TODO display message to let user know there was an issue.
-    //         return
-    //     }
-
-    //     if (password === '') {
-    //         passwordInput.current.focus()
-    //         //TODO display message to let user know there was an issue.
-    //         return
-    //     }
-
-    //     const confirmed = true// TODO check username and password against database
-
-    //     if (confirmed) {
-    //         const user = {}// TODO get user profile from database
-
-    //         logUserIn(user)
-    //     } else {
-    //         //TODO display message to let user know that the username or password did not match.
-    //     }
-    // }
 
     return (
         <div
             id="bootstrap-overrides"
             className=" sketchBackground">
-            <main className="container" >
+            <div className="main container" >
                 <div className="card-deck">
                     <div className="card">
                         <h2 className="card-header">Existing Users</h2>
-                        {/* <div className="card-body"> */}
-                            <div className="card-body d-flex justify-content-around align-items-center">
-
-                                <form 
+                        <div className="card-body d-flex justify-content-around align-items-center">
+                            <form 
                                 className="d-flex justify-content-around align-items-center"
                                 onSubmit={handleSubmit}>
-                                    {/* <div className=" "> */}
-                                        <div className="">
-                                            {/* One of three columns */}
-                                            <span>
-                                                {/* <label htmlFor="username:">Username</label> */}
-                                                <input
-                                                    id='username'
-                                                    type="text"
-                                                    // onBlur={event => setUsername(event.target.value)}
-                                                    autoComplete="username"
-                                                    ref={usernameInput}
-                                                    autoFocus
-                                                    placeholder="USERNAME"
-                                                />
-                                            </span>
-                                        </div>
-                                        <br></br>
-                                        <div className="">
-                                            {/* One of three columns */}
-                                            <span>
-                                                {/* <label htmlFor="password:">Password</label> */}
-                                                <input
-                                                    id='password'
-                                                    type="password"
-                                                    // onBlur={event => setPassword(event.target.value)}
-                                                    ref={passwordInput}
-                                                    autoComplete="current-password"
-                                                    placeholder="PASSWORD"
-                                                />
-                                            </span>
-                                        </div>
-                                        <button type="submit" className="btn btn-primary btn-block ">Log In</button>
-                                    {/* </div> */}
-                                </form>
-                            </div>
-                            {/* </div> */}
-                            </div>
+                                <div className="">
+                                    <span>
+                                        <input
+                                            id='username'
+                                            type="text"
+                                            autoComplete="username"
+                                            ref={usernameInput}
+                                            autoFocus
+                                            placeholder="USERNAME"
+                                        />
+                                    </span>
+                                </div>
+                                <br></br>
+                                <div className="">
+                                    <span>
+                                        <input
+                                            id='password'
+                                            type="password"
+                                            ref={passwordInput}
+                                            autoComplete="current-password"
+                                            placeholder="PASSWORD"
+                                        />
+                                    </span>
+                                </div>
+                                <button type="submit" className="btn btn-primary btn-block ">Log In</button>
+                            </form>
+                        </div>
                     </div>
-                    <br></br>
-
-                    {/* <div className="card"> */}
-                        {/* <h2 className="card-header">New Users</h2> */}
-                        {/* <div className="card-body"> */}
-                            {/* <div className="card-body d-flex justify-content-around align-items-center"> */}
-                                {/* <div> */}
-                                    {/* <div className="row"> */}
-                                        {/* <div className="col"> */}
-
-                                            <p>New User? <button type="button" 
-                                        className="btn btn-primary " onClick={() => window.location.assign('/signup')}>Register</button>
-                                            </p>
-                                        {/* </div> */}
-                                    {/* </div> */}
-                                {/* </div> */}
-                            {/* </div> */}
-                        {/* </div> */}
-                    {/* </div> */}
-                {/* </div> */}
-
-            </main>
+                </div>
+                <p>Don't have an account yet?
+                    <Link to='/signup'> Sign up</Link>
+                </p>
+            </div>
         </div>
     )
 }

@@ -19,7 +19,7 @@ const ArtistView = () => {
         <div
             id="bootstrap-overrides"
             className="container sketchBackground">
-            <main>
+            <div className='main'>
                 <h2 className="banner">
                     <div className="d-flex justify-content-around align-items-center">
 
@@ -51,7 +51,7 @@ const ArtistView = () => {
                     </div>
                     <ChatBox lobby={{id: 'D5EA12C14'}} user={{username: 'ToMakPo'}}/>
                 </div>
-            </main>
+            </div>
         </div>
     )
 }

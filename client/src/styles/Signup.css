@@ -1,12 +1,14 @@
-input{
-    padding:5px;
+input {
+    padding: 5px;
     justify-items: center;
-    margin:5px;
+    margin: 3px !important;
+    height:38px
 }
 
-button{
-    margin-left: 5px;
+button {
+    margin: 3px !important;
 }
-input{
-    height:38px
+
+.main {
+    flex-direction: column;
 }
