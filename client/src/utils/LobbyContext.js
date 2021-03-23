@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 const LobbyContext = createContext({
-    id: ''
+    code: ''
 })
 
 export default LobbyContext

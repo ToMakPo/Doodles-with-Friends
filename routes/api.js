@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const db = require('../models');
 
-router.get('/lobby/:id', (req, res) => {
+router.get('/lobby/:code', (req, res) => {
     db.Lobby
-        .find({ id: req.params.id })
+        .find({ code: req.params.code })
         .then(data => res.json(data))
         .catch(err => res.status(422).json(err))
 })
@@ -15,9 +15,9 @@ router.post('/lobby', (req, res) => {
         .catch(err => res.status(422).json(err))
 })
 
-router.put('/lobby/:id', (req, res) => {
+router.put('/lobby/:code', (req, res) => {
     db.Lobby
-        .findOneAndUpdate({ id: req.params.id }, req.body)
+        .findOneAndUpdate({ code: req.params.code }, req.body)
         .then(data => res.json(data))
         .catch(err => res.status(422).json(err));
 })

@@ -46,19 +46,19 @@ class API {
     }
 
     createLobby(host) {
-        const id = Math.floor(Math.random() * 36 ** 9).toString(36).padStart(9, '0').toUpperCase()
-        return this.axios.post(`/api/lobby`, { id, host: host._id })
+        const code = Math.floor(Math.random() * 36 ** 9).toString(36).padStart(9, '0').toUpperCase()
+        return this.axios.post(`/api/lobby`, { code, host: host._code })
     }
 
-    getLobby(id) {
-        return this.axios.get(`/api/lobby/${id}`)
+    getLobby(code) {
+        return this.axios.get(`/api/lobby/${code}`)
     }
-    updateLobby(id, body) {
-        return this.axios.put(`/api/lobby/${id}`, body);
+    updateLobby(code, body) {
+        return this.axios.put(`/api/lobby/${code}`, body);
     }
-    //WaitingRoom.js calls the method below. The method below triggers the corresponding back end route in api.js: router.get('/user/:id', (req, res) => {...
-    getPlayer(id){
-        return this.axios.get(`/api/user/${id}`)
+    //WaitingRoom.js calls the method below. The method below triggers the corresponding back end route in api.js: router.get('/user/:code', (req, res) => {...
+    getPlayer(code){
+        return this.axios.get(`/api/user/${code}`)
     }
 }
 

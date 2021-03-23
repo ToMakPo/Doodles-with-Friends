@@ -1,11 +1,9 @@
-import React, { useEffect, useState, /*useReducer, */useRef, useContext } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router";
 import { useWordBankContext } from "../utils/GlobalState"
 import { useAuthenticatedUser } from "../utils/auth";
-import LobbyContext from "../utils/LobbyContext";
 
 import ChatBox from "../components/ChatBox"
-import testPeopleAPI from "../utils/testPeopleAPI";
 import testCategoriesAPI from '../utils/testCategoriesAPI';
 import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
@@ -17,13 +15,13 @@ import '../styles/WaitingRoom.css'
 const WaitingRoom = () => {
     const [lobby, setLobby] = useState({});
     // const {lobby} = useContext(LobbyContext)
-    console.log('WaitingRoom - lobby:', lobby)
-    const AuthUser = useAuthenticatedUser()
-    console.log('WaitingRoom - user:', AuthUser);
+    // console.log('WaitingRoom - lobby:', lobby)
+    const user = useAuthenticatedUser()
+    // console.log('WaitingRoom - user:', user);
 
     useEffect(() => {
-        const lobbyId = window.location.pathname.split('room/')[1]
-        API.getLobby(lobbyId)
+        const lobbyCode = window.location.pathname.split('room/')[1]
+        API.getLobby(lobbyCode)
             .then(data => {
                 setLobby(data.data[0])
             })
@@ -76,7 +74,7 @@ const WaitingRoom = () => {
                 .catch(err => console.log(err))
         }
 
-    }, [players])
+    }, [])
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -87,10 +85,10 @@ const WaitingRoom = () => {
         customWordInputRef.current.value = "";
     }
     const numRoundsRef = useRef()
-    const startGame = (id) => {
-        id = lobby.id
+    const startGame = (code) => {
+        code = lobby.code
         const rounds = parseInt(numRoundsRef.current.value)
-        API.updateLobby(id, {
+        API.updateLobby(code, {
             games: [{
                 category: selectedCategory,
                 maxRotations: rounds
@@ -105,7 +103,7 @@ const WaitingRoom = () => {
     const history = useHistory()
     const nextPage = () => {
         console.log(lobby)
-        history.push(`/active-game/${lobby.id}`);
+        history.push(`/active-game/${lobby.code}`);
 
     }
     console.log(lobby)
@@ -120,7 +118,7 @@ const WaitingRoom = () => {
 
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code: {lobby === undefined ? `no lobby` : lobby.id}</h2>
+                        <h2 className="card-header">Game Code: {lobby === undefined ? `no lobby` : lobby.code}</h2>
                         <div className="card-body">
                             <PlayerList players={players} />
                         </div>

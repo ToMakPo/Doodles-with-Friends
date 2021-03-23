@@ -1,7 +1,7 @@
 header {
     display: flex !important;
-    background-image: url('./assets/banner.jpg');
-    background-size: 100%;
+    background-image: url('./assets/bannerTile.jpg');
+    background-position: center;
 }
 
 h1 {

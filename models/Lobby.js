@@ -4,7 +4,7 @@ const wordBank = require('./wordBank.json')
 
 const lobbySchema = new mongoose.Schema(
     {
-        id: { //The game id that will be displayed to the players. Not to be confused with _id used by the database.
+        code: { //The game code that will be displayed to the players. Not to be confused with _id used by the database.
             type: String,
             trim: true
         },
@@ -125,7 +125,7 @@ lobbySchema.methods.startNewGame = function(category, maxRotations) {
     this.randomizePlayerOrder()
 
     const newGame = {
-        id: Math.floor(Math.random() * 36**9).toString(36).toUpperCase().padStart(9, '0'),
+        code: Math.floor(Math.random() * 36**9).toString(36).toUpperCase().padStart(9, '0'),
         category,
         wordBank: this.buildWordBank(),
         maxRotations,

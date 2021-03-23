@@ -7,8 +7,8 @@ const ArtistView = () => {
     const [lobby, setLobby] = useState({})
     const [totalRounds, setTotalRounds] = useState()
     useEffect(() => {
-        const lobbyId = window.location.pathname.split('game/')[1]
-        API.getLobby(lobbyId)
+        const lobbyCode = window.location.pathname.split('game/')[1]
+        API.getLobby(lobbyCode)
             .then(data => {
                 setLobby(data.data[0])
                 setTotalRounds(data.data[0].games[0].maxRotations)
@@ -51,7 +51,7 @@ const ArtistView = () => {
                             </div>
                         </div>
                     </div>
-                    <ChatBox lobby={{id: 'D5EA12C14'}} user={{username: 'ToMakPo'}}/>
+                    <ChatBox lobby={{code: 'D5EA12C14'}} user={{username: 'ToMakPo'}}/>
                 </div>
             </div>
         </div>

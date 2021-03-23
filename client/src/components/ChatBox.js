@@ -33,7 +33,7 @@ const AnswerMessage = ({ sender, answer }) => {
 const ChatBox = () => {
     const lobby = useContext(LobbyContext)
     const user = useAuthenticatedUser()
-    // const lobby = {id: 'D5EA12C14'} // TODO: fix this 
+    // const lobby = {code: 'D5EA12C14'} // TODO: fix this 
     // const activeUser = {username: 'ToMakPo'}
 
     console.log('ChatBox - lobby:', lobby);
@@ -48,7 +48,7 @@ const ChatBox = () => {
     // useEffect(() => {
     //     socketRef.current = io.connect('/')
 
-    //     socketRef.current.on(`${lobby.id}-logMessage`, logMessage)
+    //     socketRef.current.on(`${lobby.code}-logMessage`, logMessage)
     // }, [lobby])
 
     /// EVENT HANDLERS ///
@@ -66,7 +66,7 @@ const ChatBox = () => {
 
     function chatSubmitOnClick(event) {
         event.preventDefault()
-        socketRef.emit(guessing ? 'logGuess' : 'logMessage', lobby.id, user, message)
+        socketRef.emit(guessing ? 'logGuess' : 'logMessage', lobby.code, user, message)
     }
 
     return (

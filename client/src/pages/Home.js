@@ -17,20 +17,20 @@ const Home = ({setLobby}) => {
         event.preventDefault()
         API.createLobby(AuthUser)
             .then(({data}) => {
-                loadLobby(data.id)
+                loadLobby(data.code)
             })
             .catch(err => console.error(err))
     }
     
     function joinLobby(event) {
         event.preventDefault()
-        const id = gameCodeRef.current.value.toUpperCase().trim()
-        loadLobby(id)
+        const code = gameCodeRef.current.value.toUpperCase().trim()
+        loadLobby(code)
         window.location.assign(`/waiting-room/${gameCodeRef.current.value}`)
     }
 
-    function loadLobby(id) {
-        API.getLobby(id)
+    function loadLobby(code) {
+        API.getLobby(code)
             .then(({data}) => {
                 const lobby = data[0]
                 setLobby(lobby)
