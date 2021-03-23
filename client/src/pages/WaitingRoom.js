@@ -8,12 +8,28 @@ import testCategoriesAPI from "../utils/testCategoriesAPI";
 import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
 import CategoryList from "../components/CategoryList";
-import { useAuthenticatedUser } from "../utils/auth";
-import { useHistory } from "react-router";
-
+import '../styles/palette.css'
+import '../styles/WaitingRoom.css'
 
 const WaitingRoom = () => {
-    const [lobby, setLobby] = useState()
+    const [lobby, setLobby] = useState({});
+    // const {lobby} = useContext(LobbyContext)
+    console.log('WaitingRoom - lobby:', lobby)
+    const AuthUser = useAuthenticatedUser()
+    console.log('WaitingRoom - user:', AuthUser);
+
+    useEffect(() => {
+        const lobbyId = window.location.pathname.split('room/')[1]
+        API.getLobby(lobbyId)
+            .then(data => {
+                setLobby(data.data[0])
+            })
+            .catch(err => console.error(err))
+    }, [])
+
+    // const [attendees, setAttendees] = useState({
+
+    // });
 
     const AuthUser = useAuthenticatedUser()
 
@@ -142,13 +158,12 @@ const WaitingRoom = () => {
                                             ref={customWordInputRef}
                                         />
                                     </div>
-                                    <div className="" >
-
-                                        <button className="
-                                    col
-                                    btn 
-                                    btnAdd
-                                    btn-block" type="submit">+</button>
+                                    <div>
+                                        <button
+                                            className="col btn btnAdd btn-block"
+                                            type="submit">
+                                            +
+                                        </button>
                                     </div>
 
                                 </form>
@@ -167,13 +182,11 @@ const WaitingRoom = () => {
                                                 {boop.name}{" "}
                                                 <button
                                                     className="btn btnDel"
-                                                    onClick={
-                                                        () => dispatch({
-                                                            type: "deleteWord",
-                                                            id: boop.id
-                                                        })}
-                                                >x
-                                            </button>
+                                                    onClick={_ => dispatch({
+                                                        type: "deleteWord",
+                                                        id: word.id
+                                                    })}
+                                                >x</button>
                                             </li>
                                         ))}
                                     </ul>
