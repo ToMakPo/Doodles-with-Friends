@@ -7,10 +7,9 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Home from './pages/Home'
 import WaitingRoom from './pages/WaitingRoom'
-import ArtistView from './pages/ArtistView'
-import PageNotFound from './pages/PageNotFound'
 import ActiveGame from './pages/ActiveGame'
 import ScoreBoard from './pages/ScoreBoard'
+import PageNotFound from './pages/PageNotFound'
 
 import LobbyContext from './utils/LobbyContext'
 import { WordBankProvider } from './utils/GlobalState'
@@ -46,7 +45,7 @@ const App = () => {
 		<LobbyContext.Provider value={lobby}>
 			<WordBankProvider>
 				{
-				// true ? <ArtistView/>: //TODO: remove this line
+				// true ? <ActiveGame/>: //TODO: remove this line
 				<Router>
 					<PageHeader loggedIn={isAuthenticated}/>
 
@@ -61,7 +60,7 @@ const App = () => {
 							<Switch>
 								<Route exact path='/home' render={_ => <Home setLobby={setLobby}/>} />
 								<Route exact path='/waiting-room/:roomId' component={WaitingRoom} />
-								<Route exact path='/active-game/:roomId' component={ArtistView} />
+								<Route exact path='/active-game/:roomId' component={ActiveGame} />
 								<Route exact path='/score-board/:roomId' component={ScoreBoard} />
 								<Route render={_ => <div>PageNotFound (logged in)</div>} />
 								{/* <Route render={PageNotFound} /> */}
