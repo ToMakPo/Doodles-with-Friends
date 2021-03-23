@@ -4,17 +4,19 @@ import API from "../utils/API"
 const { default: Canvas } = require("../components/Canvas")
 
 const ArtistView = () => {
-    const [lobby, setLobby] = useState()
+    const [lobby, setLobby] = useState({})
+    const [totalRounds, setTotalRounds] = useState()
     useEffect(() => {
         const lobbyId = window.location.pathname.split('game/')[1]
         API.getLobby(lobbyId)
             .then(data => {
                 setLobby(data.data[0])
-
+                setTotalRounds(data.data[0].games[0].maxRotations)
             })
             .catch(err => console.error(err))
     }, [])
-    console.log(lobby)
+    console.log('lobby: ', lobby)
+    console.log(totalRounds);
     return (
         <div
             id="bootstrap-overrides"
@@ -27,7 +29,7 @@ const ArtistView = () => {
                             THE WORD: { }
                         </div>
                         <div className="d-inline p-2 ">
-                            ROUND 1 OF 5
+                            ROUND 1 OF {totalRounds}
                         </div>
 
                         <div className="d-inline p-2 ">

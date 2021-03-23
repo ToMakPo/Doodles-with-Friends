@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import WaitingRoom from './pages/WaitingRoom'
 import ArtistView from './pages/ArtistView'
 import PageNotFound from './pages/PageNotFound'
+import ActiveGame from './pages/ActiveGame'
 import ScoreBoard from './pages/ScoreBoard'
 
 import LobbyContext from './utils/LobbyContext'
