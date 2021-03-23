@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import ChatBox from "../components/ChatBox"
+import Timer from "../components/Timer"
 import API from "../utils/API"
 const { default: Canvas } = require("../components/Canvas")
 
@@ -33,7 +34,7 @@ const ArtistView = () => {
                         </div>
 
                         <div className="d-inline p-2 ">
-                            TIME REMAINING
+                            TIME REMAINING: <Timer/>
                         </div>
                     </div>
                 </h2>
