@@ -5,8 +5,7 @@ const PlayerList = ({ players }) => {
         <div>
             <h5 className="card-title">Attending Players:</h5>
             <ol>
-                players.map()
-                <li key={players.id}>{players.username}</li>
+                {players.map(player => <li key={player.id}>{player.username}</li>)}
             </ol>
         </div>
     )

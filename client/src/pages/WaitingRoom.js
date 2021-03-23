@@ -122,9 +122,7 @@ const WaitingRoom = () => {
                     <div className="card">
                         <h2 className="card-header">Game Code: {lobby === undefined ? `no lobby` : lobby.id}</h2>
                         <div className="card-body">
-
-                            <PlayerList playersProp={players} />
-
+                            <PlayerList players={players} />
                         </div>
                     </div>
                     {/* Column 2 */}
