@@ -54,7 +54,9 @@ const App = () => {
 							<Switch>
 								<Route exact path='/login' component={Login} />
 								<Route exact path='/signup' component={Signup} />
-								<Route render={_ => <div>PageNotFound (logged out)</div>} />
+								
+								<Route component={Login} />
+								{/* <Route render={_ => <div>PageNotFound (logged out)</div>} /> */}
 							</Switch>
 						) : (
 							<Switch>
@@ -62,7 +64,7 @@ const App = () => {
 								<Route exact path='/waiting-room/:roomId' component={WaitingRoom} />
 								<Route exact path='/active-game/:roomId' component={ActiveGame} />
 								<Route exact path='/score-board/:roomId' component={ScoreBoard} />
-								<Route render={_ => <div>PageNotFound (logged in)</div>} />
+								<Route render={_ => <Home setLobby={setLobby}/>} />
 								{/* <Route render={PageNotFound} /> */}
 							</Switch>
 						)}
