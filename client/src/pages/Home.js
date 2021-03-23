@@ -7,31 +7,31 @@ import API from '../utils/API'
 import '../styles/palette.css'
 import '../styles/Home.css'
 
-const Home = ({setLobby}) => {
+const Home = ({ setLobby }) => {
     const AuthUser = useAuthenticatedUser()
-    
+
     const history = useHistory()
     const gameCodeRef = useRef()
 
     function hostGame(event) {
         event.preventDefault()
         API.createLobby(AuthUser)
-            .then(({data}) => {
+            .then(({ data }) => {
                 loadLobby(data.id)
             })
             .catch(err => console.error(err))
     }
-    
+
     function joinLobby(event) {
         event.preventDefault()
         const id = gameCodeRef.current.value.toUpperCase().trim()
         loadLobby(id)
-        window.location.assign(`/waiting-room/${gameCodeRef.current.value}`)
+        history.push(`/waiting-room/${gameCodeRef.current.value}`)
     }
 
     function loadLobby(id) {
         API.getLobby(id)
-            .then(({data}) => {
+            .then(({ data }) => {
                 const lobby = data[0]
                 setLobby(lobby)
                 history.push(`/waiting-room/${lobby.id}`);
