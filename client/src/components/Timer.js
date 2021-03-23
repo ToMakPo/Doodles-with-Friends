@@ -1,8 +1,8 @@
 import React from 'react'
+import '../styles/Timer.css'
+
 import { useState, useEffect } from 'react';
-const Timer = (
-    props:any
-    ) => {
+const Timer = (props:any) => {
     const {initialMinute = 2,initialSeconds = 0} = props;
     const [ minutes, setMinutes ] = useState(initialMinute);
     const [seconds, setSeconds ] =  useState(initialSeconds);
@@ -25,10 +25,10 @@ const Timer = (
         };
     });
     return (
-        <div>
+        <div >
         { minutes === 0 && seconds === 0
             ? null
-            : <h1> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</h1> 
+            : <p className="timerElement"> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</p> 
         }
         </div>
     )
