@@ -108,6 +108,6 @@ export const useLogout = () => {
     return () => {
         setAuthToken(false);
         dispatch({ type: LOGOUT_USER });
-        history.push("/");
+        history.push("/login");
     }
 }

@@ -3,13 +3,11 @@
     align-items: center !important;
 }
 
-h1{
+/* h1{
     font-family: 'Sedgwick Ave', cursive;
     margin-bottom: 0rem !important;
-    /* text-align: center; */
     padding-top: 20px;
-}
-
+} */
 
 .jumbotron{
     display: block;
@@ -23,7 +21,6 @@ h1{
     background-size: 65%;
     background-position: center; 
     /* background-color: red; */
-
 }
 
 

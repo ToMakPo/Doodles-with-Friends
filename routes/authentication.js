@@ -26,7 +26,7 @@ router.post("/login", validateBodyWith(loginValidator), async (req, res) => {
                 .select("name username password");
         if (!user) {
             // User not found by username.
-            return res.status(404).json({ default: "username or password is invalid. UN" });
+            return res.status(404).json({ default: "username or password is invalid." });
         }
 
         const {
@@ -39,7 +39,7 @@ router.post("/login", validateBodyWith(loginValidator), async (req, res) => {
 
         if (!isMatch) {
             // User's password is invalid.
-            return res.status(404).json({ default: "username or password is invalid. PW" });
+            return res.status(404).json({ default: "username or password is invalid." });
         }
 
         const payload = {

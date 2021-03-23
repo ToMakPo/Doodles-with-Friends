@@ -1,0 +1,22 @@
+header {
+    display: flex !important;
+    background-image: url('./assets/banner.jpg');
+    background-size: 100%;
+}
+
+h1 {
+    font-family: 'Sedgwick Ave', cursive;
+    margin-bottom: 0rem !important;
+    white-space: nowrap;
+    font-size: clamp(2em, 8vw, 5em) !important;
+    padding-top: 20px;
+    padding-left: 0.5ch;
+    flex: 1 0 auto;
+    color: #700;
+    
+    text-shadow: -0.3rem 0 white, 0 0.3rem white, 0.3rem 0 white, 0 -0.3rem white;
+}
+
+button {
+    flex: 0 0 auto;
+}

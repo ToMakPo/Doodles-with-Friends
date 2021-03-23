@@ -1,8 +1,3 @@
-input {
-    margin: 3px !important;
-    height:38px
-}
-
 .col {
     justify-items: center;
     justify-content: center;
@@ -13,8 +8,25 @@ input {
 
 .main {
     flex-direction: column;
+    align-items: center;
+}
+
+form {
+    gap: 3px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+form > * {
+    flex: 0 0 min(100%, 300px);
+}
+
+input {
+    height:38px;
+    padding: 0 5px;
 }
 
 button {
-    margin: 3px !important;
+    white-space: nowrap;
 }

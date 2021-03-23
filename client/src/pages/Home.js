@@ -1,17 +1,16 @@
 import { useRef } from 'react'
-import API from '../utils/API'
+import { useHistory } from 'react-router'
 import { useAuthenticatedUser } from '../utils/auth'
-// import { useHistory } from 'react-router'
 // import { Link } from 'react-router-dom'
+import API from '../utils/API'
 
 import '../styles/palette.css'
 import '../styles/Home.css'
 
 const Home = ({setLobby}) => {
-    console.log(setLobby);
     const AuthUser = useAuthenticatedUser()
-
-    // const history = useHistory()
+    
+    const history = useHistory()
     const gameCodeRef = useRef()
 
     function hostGame(event) {
@@ -35,8 +34,7 @@ const Home = ({setLobby}) => {
             .then(({data}) => {
                 const lobby = data[0]
                 setLobby(lobby)
-                window.history.replaceState(null, 'Waiting Room', `/waiting-room/${lobby.id}`);
-                // history.push(`/waiting-room/${lobby.id}`);
+                history.push(`/waiting-room/${lobby.id}`);
             })
             .catch(err => console.error(err))
     }

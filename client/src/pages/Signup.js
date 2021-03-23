@@ -27,7 +27,7 @@ const Signup = _ => {
             // User has been successfully registered, logged in and added to state. Perform any additional actions you need here such as redirecting to a new page.
         } catch (err) {
             // Handle error responses from the API. This will include
-            if (err.response && err.response.data) console.log(err.response.data);
+            console.log(err.response?.data);
         }
     }
 
@@ -40,7 +40,7 @@ const Signup = _ => {
                     <div className="card">
                     <h2 className="card-header">Sign Up</h2>
                     <div className="card-body d-flex justify-content-around align-items-center">
-                        <form
+                        {/* <form
                             className="d-flex justify-content-around align-items-center"
                             onSubmit={handleSubmit}>
                             <div className="">
@@ -67,13 +67,32 @@ const Signup = _ => {
                             </div>
 
                             <button className="btn btn-primary btn-block">Submit</button>
-                        </form>
-
+                        </form> */}
+                            <form 
+                                className="d-flex"
+                                onSubmit={handleSubmit}>
+                                <input
+                                    id='username'
+                                    type="text"
+                                    autoComplete="username"
+                                    ref={usernameInput}
+                                    autoFocus
+                                    placeholder="USERNAME"
+                                />
+                                <input
+                                    id='password'
+                                    type="password"
+                                    ref={passwordInput}
+                                    autoComplete="current-password"
+                                    placeholder="PASSWORD"
+                                />
+                                <button type="submit" className="btn btn-primary">Submit</button>
+                            </form>
                     </div>
                     </div>
                 </div>
                 <p>Already have an account? 
-                    <Link to='/'> Login</Link>
+                    <Link to='/login'> Login</Link>
                 </p>
             </div>
         </div>

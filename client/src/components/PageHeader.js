@@ -5,17 +5,13 @@ import LogoutButton from "./LogoutButton"
 import '../styles/PageHeader.css'
 import '../styles/palette.css'
 
-const PageHeader = () => {
+const PageHeader = (loggedIn) => {
     return (
         <>
             <header>
                 <Jumbotron />
-
-                <div>
-                    <LogoutButton />
-                </div>
+                {loggedIn && <LogoutButton />}
             </header>
-            <hr />
         </>
     )
 }
