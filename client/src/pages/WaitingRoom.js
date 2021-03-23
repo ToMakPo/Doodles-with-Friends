@@ -16,9 +16,9 @@ import '../styles/WaitingRoom.css'
 const WaitingRoom = () => {
     const [lobby, setLobby] = useState({});
     // const {lobby} = useContext(LobbyContext)
-    console.log('WaitingRoom - lobby:', lobby)
+    console.log('WaitingRoom - lobby:', lobby.host)
     const AuthUser = useAuthenticatedUser()
-    console.log('WaitingRoom - user:', AuthUser);
+    console.log('WaitingRoom - user:', AuthUser._id);
 
     useEffect(() => {
         const lobbyId = window.location.pathname.split('room/')[1]
@@ -132,6 +132,8 @@ const WaitingRoom = () => {
                             <CategoryList
                                 categoriesProp={categories}
                                 setSelectedCategory={setSelectedCategory}
+                                user={AuthUser._id}
+                                host={lobby.host}
                             />
                             <hr></hr>
                             <div className="card-body">
@@ -187,6 +189,7 @@ const WaitingRoom = () => {
                                     aria-label="Recipient's username"
                                     aria-describedby="basic-addon2"
                                     ref={numRoundsRef}
+                                    disabled={AuthUser._id !== lobby.host}
                                 />
                             </div>
                         </div>

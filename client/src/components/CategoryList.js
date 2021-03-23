@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
 
-const CategoryList = ({ categoriesProp, setSelectedCategory }) => {
+const CategoryList = ({ categoriesProp, setSelectedCategory, user, host }) => {
     const categoryRef = useRef()
     function handleCategoryChange() {
         setSelectedCategory(categoryRef.current.value)
@@ -19,7 +19,9 @@ const CategoryList = ({ categoriesProp, setSelectedCategory }) => {
                 name="categories"
                 id="categoriesEl"
                 type="button"
-                ref={categoryRef}>
+                ref={categoryRef}
+                disabled={user !== host}
+            >
 
                 <option value=''>Select Category</option>
                 {categoriesProp.map((category) => (
