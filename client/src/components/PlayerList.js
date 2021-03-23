@@ -1,21 +1,12 @@
 import React from "react"
 
-const PlayerList = ({ playersProp }) => {
+const PlayerList = ({ players }) => {
     return (
         <div>
             <h5 className="card-title">Attending Players:</h5>
             <ol>
-                {/* {playersProp
-                    ? ( */}
-                        {/* playersProp.map((player) => ( */}
-                            
-                            <li key={playersProp.id}>{playersProp.username}</li>
-                        {/* )) */}
-
-
-                    {/* ) : (
-                        <li> No Players Yet</li>
-                    )} */}
+                players.map()
+                <li key={players.id}>{players.username}</li>
             </ol>
         </div>
     )

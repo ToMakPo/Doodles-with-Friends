@@ -1,21 +1,35 @@
 import React, { useEffect, useState, /*useReducer, */useRef, useContext } from "react";
+import { useHistory } from "react-router";
 import { useWordBankContext } from "../utils/GlobalState"
-import ChatBox from "../components/ChatBox"
-import '../styles/palette.css'
-import '../styles/WaitingRoom.css'
+import { useAuthenticatedUser } from "../utils/auth";
 import LobbyContext from "../utils/LobbyContext";
+
+import ChatBox from "../components/ChatBox"
 import testPeopleAPI from "../utils/testPeopleAPI";
 import testCategoriesAPI from '../utils/testCategoriesAPI';
 import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
 import CategoryList from "../components/CategoryList";
-import { useAuthenticatedUser } from "../utils/auth";
-import { useHistory } from "react-router";
+
+import '../styles/palette.css'
+import '../styles/WaitingRoom.css'
 
 const WaitingRoom = () => {
-    const {lobby} = useContext(LobbyContext)
-    console.log(lobby)
+    const [lobby, setLobby] = useState({});
+    // const {lobby} = useContext(LobbyContext)
+    console.log('WaitingRoom - lobby:', lobby)
     const AuthUser = useAuthenticatedUser()
+    console.log('WaitingRoom - user:', AuthUser);
+
+    useEffect(() => {
+        const lobbyId = window.location.pathname.split('room/')[1]
+        API.getLobby(lobbyId)
+            .then(data => {
+                setLobby(data.data[0])
+            })
+            .catch(err => console.error(err))
+    }, [])
+    
     // const [attendees, setAttendees] = useState({
 
     // });
@@ -53,15 +67,16 @@ const WaitingRoom = () => {
         //     setPlayers(data)
         // })
         //OLD DEVELOPMENT CODE END
+        for (const player of players) {
+            API.getPlayer(player._id)
+                .then(({ data }) => {
+                    // data.forEach(element => console.log(element.name))
+                    setPlayers(data)
+                })
+                .catch(err => console.log(err))
+        }
 
-        API.getPlayer(AuthUser._id)
-            .then(({ data }) => {
-                // data.forEach(element => console.log(element.name))
-                setPlayers(data)
-            })
-            .catch(err => console.log(err))
-
-    }, [setPlayers, AuthUser])
+    }, [players])
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -71,27 +86,6 @@ const WaitingRoom = () => {
         });
         customWordInputRef.current.value = "";
     }
-
-    const printPeople = event => {
-        event.preventDefault();
-
-        console.log("Getting people")
-
-        testPeopleAPI.getPeople()
-            .then(({ data }) => {
-
-                data.forEach(element => console.log(element.name))
-                setPlayers(data)
-            })
-    }
-    // useEffect(() => {
-    //     const lobbyId = window.location.pathname.split('room/')[1]
-    //     API.getLobby(lobbyId)
-    //         .then(data => {
-    //             setLobby(data.data[0])
-    //         })
-    //         .catch(err => console.error(err))
-    // }, [])
     const numRoundsRef = useRef()
     const startGame = (id) => {
         id = lobby.id
@@ -143,7 +137,7 @@ const WaitingRoom = () => {
                                 setSelectedCategory={setSelectedCategory}
                             />
                             <hr></hr>
-                            <div className="card-body ">
+                            <div className="card-body">
                                 <form
                                     className="d-flex 
                                         flex-grow-1

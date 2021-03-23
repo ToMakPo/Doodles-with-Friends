@@ -36,9 +36,8 @@ const ChatBox = () => {
     // const lobby = {id: 'D5EA12C14'} // TODO: fix this 
     // const activeUser = {username: 'ToMakPo'}
 
-    console.log('In Chat!!!');
-    console.log('lobby:', lobby);
-    console.log('user:', user);
+    console.log('ChatBox - lobby:', lobby);
+    console.log('ChatBox - user:', user);
 
     const [messages/*, setMessages*/] = useState([])
     const [message, setMessage] = useState('')
