@@ -1,23 +1,22 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, /*useReducer, */useRef, useContext } from "react";
+import { useHistory } from "react-router";
 import { useWordBankContext } from "../utils/GlobalState"
+import { useAuthenticatedUser } from "../utils/auth";
+import LobbyContext from "../utils/LobbyContext";
 import ChatBox from "../components/ChatBox"
-import '../styles/palette.css'
-import '../styles/WaitingRoom.css'
-// import { LobbyContext } from "../utils/GameContext";
-import testCategoriesAPI from "../utils/testCategoriesAPI";
+import testPeopleAPI from "../utils/testPeopleAPI";
+import testCategoriesAPI from '../utils/testCategoriesAPI';
 import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
 import CategoryList from "../components/CategoryList";
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
-
 const WaitingRoom = () => {
     const [lobby, setLobby] = useState({});
     // const {lobby} = useContext(LobbyContext)
     console.log('WaitingRoom - lobby:', lobby)
     const AuthUser = useAuthenticatedUser()
     console.log('WaitingRoom - user:', AuthUser);
-
     useEffect(() => {
         const lobbyId = window.location.pathname.split('room/')[1]
         API.getLobby(lobbyId)
@@ -26,30 +25,27 @@ const WaitingRoom = () => {
             })
             .catch(err => console.error(err))
     }, [])
-
     // const [attendees, setAttendees] = useState({
-
     // });
-
-    const AuthUser = useAuthenticatedUser()
-
+    // useEffect(()=>{
+    //     const peopleTestArray =["Danny", "Aaron", "Makai", "Mike"]//the below is just to test the setAttendees function
+    //     console.log(peopleTestArray)
+    //     setAttendees(peopleTestArray)
+    // },[])
     //Populate Categories function
     const [categories, setCategories] = useState([])
     const [selectedCategory, setSelectedCategory] = useState('')
     useEffect(() => {
         testCategoriesAPI.getCategories()
-
             .then(({ data }) => {
                 console.log("data: ", data)
                 setCategories(data)
             })
     }, [setCategories])
-
     //Functionality for the Add Words using the GlobalState
     const customWordInputRef = useRef()
     const [listOfCustomWords, dispatch] =
         useWordBankContext();
-
     //Functionality to render the PlayerList    
     const [players, setPlayers] = useState([])
     useEffect(() => {
@@ -60,16 +56,15 @@ const WaitingRoom = () => {
         //     setPlayers(data)
         // })
         //OLD DEVELOPMENT CODE END
-
-        API.getPlayer(AuthUser._id)
-            .then(({ data }) => {
-                // data.forEach(element => console.log(element.name))
-                setPlayers(data)
-            })
-            .catch(err => console.log(err))
-
-    }, [setPlayers, AuthUser])
-
+        for (const player of players) {
+            API.getPlayer(player._id)
+                .then(({ data }) => {
+                    // data.forEach(element => console.log(element.name))
+                    setPlayers(data)
+                })
+                .catch(err => console.log(err))
+        }
+    }, [players])
     function handleSubmit(event) {
         event.preventDefault();
         dispatch({
@@ -78,16 +73,6 @@ const WaitingRoom = () => {
         });
         customWordInputRef.current.value = "";
     }
-
-    useEffect(() => {
-        const lobbyId = window.location.pathname.split('room/')[1]
-        API.getLobby(lobbyId)
-            .then(data => {
-                setLobby(data.data[0])
-
-            })
-            .catch(err => console.error(err))
-    }, [])
     const numRoundsRef = useRef()
     const startGame = (id) => {
         id = lobby.id
@@ -103,12 +88,10 @@ const WaitingRoom = () => {
                 nextPage()
             })
     }
-
     const history = useHistory()
     const nextPage = () => {
         console.log(lobby)
         history.push(`/active-game/${lobby.id}`);
-
     }
     console.log(lobby)
     console.log("players: ", players)
@@ -116,39 +99,34 @@ const WaitingRoom = () => {
     return (
         <div
             id="bootstrap-overrides"
-            className="container containerCol sketchBackground">
-            <main className="row sketchBackground">
+            className="main container containerCol sketchBackground">
+            <div className="row sketchBackground">
                 <div className="card-deck">
-
                     {/* Column 1 */}
                     <div className="card">
                         <h2 className="card-header">Game Code: {lobby === undefined ? `no lobby` : lobby.id}</h2>
                         <div className="card-body">
-
                             <PlayerList players={players} />
-
                         </div>
                     </div>
                     {/* Column 2 */}
                     <div className="card">
                         <h2 className="card-header">Options:</h2>
                         <div style={{ padding: "0px 10px" }}>
-
                             <CategoryList
                                 categoriesProp={categories}
                                 setSelectedCategory={setSelectedCategory}
                             />
                             <hr></hr>
-                            <div className="card-body ">
+                            <div className="card-body">
                                 <form
                                     className="d-flex 
-                                    flex-grow-1
-                                    justify-content-center
-                            row"
+                                        flex-grow-1
+                                        justify-content-center
+                                        row"
                                     onSubmit={handleSubmit}
                                 >
-
-                                    <div className="" >
+                                    <div>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -165,21 +143,13 @@ const WaitingRoom = () => {
                                             +
                                         </button>
                                     </div>
-
                                 </form>
-
-
                                 <br></br>
                                 <div>
-                                    {/* <h5 className="card-title">Added Words:</h5> */}
                                     <ul className="list-group">
-                                        {listOfCustomWords.map((boop) => (
-
-                                            <li
-                                                className=""
-                                                key={boop.id}
-                                            >
-                                                {boop.name}{" "}
+                                        {listOfCustomWords.map(word => (
+                                            <li className="" key={word.id}>
+                                                {word.name + " "}
                                                 <button
                                                     className="btn btnDel"
                                                     onClick={_ => dispatch({
@@ -208,37 +178,24 @@ const WaitingRoom = () => {
                     {/* Column 3 */}
                     <ChatBox />
                 </div>{/* end card deck div */}
-            </main>
+            </div>
             <div className="containerBottom">
                 <div className="card-deck">
-                    {/* <div className="card"> */}
                     <div className="card-body row">
-                        {/* <div className="col"> */}
-                        {/* <h5 className="card-title col">Number of Rounds:</h5> */}
-                        {/* <input 
-                                type="text" 
-                                className="form-control col" 
-                                placeholder="" 
-                                aria-label="Recipient's username" 
-                                aria-describedby="basic-addon2"
-                                /> */}
                         <button className="
                                 col
                                 btn btn-primary 
                                 btn-lg 
                                 btn-block" type="button"
-                            onClick={(e) => {
-                                e.preventDefault()
+                            onClick={event => {
+                                event.preventDefault()
                                 startGame()
-                            }
-                            }
+                            }}
                         >Start Game</button>
                     </div>
-                    {/* </div> */}
                 </div>
             </div>
         </div>
     )
 }
-
 export default WaitingRoom
