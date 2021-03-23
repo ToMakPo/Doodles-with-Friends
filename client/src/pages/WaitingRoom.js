@@ -10,7 +10,6 @@ import testCategoriesAPI from '../utils/testCategoriesAPI';
 import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
 import CategoryList from "../components/CategoryList";
-
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
 
@@ -29,7 +28,7 @@ const WaitingRoom = () => {
             })
             .catch(err => console.error(err))
     }, [])
-    
+
     // const [attendees, setAttendees] = useState({
 
     // });
@@ -155,9 +154,9 @@ const WaitingRoom = () => {
                                     </div>
                                     <div>
                                         <button
-                                            className="col btn btnAdd btn-block" 
+                                            className="col btn btnAdd btn-block"
                                             type="submit">
-                                                +
+                                            +
                                         </button>
                                     </div>
                                 </form>
@@ -170,9 +169,9 @@ const WaitingRoom = () => {
                                                 <button
                                                     className="btn btnDel"
                                                     onClick={_ => dispatch({
-                                                            type: "deleteWord",
-                                                            id: word.id
-                                                        })}
+                                                        type: "deleteWord",
+                                                        id: word.id
+                                                    })}
                                                 >x</button>
                                             </li>
                                         ))}
