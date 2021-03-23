@@ -16,7 +16,6 @@ router.post("/authenticated", authenticateUser, (req, res) => {
 });
 
 router.post("/login", validateBodyWith(loginValidator), async (req, res) => {
-
     const { username, password } = req.body;
 
     try {

@@ -1,7 +1,4 @@
-input{
-    padding:5px;
-}
-.col{
+.col {
     justify-items: center;
     justify-content: center;
     align-items: center;
@@ -9,9 +6,27 @@ input{
     padding:0px;
 }
 
-button{
-    margin-left: 5px;
+.main {
+    flex-direction: column;
+    align-items: center;
 }
-input{
-    height:38px
+
+form {
+    gap: 3px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+form > * {
+    flex: 0 0 min(100%, 300px);
+}
+
+input {
+    height:38px;
+    padding: 0 5px;
+}
+
+button {
+    white-space: nowrap;
 }

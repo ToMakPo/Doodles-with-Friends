@@ -1,12 +1,47 @@
-input{
-    padding:5px;
+/* input {
+    padding: 5px;
     justify-items: center;
-    margin:5px;
+    margin: 3px !important;
+    height:38px
 }
 
-button{
-    margin-left: 5px;
+button {
+    margin: 3px !important;
 }
-input{
-    height:38px
+
+.main {
+    flex-direction: column;
+} */
+
+.col {
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding:0px;
+}
+
+.main {
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    gap: 3px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+form > * {
+    flex: 0 0 min(100%, 300px);
+}
+
+input {
+    height:38px;
+    padding: 0 5px;
+}
+
+button {
+    white-space: nowrap;
 }
