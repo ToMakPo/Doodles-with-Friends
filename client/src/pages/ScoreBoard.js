@@ -8,8 +8,7 @@ const ScoreBoard = () => {
         <div
             id="bootstrap-overrides"
             className="container sketchBackground">
-            <main className="">
-
+            <div className='main'>
                 <div className="card-deck">
                     <div className="card">
                         <h2 className="card-header">
@@ -24,7 +23,7 @@ const ScoreBoard = () => {
                     </div>
                     <ChatBox />
                 </div>
-            </main>
+            </div>
         </div>
     )
 }

@@ -24,6 +24,7 @@ router.put('/lobby/:id', (req, res) => {
 
 // This route is called by the corresponding API.js front end route which returns the user to be rendered in the PlayerList component.
 router.get('/user/:id', (req, res) => {
+    console.log('getting user:', req.params.id);
     db.User
         .findById(req.params.id)
         .then(data => res.json(data))

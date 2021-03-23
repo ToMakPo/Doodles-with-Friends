@@ -1,48 +1,78 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { useState } from 'react'
+import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom'
+
 import PageHeader from './components/PageHeader'
 import PageFooter from './components/PageFooter'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Home from './pages/Home'
-
 import WaitingRoom from './pages/WaitingRoom'
 import ActiveGame from './pages/ActiveGame'
-
 import ScoreBoard from './pages/ScoreBoard'
-// import GameContext from './utils/GameContext'
-import LobbyProvider from './utils/GameContext'
-import { WordBankProvider } from './utils/GlobalState'
 import PageNotFound from './pages/PageNotFound'
+
+import LobbyContext from './utils/LobbyContext'
+import { WordBankProvider } from './utils/GlobalState'
+import { useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
+
 import "./styles/palette.css"
-import { useAuthenticatedUser, useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
 
 const App = () => {
+    const [lobby, setLobby] = useState()
 
 	useAuthTokenStore();
-	const isAuthenticated = useIsAuthenticated();
-	const AuthUser = useAuthenticatedUser()
-	console.log(AuthUser);
-	return (
-		<LobbyProvider>
-			<WordBankProvider>
-				<BrowserRouter>
-					<PageHeader /*logUserOut={logUserOut}*/ />
-					{/* {true ? <WaitingRoom/> : ( */}
-					<Switch>
-						<Route exact path='/' component={isAuthenticated ? Home : Login} />
-						<Route exact path='/login' component={isAuthenticated ? Home : Login} />
-						<Route exact path='/signup' component={isAuthenticated ? Home : Signup} />
-						{isAuthenticated && <Route path='/waiting-room/:roomId' component={WaitingRoom} />}
-						{isAuthenticated && <Route path='/active-game/:roomId' component={ActiveGame} />}
-						{isAuthenticated && <Route path='/score-board/:roomId' component={ScoreBoard} />}
-						<Route component={PageNotFound} />
-					</Switch>
-					{/* )} */}
-				</BrowserRouter>
+	const isAuthenticated = useIsAuthenticated() || false;
 
+	const history = useHistory()
+
+	function fixURL(defaultPage, ...ifs) {	
+		const pathname = window.location.pathname.split('/')[1]
+
+		if (pathname === '' || ifs.includes(pathname)) {
+			window.history.replaceState(null, '', '/' + defaultPage)
+			history?.push(defaultPage)
+		}
+	}
+
+	if (!isAuthenticated) {
+		console.log({isAuthenticated});
+		fixURL('login', 'home', 'waiting-room', 'active-game', 'score-board')
+	} else {
+		fixURL('home', 'login', 'signup')
+	}
+
+	return (
+		<LobbyContext.Provider value={lobby}>
+			<WordBankProvider>
+				{
+				// true ? <ActiveGame/>: //TODO: remove this line
+				<Router>
+					<PageHeader loggedIn={isAuthenticated}/>
+
+					<main>
+						{!isAuthenticated ? (
+							<Switch>
+								<Route exact path='/login' component={Login} />
+								<Route exact path='/signup' component={Signup} />
+								<Route render={_ => <div>PageNotFound (logged out)</div>} />
+							</Switch>
+						) : (
+							<Switch>
+								<Route exact path='/home' render={_ => <Home setLobby={setLobby}/>} />
+								<Route exact path='/waiting-room/:roomId' component={WaitingRoom} />
+								<Route exact path='/active-game/:roomId' component={ActiveGame} />
+								<Route exact path='/score-board/:roomId' component={ScoreBoard} />
+								<Route render={_ => <div>PageNotFound (logged in)</div>} />
+								{/* <Route render={PageNotFound} /> */}
+							</Switch>
+						)}
+					</main>
+					
+				</Router>
+				}
 				<PageFooter />
 			</WordBankProvider>
-		</LobbyProvider>
+		</LobbyContext.Provider>
 	)
 }
 export default App

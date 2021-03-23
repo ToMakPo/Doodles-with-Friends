@@ -1,9 +1,9 @@
 // import { useState, useRef, useContext } from 'react'
 import { useRef } from 'react'
+// import LobbyContext from '../utils/LobbyContext'
 // import io from 'socket.io-client'
-import PropTypes from 'prop-types'
-// import GameContext from "../utils/GameContext"
 
+import PropTypes from 'prop-types'
 import '../styles/Canvas.css'
 
 /**
@@ -11,28 +11,44 @@ import '../styles/Canvas.css'
  * @param {Number} height The height of the drawing area (Required)
  * @param {Boolean} active True if this is the active player (Required)
  */
-const Canvas = ({ active }) => {
+const Canvas = ({active}) => {
+    // const {lobby} = useContext(LobbyContext)
+
     const penTool = useRef()
     const penBody = useRef()
     const eraserTool = useRef()
     const canvasCursor = useRef()
 
-    // const {user, lobby} = useContext(GameContext)
     // const [activeTool, setActiveTool] = useState(penTool)
 
     // let lastPoint = null
 
     /// EVENT LISTENERS ///
     const canvasOnMouseMove = event => {
-        const x = event.offsetX
-        const y = event.offsetY
-        canvasCursor.style.top = y + 'px'
-        canvasCursor.style.left = x + 'px'
-
+        // const x = event.offsetX
+        // const y = event.offsetY
+        // canvasCursor.style.top = y + 'px'
+        // canvasCursor.style.left = x + 'px'
+    
         // if (lastPoint !== null) {
         //     drawLine(x, y)
         //     emit.drawLine(x, y)
         // }
+    }
+    function penToolOnClick() {
+
+    }
+    function eraserToolOnClick() {
+
+    }
+    function clearDrawingButtonOnClick() {
+
+    }
+    function colorPickerOnInput() {
+
+    }
+    function sizePickerOnInput() {
+
     }
 
     return (
@@ -47,7 +63,7 @@ const Canvas = ({ active }) => {
                     <span id='canvas-cursor' ref={canvasCursor}></span>
                     <div id='tools'>
                         <div>
-                            <svg id='pen-tool' className='tool' ref={penTool} onClick='handlePenToolOnClick()' style={{ width: 24, height: 120 }}>
+                            <svg id='pen-tool' className='tool' ref={penTool} onClick={penToolOnClick} style={{width: 24, height: 120}}>
                                 <path
                                     id='pen-tip'
                                     d='M 9.96296,2.125 2,15.996524 V 20.125 H 22 V 15.996524 L 14.03702,2.125 Z'
@@ -70,7 +86,7 @@ const Canvas = ({ active }) => {
                                     d='m 19.867188,16.625 -0.004,0.0039 c 0.08807,0.150606 0.135202,0.321633 0.13672,0.496092 v 1 h -16 v -1 c -3.512e-4,-0.175432 0.045456,-0.347869 0.13282,-0.5 L 9.218664,7.8164 h 5.5625 l 5.085938,8.808592 m 3.460938,-2 -7,-12.121092 -0.004,0.0039 C 15.432924,0.961117 13.784843,0.006808 11.99982,0.003894 L 12,0 C 10.212775,0.0023 8.5626948,0.95842 7.671876,2.507814 l -0.004,-0.0039 -7,12.121092 0.0078,0.0039 C 0.23546754,15.387293 0.00244896,16.248114 0,17.125 V 112 c 0,4.41828 3.581722,8 8,8 h 8 c 4.418278,0 8,-3.58172 8,-8 V 17.125 C 23.9987,16.24846 23.767004,15.387663 23.328126,14.628908 M 4,22.125 H 20 V 92 H 4 Z M 4,96 h 16 v 8 H 4 Z m 0,12 h 16 v 4 c 0,2.20914 -1.790861,4 -4,4 H 8 c -2.209139,0 -4,-1.79086 -4,-4 z'
                                     style={{ fill: '#4d4d4d' }} />
                             </svg>
-                            <svg id='eraser-tool' className='tool' ref={eraserTool} onClick='handleEraserToolOnClick()' style={{ width: 32, height: 120 }}>
+                            <svg id='eraser-tool' className='tool' ref={eraserTool} onClick={eraserToolOnClick} style={{width: 32, height: 120}}>
                                 <path
                                     id='eraser-top'
                                     d='m 29.999995,17.500006 v -9.68519 c 0,-3.313701 -2.686291,-6 -6,-6 H 7.9999938 c -3.3137084,0 -6.0000001,2.686299 -6.0000001,6 v 9.68519 z'
@@ -94,13 +110,22 @@ const Canvas = ({ active }) => {
             </div>
             {active &&
                 <div className="d-flex justify-content-around align-items-center">
-                    <input id='color-picker' onInput="handleColorPickerOnInput(this.value)" type="color" />
-                    <input id='size-picker' onInput="handleSizePickerOnInput(this.value)" type="range"
-                        min={1} max={50} value={20} />
-                    <button
-                        type="button"
+                    <input
+                        id='color-picker' 
+                        type="color"
+                        onInput={({target}) => colorPickerOnInput(target.value)}/>
+                    <input
+                        id='size-picker' 
+                        type="range" 
+                        onInput={({target}) => sizePickerOnInput(target.value)} 
+                        min={1}
+                        max={50}
+                        value={20}/>
+                    <button 
+                        id='clear-drawing-button'
                         className="btn btn-primary"
-                        id='clear-drawing-button' onClick="handleClearDrawingButtonOnClick()">
+                        type="button" 
+                        onClick={clearDrawingButtonOnClick}>
                         Clear Drawing
                     </button>
                 </div>
@@ -110,8 +135,6 @@ const Canvas = ({ active }) => {
 }
 
 Canvas.propTypes = {
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
     active: PropTypes.bool.isRequired
 }
 
