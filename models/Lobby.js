@@ -37,7 +37,10 @@ const lobbySchema = new mongoose.Schema(
                 ref: User
             }
         }],
-        
+        rules: {
+            maxRotations: number,
+            category: String
+        },
         userWords: [String],
         players: [{
             type: mongoose.Schema.Types.ObjectId,
