@@ -37,6 +37,7 @@ const lobbySchema = new mongoose.Schema(
                 ref: User
             }
         }],
+        
         userWords: [String],
         players: [{
             type: mongoose.Schema.Types.ObjectId,
@@ -102,7 +103,9 @@ lobbySchema.methods.randomizePlayerOrder = function() {
 lobbySchema.methods.buildWordBank = function(category) {
     const set = new Set(this.userWords)
 
-    const options = wordBank.getCategory(category)
+    const options = category === 'all'
+        ? wordBank.getAll()
+        : wordBank.getCategory(category)
 
     while (set.size < 100 && options.length > 0) {
         const rand = Math.floor(Math.random() * options.length - 1)
