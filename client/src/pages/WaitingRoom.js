@@ -22,13 +22,7 @@ const WaitingRoom = () => {
 
     const history = useHistory()
     const userId = useAuthenticatedUser()._id
-
-    const emit = {
-        addPlayer: player => socket.emit('addPlayer', lobby, player),
-        updateRotations: count => socket.emit('updateRotations', lobby, count),
-        updateCatagory: category => socket.emit('updateCatagory', lobby, category),
-        startGame: _ => socket.emit('startGame', lobby)
-    }
+    const [emit, setEmit] = useState({})
 
     useEffect(() => {
         (async _ => {
@@ -103,9 +97,15 @@ const WaitingRoom = () => {
 
     useEffect(() => {
         // socket.current = io.connect('/')
-
         // socket.current.on(`${lobby.code}-addPlayer`, addPlayer)
-    })
+
+        setEmit({
+            addPlayer: player => socket.emit('addPlayer', lobby, player),
+            updateRotations: count => socket.emit('updateRotations', lobby, count),
+            updateCatagory: category => socket.emit('updateCatagory', lobby, category),
+            startGame: _ => socket.emit('startGame', lobby)
+        })
+    }, [])
 
     /// these functions should only be called by sockets
     function addPlayer(player) {
