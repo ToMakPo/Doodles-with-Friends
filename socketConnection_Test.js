@@ -1,5 +1,5 @@
 function newConnection(socket, io) {
-    console.log('new connection:', socket.id)
+    console.debug('new connection:', socket.id)
 
     socket.on('setColor', (gameId, color) => {
         socket.broadcast.emit(`${gameId}-setColor`, color)
@@ -17,7 +17,7 @@ function newConnection(socket, io) {
         socket.broadcast.emit(`${gameId}-endLine`)
     })
     socket.on('clearDrawing', (gameId) => {
-        console.log('sensed clearDrawing');
+        console.debug('sensed clearDrawing');
         socket.broadcast.emit(`${gameId}-clearDrawing`)
     })
     socket.on('usePen', (gameId) => {
@@ -27,7 +27,7 @@ function newConnection(socket, io) {
         socket.broadcast.emit(`${gameId}-useEraser`)
     })
     socket.on('logMessage', (gameId, sender, message) => {
-        console.log('game id:', gameId);
+        console.debug('game id:', gameId);
         socket.broadcast.emit(`${gameId}-logMessage`, sender, message)
     })
     socket.on('logGuess', (gameId, sender, guess) => {

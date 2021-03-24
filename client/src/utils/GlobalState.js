@@ -12,8 +12,8 @@ const reducer = (state, action) => { //this is our reducer method
                 id:Date.now()
             }])
         case "deleteWord":
-            return(state.filter((boop)=>{
-                return boop.id !== action.id
+            return(state.filter(word => {
+                return word.id !== action.id
             }))
         default:
             return state

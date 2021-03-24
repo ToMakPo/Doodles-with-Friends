@@ -1,5 +1,5 @@
 {
-    "actions": [
+    "Actions": [
         "apologize",
         "burp",
         "catch",
@@ -46,7 +46,7 @@
         "jump"
         
     ],
-    "animal": [
+    "Animal": [
         "aardvark",
         "alligator",
         "alpaca",
@@ -182,7 +182,7 @@
         "yak",
         "zebra"
     ],
-    "body": [
+    "Body": [
         "arm",
         "bone",
         "eye",
@@ -345,7 +345,7 @@
         "white blood cells",
         "wrist"
     ],
-    "character": [
+    "Character": [
         "Abe Lincoln",
         "baby",
         "Baby Yoda",
@@ -372,7 +372,7 @@
         "vampire",
         "Yoshi"
     ],
-    "food": [
+    "Food": [
         "apple",
         "banana",
         "carrot",
@@ -391,7 +391,7 @@
         "sushi",
         "waffles"
     ],
-    "nouns": [
+    "Nouns": [
         "abbey",
         "absence",
         "absorption",
@@ -1365,7 +1365,7 @@
         "workman",
         "youngster"
     ],
-    "object": [
+    "Object": [
         "airplane",
         "balloon",
         "banana peel",
@@ -1448,7 +1448,7 @@
         "whistle",
         "wreath"
     ],
-    "places": [
+    "Places": [
         "attic",
         "bathroom",
         "beach",

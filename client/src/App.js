@@ -18,14 +18,14 @@ import { useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
 import "./styles/palette.css"
 
 const App = () => {
-    const [lobby, setLobby] = useState()
+	const [lobby, setLobby] = useState()
 
 	useAuthTokenStore();
 	const isAuthenticated = useIsAuthenticated() || false;
 
 	const history = useHistory()
 
-	function fixURL(defaultPage, ...ifs) {	
+	function fixURL(defaultPage, ...ifs) {
 		const pathname = window.location.pathname.split('/')[1]
 
 		if (pathname === '' || ifs.includes(pathname)) {
@@ -35,7 +35,7 @@ const App = () => {
 	}
 
 	if (!isAuthenticated) {
-		console.log({isAuthenticated});
+		console.debug({isAuthenticated});
 		fixURL('login', 'home', 'waiting-room', 'active-game', 'score-board')
 	} else {
 		fixURL('home', 'login', 'signup')
@@ -45,9 +45,9 @@ const App = () => {
 		<LobbyContext.Provider value={lobby}>
 			<WordBankProvider>
 				{
-				// true ? <ActiveGame/>: //TODO: remove this line
-				<Router>
-					<PageHeader loggedIn={isAuthenticated}/>
+					// true ? <ActiveGame/>: //TODO: remove this line
+					<Router>
+						<PageHeader loggedIn={isAuthenticated} />
 
 					<main>
 						{!isAuthenticated ? (
@@ -61,9 +61,9 @@ const App = () => {
 						) : (
 							<Switch>
 								<Route exact path='/home' render={_ => <Home setLobby={setLobby}/>} />
-								<Route exact path='/waiting-room/:roomId' component={WaitingRoom} />
-								<Route exact path='/active-game/:roomId' component={ActiveGame} />
-								<Route exact path='/score-board/:roomId' component={ScoreBoard} />
+								<Route exact path='/waiting-room/:lobbyCode' component={WaitingRoom} />
+								<Route exact path='/active-game/:lobbyCode' component={ActiveGame} />
+								<Route exact path='/score-board/:lobbyCode' component={ScoreBoard} />
 								<Route render={_ => <Home setLobby={setLobby}/>} />
 								{/* <Route render={PageNotFound} /> */}
 							</Switch>

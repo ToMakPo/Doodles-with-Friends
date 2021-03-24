@@ -30,7 +30,7 @@ app.use("/api", require("./routes/authentication"));
 app.use(apiRoutes)
 
 const server = app.listen(PORT, () => {
-    console.log(`App running on http://localhost:${PORT}`)
+    console.info(`App running on http://localhost:${PORT}`)
 })
 
 /// SOCKET.IO ///
@@ -40,46 +40,46 @@ const server = app.listen(PORT, () => {
 // io.on('connection', newConnection(socket))
 
 function newConnection(socket, io) {
-    // console.log('new connection:', socket.id)
+    // console.info('new connection:', socket.id)
 
-    // socket.on('setColor', (lobbyId, color) => {
-    //     id.emit(`${lobbyId}-setColor`, color)
+    // socket.on('setColor', (lobbyCode, color) => {
+    //     io.emit(`${lobbyCode}-setColor`, color)
     // })
-    // socket.on('setSize', (lobbyId, size) => {
-    //     id.emit(`${lobbyId}-setSize`, size)
+    // socket.on('setSize', (lobbyCode, size) => {
+    //     io.emit(`${lobbyCode}-setSize`, size)
     // })
-    // socket.on('startLine', (lobbyId, x, y) => {
-    //     id.emit(`${lobbyId}-startLine`, x, y)
+    // socket.on('startLine', (lobbyCode, x, y) => {
+    //     io.emit(`${lobbyCode}-startLine`, x, y)
     // })
-    // socket.on('drawLine', (lobbyId, x, y) => {
-    //     id.emit(`${lobbyId}-drawLine`, x, y)
+    // socket.on('drawLine', (lobbyCode, x, y) => {
+    //     io.emit(`${lobbyCode}-drawLine`, x, y)
     // })
-    // socket.on('endLine', (lobbyId) => {
-    //     id.emit(`${lobbyId}-endLine`)
+    // socket.on('endLine', (lobbyCode) => {
+    //     io.emit(`${lobbyCode}-endLine`)
     // })
-    // socket.on('clearDrawing', (lobbyId) => {
-    //     console.log('sensed clearDrawing');
-    //     id.emit(`${lobbyId}-clearDrawing`)
+    // socket.on('clearDrawing', (lobbyCode) => {
+    //     console.debug('sensed clearDrawing');
+    //     io.emit(`${lobbyCode}-clearDrawing`)
     // })
-    // socket.on('usePen', (lobbyId) => {
-    //     id.emit(`${lobbyId}-usePen`)
+    // socket.on('usePen', (lobbyCode) => {
+    //     io.emit(`${lobbyCode}-usePen`)
     // })
-    // socket.on('useEraser', (lobbyId) => {
-    //     id.emit(`${lobbyId}-useEraser`)
+    // socket.on('useEraser', (lobbyCode) => {
+    //     io.emit(`${lobbyCode}-useEraser`)
     // })
-    // socket.on('logMessage', (lobbyId, sender, message) => {
-    //     console.log('game id:', lobbyId);
-    //     id.emit(`${lobbyId}-logMessage`, sender, message)
+    // socket.on('logMessage', (lobbyCode, sender, message) => {
+    //     console.debug('lobby code:', lobbyCode);
+    //     io.emit(`${lobbyCode}-logMessage`, sender, message)
     // })
-    // socket.on('logGuess', (lobbyId, sender, guess) => {
-    //     id.emit(`${lobbyId}-logGuess`, sender, guess)
+    // socket.on('logGuess', (lobbyCode, sender, guess) => {
+    //     io.emit(`${lobbyCode}-logGuess`, sender, guess)
     //     const answer = 'panda'//TODO: lookup answer for this game
     //     if (guess.toLowerCase() === answer) {
-    //         io.emit(`${lobbyId}-guessIsCorrect`, sender, answer)
+    //         io.emit(`${lobbyCode}-guessIsCorrect`, sender, answer)
     //         //TODO: trigger next round
     //     }
     // })
-    // socket.on('consoleLog', (lobbyId, message) => {
-    //     io.emit(`${lobbyId}-consoleLog`, message)
+    // socket.on('consoleLog', (lobbyCode, message) => {
+    //     io.emit(`${lobbyCode}-consoleLog`, message)
     // })
 }

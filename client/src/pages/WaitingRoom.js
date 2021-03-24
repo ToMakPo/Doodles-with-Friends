@@ -1,57 +1,67 @@
-import React, { useEffect, useState, /*useReducer, */useRef, useContext } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router";
 import { useWordBankContext } from "../utils/GlobalState"
-import { useAuthenticatedUser } from "../utils/auth";
-import LobbyContext from "../utils/LobbyContext";
+import { useAuthenticatedUser } from '../utils/auth'
+
 import ChatBox from "../components/ChatBox"
-import testPeopleAPI from "../utils/testPeopleAPI";
-import testCategoriesAPI from '../utils/testCategoriesAPI';
 import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
-import CategoryList from "../components/CategoryList";
+import io from 'socket.io-client'
+
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
 const WaitingRoom = () => {
     const [lobby, setLobby] = useState({});
-    // const {lobby} = useContext(LobbyContext)
-    console.log('WaitingRoom - lobby:', lobby)
-    const AuthUser = useAuthenticatedUser()
-    console.log('WaitingRoom - user:', AuthUser);
-    useEffect(() => {
-        const lobbyId = window.location.pathname.split('room/')[1]
-        API.getLobby(lobbyId)
-            .then(data => {
-                setLobby(data.data[0])
-            })
-            .catch(err => console.error(err))
-    }, [])
+    const [players, setPlayers] = useState([])
+    const [player, setPlayer] = useState({})
+    const [isHost, setIsHost] = useState(false)
 
-    //Populate Categories function
+    const [rotations, setRotations] = useState(3)
     const [categories, setCategories] = useState([])
-    const [selectedCategory, setSelectedCategory] = useState('')
+    const [category, setCategory] = useState('')
+
+    const history = useHistory()
+    const userId = useAuthenticatedUser()._id
+    const [emit, setEmit] = useState({})
+
     useEffect(() => {
-        testCategoriesAPI.getCategories()
-            .then(({ data }) => {
-                console.log("data: ", data)
-                setCategories(data)
-            })
-    }, [setCategories])
+        (async _ => {
+            // get lobby
+            const lobbyCode = window.location.pathname.split('room/')[1]
+            const {data: [thisLobby]} = await API.getLobby(lobbyCode)
+            setLobby(thisLobby)
+
+            // get player list
+            const playerList = thisLobby.players
+            setPlayers(playerList)
+
+            // get user
+            const {data: user} = await API.getPlayer(userId)
+            const player = {
+                id: user._id,
+                username: user.username
+            }
+            setIsHost(userId === thisLobby.host)
+            setPlayer(player)
+            emit.addPlayer(player)
+            
+            const {data: catagoryList} = await API.getCategories()
+            setCategories(catagoryList)
+        })()
+    }, [])
+    
+    // const [attendees, setAttendees] = useState([]);
+
+    // useEffect(()=>{
+    //     const peopleTestArray =["Danny", "Aaron", "Makai", "Mike"]//the below is just to test the setAttendees function
+    //     console.debug(peopleTestArray)
+    //     setAttendees(peopleTestArray)
+    // },[])
+
     //Functionality for the Add Words using the GlobalState
     const customWordInputRef = useRef()
-    const [listOfCustomWords, dispatch] =
-        useWordBankContext();
-    //Functionality to render the PlayerList    
-    const [players, setPlayers] = useState([])
-    useEffect(() => {
+    const [listOfCustomWords, dispatch] = useWordBankContext();
 
-        for (const player of players) {
-            API.getPlayer(player._id)
-                .then(({ data }) => {
-                    setPlayers(data)
-                })
-                .catch(err => console.log(err))
-        }
-    }, [players])
     function handleSubmit(event) {
         event.preventDefault();
         dispatch({
@@ -60,109 +70,165 @@ const WaitingRoom = () => {
         });
         customWordInputRef.current.value = "";
     }
-    const numRoundsRef = useRef()
-    const startGame = (id) => {
-        id = lobby.id
-        const rounds = parseInt(numRoundsRef.current.value)
-        API.updateLobby(id, {
-            // userWords:[listOfCustomWords],
+
+    //console.debug(lobby)
+    //console.debug("players: ", players)
+    //console.debug(selectedCategory)
+    
+
+    function hostGame(event) {
+        event.preventDefault()
+
+        API.updateLobby(lobby.code, {
             games: [{
-                category: selectedCategory,
-                maxRotations: rounds,
-            }],
+                category: category,
+                maxRotations: rotations
+            }]
+        }).then(data => {
+            console.debug(data);
+            emit.startGame()
         })
-            .then(data => {
-                console.log("updateLobby data: ",data)
-                nextPage()
-            })
     }
-    const history = useHistory()
-    const nextPage = () => {
-        console.log(lobby)
-        history.push(`/active-game/${lobby.id}`);
+
+    ///////////////////
+    ///   SOCKETS   ///
+    ///////////////////
+    const socket = useRef()
+
+    useEffect(() => {
+        // socket.current = io.connect('/')
+        // socket.current.on(`${lobby.code}-addPlayer`, addPlayer)
+
+        setEmit({
+            addPlayer: player => socket.emit('addPlayer', lobby, player),
+            updateRotations: count => socket.emit('updateRotations', lobby, count),
+            updateCatagory: category => socket.emit('updateCatagory', lobby, category),
+            startGame: _ => socket.emit('startGame', lobby)
+        })
+    }, [])
+
+    /// these functions should only be called by sockets
+    function addPlayer(player) {
+        setPlayers([...players, player])
     }
-    console.log(lobby)
-    console.log("players: ", players)
-    console.log(selectedCategory)
+    function updateRotations(count) {
+        setRotations(count)
+    }
+    function updateCatagory(category) {
+        setCategory(category)
+    }
+    function startGame() {
+        history.push(`/active-game/${lobby.code}`);
+    }
+
     return (
         <div
             id="bootstrap-overrides"
-            className="main container containerCol sketchBackground">
-            <div className="row sketchBackground">
+            className="waiting-room-main main container">
+            <div className="row containerCol">
                 <div className="card-deck">
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code: {lobby === undefined ? `no lobby` : lobby.id}</h2>
+                        <h2 className="card-header">Game Code: {lobby === undefined ? `no lobby` : lobby.code}</h2>
                         <div className="card-body">
                             <PlayerList players={players} />
                         </div>
                     </div>
+
                     {/* Column 2 */}
                     <div className="card">
                         <h2 className="card-header">Options:</h2>
-                        <div style={{ padding: "0px 10px" }}>
-                            <CategoryList
-                                categoriesProp={categories}
-                                setSelectedCategory={setSelectedCategory}
-                            />
-                            <hr></hr>
-                            <div className="card-body">
-                                <form
-                                    className="d-flex 
-                                        flex-grow-1
-                                        justify-content-center
-                                        row"
-                                    onSubmit={handleSubmit}
-                                >
-                                    <div>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="Enter Custom Word"
-                                            aria-label="Recipient's username"
-                                            aria-describedby="basic-addon2"
-                                            ref={customWordInputRef}
-                                        />
-                                    </div>
-                                    <div>
-                                        <button
-                                            className="col btn btnAdd btn-block"
-                                            type="submit">
-                                            +
-                                        </button>
-                                    </div>
-                                </form>
-                                <br></br>
+                        <div className="card-body">
+                            <div style={{marginBottom: 5}}>
+                                <label htmlFor="num-rotations-input">
+                                    Number of Rounds</label>
+                                <input
+                                    id='num-rotations-input'
+                                    type="number"
+                                    className="form-control col"
+                                    aria-label="Recipient's username"
+                                    aria-describedby="basic-addon2"
+                                    min={1}
+                                    value={rotations}
+                                    onChange={event => {
+                                        const value = Math.max(event.target.value, 1)
+                                        emit.updateRotations(value)
+                                    }}
+                                    disabled={!isHost}
+                                />
+                            </div>
+                            
+                            <div>
+                                <label htmlFor="category-selector">
+                                    Category</label>
+                                <select
+                                    id="category-selector"
+                                    className="btn btn-primary dropDN col flex-grow-1"
+                                    type="button"
+                                    defaultValue=''
+                                    onChange={event => {
+                                        const category = event.target.value
+                                        emit.updateCatagory(category)
+                                    }}
+                                    disabled={!isHost}
+                                    name="categories">
+
+                                    <option value='any'>Any</option>
+                                    <option disabled>------------</option>
+                                    {categories.map(category => 
+                                        <option
+                                            key={category}
+                                            value={category}>
+                                                {category}
+                                        </option>
+                                    )}
+                                </select>
+                            </div>
+                        </div>
+                        <div className="card-body">
+                            <form
+                                className="d-flex 
+                                    flex-grow-1
+                                    justify-content-center
+                                    row"
+                                onSubmit={handleSubmit}>
                                 <div>
-                                    <ul className="list-group">
-                                        {listOfCustomWords.map(word => (
-                                            <li className="" key={word.id}>
-                                                {word.name + " "}
-                                                <button
-                                                    className="btn btnDel"
-                                                    onClick={_ => dispatch({
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Enter Custom Word"
+                                        aria-label="Recipient's username"
+                                        aria-describedby="basic-addon2"
+                                        ref={customWordInputRef}
+                                    />
+                                </div>
+                                <div>
+                                    <button
+                                        className="col btn btnAdd btn-block" 
+                                        type="submit">
+                                            +
+                                    </button>
+                                </div>
+                            </form>
+                            <div>
+                                <ul className="list-group">
+                                    {listOfCustomWords.map(word => (
+                                        <li className="" key={word.id}>
+                                            {word.name + " "}
+                                            <button
+                                                className="btn btnDel"
+                                                onClick={_ => dispatch({
                                                         type: "deleteWord",
                                                         id: word.id
                                                     })}
-                                                >x</button>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                            <hr></hr>
-                            <div className="card-body">
-                                <input
-                                    type="text"
-                                    className="form-control col"
-                                    placeholder="Number of Rounds"
-                                    aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2"
-                                    ref={numRoundsRef}
-                                />
+                                            >x</button>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         </div>
                     </div>
+
                     {/* Column 3 */}
                     <ChatBox />
                 </div>{/* end card deck div */}
@@ -175,10 +241,8 @@ const WaitingRoom = () => {
                                 btn btn-primary 
                                 btn-lg 
                                 btn-block" type="button"
-                            onClick={event => {
-                                event.preventDefault()
-                                startGame()
-                            }}
+                            onClick={hostGame}
+                            disabled={!isHost}
                         >Start Game</button>
                     </div>
                 </div>
