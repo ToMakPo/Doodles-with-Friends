@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import ChatBox from "../components/ChatBox"
-import ReactDOM from 'react-dom';
+import Timer from "../components/Timer"
 import Countdown from "react-countdown"
 import API from "../utils/API"
 const { default: Canvas } = require("../components/Canvas")
-const Completionist = () => <span>You are good to go!</span>;
+
 
 
 const ArtistView = () => {
@@ -38,10 +38,7 @@ const ArtistView = () => {
 
                     <div className="d-inline p-2 ">
                         TIME REMAINING:     
-                        <Countdown date={Date.now() + 10000}>
-                        <br></br>
-                            <Completionist />
-                        </Countdown>
+                        <Timer />
                     </div>
                     {/* </div> */}
                 </div>
