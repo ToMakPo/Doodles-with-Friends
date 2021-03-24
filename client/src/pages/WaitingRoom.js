@@ -142,13 +142,17 @@ const WaitingRoom = () => {
                     <div className="card">
                         <h2 className="card-header">Options:</h2>
                         <div className="card-body">
-                            <div style={{marginBottom: 5}}>
+                            <div style={{marginBottom: 10}}
+                            className="d-flex 
+                                flex-row
+                                justify-content-center
+                                align-items-center">
                                 <label htmlFor="num-rotations-input">
-                                    Number of Rounds</label>
+                                    Number of Rounds: </label>
                                 <input
                                     id='num-rotations-input'
                                     type="number"
-                                    className="form-control col"
+                                    className="form-control col mr-0"
                                     aria-label="Recipient's username"
                                     aria-describedby="basic-addon2"
                                     min={1}
@@ -161,12 +165,17 @@ const WaitingRoom = () => {
                                 />
                             </div>
                             
-                            <div>
-                                <label htmlFor="category-selector">
-                                    Category</label>
-                                <select
+                            <div style={{marginBottom: 10}}
+                            className="d-flex 
+                                flex-row
+                                justify-content-center
+                                align-items-center">
+                                <label 
+                                className = "col-auto p-0" htmlFor="category-selector">
+                                    Category:</label>
+                                <select 
                                     id="category-selector"
-                                    className="btn btn-primary dropDN col flex-grow-1"
+                                    className=" col-auto btn btn-primary dropDN col flex-grow-1"
                                     type="button"
                                     defaultValue=''
                                     onChange={event => {
@@ -187,15 +196,18 @@ const WaitingRoom = () => {
                                     )}
                                 </select>
                             </div>
-                        </div>
-                        <div className="card-body">
+                        <div style={{marginBottom: 5}}>
                             <form
-                                className="d-flex 
-                                    flex-grow-1
-                                    justify-content-center
-                                    row"
+                                className="
+                                
+                                
+                                d-flex 
+                                flex-row
+                                justify-content-center
+                                align-items-center
+                                    "
                                 onSubmit={handleSubmit}>
-                                <div>
+                                <div className="col-auto p-0">
                                     <input
                                         type="text"
                                         className="form-control"
@@ -205,9 +217,9 @@ const WaitingRoom = () => {
                                         ref={customWordInputRef}
                                     />
                                 </div>
-                                <div>
+                                <div className="col-auto p-0">
                                     <button
-                                        className="col btn btnAdd btn-block" 
+                                        className="btn btnAdd btn-block" 
                                         type="submit">
                                             +
                                     </button>
@@ -229,6 +241,8 @@ const WaitingRoom = () => {
                                     ))}
                                 </ul>
                             </div>
+                        </div>
+                    
                         </div>
                     </div>
 
