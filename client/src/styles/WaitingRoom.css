@@ -9,8 +9,9 @@
 	--aeroBlue: #337ca0;
 }
 
-ol {
+ul {
 	padding-left: 20px;
+	list-style-type: none;
 }
 .form-control {
 	margin-right: 20px;

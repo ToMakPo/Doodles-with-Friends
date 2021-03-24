@@ -15,7 +15,7 @@ const lobbySchema = new mongoose.Schema(
         games: [{
             category: String,
             wordBank: [String],
-            maxRotations: {
+            rotations: {
                 type: Number,
                 default: 5
             },
@@ -38,7 +38,7 @@ const lobbySchema = new mongoose.Schema(
             }
         }],
         rules: {
-            maxRotations: Number,
+            rotations: Number,
             category: String
         },
         userWords: [String],
@@ -125,16 +125,16 @@ lobbySchema.methods.buildWordBank = function(category) {
 /**
  * Start the new game.
  * @param {String} category The catagory of the words being played.
- * @param {Number} maxRotations The maximumn number of rotations.
+ * @param {Number} rotations The maximumn number of rotations.
  */
-lobbySchema.methods.startNewGame = function(category, maxRotations) {
+lobbySchema.methods.startNewGame = function(category, rotations) {
     this.randomizePlayerOrder()
 
     const newGame = {
         code: Math.floor(Math.random() * 36**9).toString(36).toUpperCase().padStart(9, '0'),
         category,
         wordBank: this.buildWordBank(),
-        maxRotations,
+        rotations,
         rounds: [],
         activeIndex: -1,
         activeRotation: 0,
@@ -156,7 +156,7 @@ lobbySchema.methods.startNextRound = function(game) {
     if (game.activeIndex === 0) game.activeRotation++
     const artist = this.players[game.activeIndex]
     if (artist.activeLobby === this) { //Check that this artist has not left the lobby.
-        if (game.activeRotation < game.maxRotations) {
+        if (game.activeRotation < game.rotations) {
             const round = {
                 answer: game.wordBank.splice(Math.floor(Math.random() * game.wordBank.length - 1), 1),
                 artist,

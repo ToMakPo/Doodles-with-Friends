@@ -11,6 +11,7 @@ import io from 'socket.io-client'
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
 const WaitingRoom = () => {
+    const code = window.location.pathname.split('room/')[1]
     const [lobby, setLobby] = useState({});
     const [players, setPlayers] = useState([])
     const [player, setPlayer] = useState({})
@@ -24,18 +25,17 @@ const WaitingRoom = () => {
     const userId = useAuthenticatedUser()._id
 
     const socket = useRef()
-    const [emit] = useState({
-        addPlayer,//: player => socket.emit('addPlayer', lobby, player),
-        updateRotations,//: count => socket.emit('updateRotations', lobby, count),
-        updateCatagory,//: category => socket.emit('updateCatagory', lobby, category),
-        startGame//: _ => socket.emit('startGame', lobby)
-    })
+    const emit = {
+        addPlayer: id => socket.current.emit('addPlayer', code, id),
+        updateRotations: count => socket.current.emit('updateRotations', code, count),
+        updateCatagory: category => socket.current.emit('updateCatagory', code, category),
+        startGame: _ => socket.current.emit('startGame', code)
+    }
 
     useEffect(() => {
         (async _ => {
             // get lobby
-            const lobbyCode = window.location.pathname.split('room/')[1]
-            const {data: [thisLobby]} = await API.getLobby(lobbyCode)
+            const {data: [thisLobby]} = await API.getLobby(code)
             setLobby(thisLobby)
 
             // set up sockets
@@ -43,30 +43,21 @@ const WaitingRoom = () => {
 
             // get player list
             const playerList = thisLobby.players
+            console.log(playerList);
             setPlayers(playerList)
 
             // get user
-            const {data: user} = await API.getPlayer(userId)
-            const player = {
-                id: user._id,
-                username: user.username
-            }
+            // const {data: {_id}} = await API.getPlayer(userId)
+            // console.log(data);
             setIsHost(userId === thisLobby.host)
-            setPlayer(player)
-            emit.addPlayer(player)
+            emit.addPlayer(userId)
+            
+            API.updateLobby(code, {rotations, category})
             
             const {data: catagoryList} = await API.getCategories()
             setCategories(catagoryList)
         })()
     }, [])
-    
-    // const [attendees, setAttendees] = useState([]);
-
-    // useEffect(()=>{
-    //     const peopleTestArray =["Danny", "Aaron", "Makai", "Mike"]//the below is just to test the setAttendees function
-    //     console.debug(peopleTestArray)
-    //     setAttendees(peopleTestArray)
-    // },[])
 
     //Functionality for the Add Words using the GlobalState
     const customWordInputRef = useRef()
@@ -79,20 +70,15 @@ const WaitingRoom = () => {
             name: customWordInputRef.current.value
         });
         customWordInputRef.current.value = "";
-    }
-
-    //console.debug(lobby)
-    //console.debug("players: ", players)
-    //console.debug(selectedCategory)
-    
+    }    
 
     function hostGame(event) {
         event.preventDefault()
 
         API.updateLobby(lobby.code, {
             games: [{
-                category: category,
-                maxRotations: rotations
+                category,
+                rotations
             }]
         }).then(data => {
             console.debug(data);
@@ -103,26 +89,20 @@ const WaitingRoom = () => {
     ///////////////////
     ///   SOCKETS   ///
     ///////////////////
-
     
     function setupSockets(lobby) {
-        // socket.current = io.connect('/')
-        // socket.current.on(`${lobby.code}-addPlayer`, addPlayer)
+        socket.current = io.connect('/')
+        socket.current.on(`${code}-setPlayers`, setPlayers)
+        socket.current.on(`${code}-setRotations`, setRotations)
     }
 
-        /// these functions should only be called by sockets
-        function addPlayer(player) {
-            setPlayers([...players, player])
-        }
-        function updateRotations(count) {
-            setRotations(count)
-        }
-        function updateCatagory(category) {
-            setCategory(category)
-        }
-        function startGame() {
-            history.push(`/active-game/${lobby.code}`);
-        }
+    /// these functions should only be called by sockets
+    function updateCatagory(category) {
+        setCategory(category)
+    }
+    function startGame() {
+        history.push(`/active-game/${lobby.code}`);
+    }
 
     return (
         <div
