@@ -1,11 +1,8 @@
-import React, { useEffect, useState, /*useReducer, */useRef, useContext } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router";
 import { useWordBankContext } from "../utils/GlobalState"
 import { useAuthenticatedUser } from "../utils/auth";
-import LobbyContext from "../utils/LobbyContext";
-
 import ChatBox from "../components/ChatBox"
-import testPeopleAPI from "../utils/testPeopleAPI";
 import testCategoriesAPI from '../utils/testCategoriesAPI';
 import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
@@ -16,9 +13,9 @@ import '../styles/WaitingRoom.css'
 const WaitingRoom = () => {
     const [lobby, setLobby] = useState({});
     // const {lobby} = useContext(LobbyContext)
-    console.log('WaitingRoom - lobby:', lobby.host)
+    console.log('WaitingRoom - lobby:', lobby)
     const AuthUser = useAuthenticatedUser()
-    console.log('WaitingRoom - user:', AuthUser._id);
+    console.log('WaitingRoom - user:', AuthUser);
 
     useEffect(() => {
         const lobbyId = window.location.pathname.split('room/')[1]
@@ -28,16 +25,6 @@ const WaitingRoom = () => {
             })
             .catch(err => console.error(err))
     }, [])
-
-    // const [attendees, setAttendees] = useState({
-
-    // });
-
-    // useEffect(()=>{
-    //     const peopleTestArray =["Danny", "Aaron", "Makai", "Mike"]//the below is just to test the setAttendees function
-    //     console.log(peopleTestArray)
-    //     setAttendees(peopleTestArray)
-    // },[])
 
     //Populate Categories function
     const [categories, setCategories] = useState([])
@@ -59,17 +46,10 @@ const WaitingRoom = () => {
     //Functionality to render the PlayerList    
     const [players, setPlayers] = useState([])
     useEffect(() => {
-        //OLD DEVELOPMENT CODE START
-        // testPeopleAPI.getPeople()
-        // .then( ({data}) => {
-        //     data.forEach(element => console.log(element.name))
-        //     setPlayers(data)
-        // })
-        //OLD DEVELOPMENT CODE END
+
         for (const player of players) {
             API.getPlayer(player._id)
                 .then(({ data }) => {
-                    // data.forEach(element => console.log(element.name))
                     setPlayers(data)
                 })
                 .catch(err => console.log(err))
