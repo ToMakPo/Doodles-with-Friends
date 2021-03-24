@@ -25,10 +25,10 @@ const WaitingRoom = () => {
 
     const socket = useRef()
     const [emit] = useState({
-        addPlayer: player => socket.emit('addPlayer', lobby, player),
-        updateRotations: count => socket.emit('updateRotations', lobby, count),
-        updateCatagory: category => socket.emit('updateCatagory', lobby, category),
-        startGame: _ => socket.emit('startGame', lobby)
+        addPlayer,//: player => socket.emit('addPlayer', lobby, player),
+        updateRotations,//: count => socket.emit('updateRotations', lobby, count),
+        updateCatagory,//: category => socket.emit('updateCatagory', lobby, category),
+        startGame//: _ => socket.emit('startGame', lobby)
     })
 
     useEffect(() => {
