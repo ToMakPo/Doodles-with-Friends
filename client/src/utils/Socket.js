@@ -7,7 +7,7 @@ const Socket = ({lobby}) => {
     useEffect(() => {
         socket.current = io.connect('/')
 
-        socket.current.on(`${lobby.code}`)
+        socket.current.on(`${lobby.code}-addPlayer`, player)
     })
 }
 

@@ -30,7 +30,7 @@ app.use("/api", require("./routes/authentication"));
 app.use(apiRoutes)
 
 const server = app.listen(PORT, () => {
-    console.log(`App running on http://localhost:${PORT}`)
+    console.info(`App running on http://localhost:${PORT}`)
 })
 
 /// SOCKET.IO ///
@@ -40,7 +40,7 @@ const server = app.listen(PORT, () => {
 // io.on('connection', newConnection(socket))
 
 function newConnection(socket, io) {
-    // console.log('new connection:', socket.id)
+    // console.info('new connection:', socket.id)
 
     // socket.on('setColor', (lobbyCode, color) => {
     //     io.emit(`${lobbyCode}-setColor`, color)
@@ -58,7 +58,7 @@ function newConnection(socket, io) {
     //     io.emit(`${lobbyCode}-endLine`)
     // })
     // socket.on('clearDrawing', (lobbyCode) => {
-    //     console.log('sensed clearDrawing');
+    //     console.debug('sensed clearDrawing');
     //     io.emit(`${lobbyCode}-clearDrawing`)
     // })
     // socket.on('usePen', (lobbyCode) => {
@@ -68,7 +68,7 @@ function newConnection(socket, io) {
     //     io.emit(`${lobbyCode}-useEraser`)
     // })
     // socket.on('logMessage', (lobbyCode, sender, message) => {
-    //     console.log('lobby code:', lobbyCode);
+    //     console.debug('lobby code:', lobbyCode);
     //     io.emit(`${lobbyCode}-logMessage`, sender, message)
     // })
     // socket.on('logGuess', (lobbyCode, sender, guess) => {

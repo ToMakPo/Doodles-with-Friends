@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const User = require("./User")
-const wordBank = require('./wordBank.json')
+const wordBank = require('../lib/wordBank')
 
 const lobbySchema = new mongoose.Schema(
     {
@@ -102,7 +102,7 @@ lobbySchema.methods.randomizePlayerOrder = function() {
 lobbySchema.methods.buildWordBank = function(category) {
     const set = new Set(this.userWords)
 
-    const options = [...wordBank[category]]
+    const options = wordBank.getCategory(category)
 
     while (set.size < 100 && options.length > 0) {
         const rand = Math.floor(Math.random() * options.length - 1)

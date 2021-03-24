@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const db = require('../models');
+const wordbank = require('../lib/wordBank')
 
 router.get('/lobby/:code', (req, res) => {
     db.Lobby
@@ -24,7 +25,6 @@ router.put('/lobby/:code', (req, res) => {
 
 // This route is called by the corresponding API.js front end route which returns the user to be rendered in the PlayerList component.
 router.get('/user/:id', (req, res) => {
-    console.log('getting user:', req.params.id);
     db.User
         .findById(req.params.id)
         .then(data => res.json(data))
@@ -37,4 +37,16 @@ router.put('/user/:id', (req, res) => {
         .then(data => res.json(data))
         .catch(err => res.status(422).json(err))
 })
+
+router.get('/wordbank/catagories', (req, res) => {
+    const catagories = wordbank.getCategories();
+    res.json(catagories)
+})
+
+router.get('/wordbank/:catagory', (req, res) => {
+    const catagory = req.params.catagory
+    console.debug({catagory});
+    res.json(wordbank.getCategory(catagory))
+})
+
 module.exports = router;

@@ -35,7 +35,7 @@ const App = () => {
 	}
 
 	if (!isAuthenticated) {
-		console.log({isAuthenticated});
+		console.debug({isAuthenticated});
 		fixURL('login', 'home', 'waiting-room', 'active-game', 'score-board')
 	} else {
 		fixURL('home', 'login', 'signup')

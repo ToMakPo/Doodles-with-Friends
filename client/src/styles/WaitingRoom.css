@@ -1,96 +1,54 @@
-:root{
-    --spaceCadet: #2B2D42;
-    --cinnabar:#db4c40;
-    --middleYellow: #f7e733;
-    --cultured: #f7f7f9;
-    --mediumAquamarine: #41e2ba;
-    --xanadu: #7e8d85;
-    --celadonBlue: #337ca0;
-    --aeroBlue: #337ca0;
-  }
-
-.containerCol{
-    flex-direction: column;
-}
-.containerBottom{
-    margin-top: 10px;
-    width:100%
-}
-ol{
-    padding-left: 20px;
-}
-.form-control{
-    margin-right: 20px;
+:root {
+	--spaceCadet: #2b2d42;
+	--cinnabar: #db4c40;
+	--middleYellow: #f7e733;
+	--cultured: #f7f7f9;
+	--mediumAquamarine: #41e2ba;
+	--xanadu: #7e8d85;
+	--celadonBlue: #337ca0;
+	--aeroBlue: #337ca0;
 }
 
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
+ol {
+	padding-left: 20px;
 }
-
-/* Hide default HTML checkbox */
-.switch input {
-opacity: 0;
-width: 0;
-height: 0;
-}
-
-/* The slider */
-.slider {
-position: absolute;
-cursor: pointer;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background-color: #ccc;
--webkit-transition: .4s;
-transition: .4s;
-}
-
-.slider:before {
-position: absolute;
-content: "";
-height: 26px;
-width: 26px;
-left: 4px;
-bottom: 4px;
-background-color: white;
--webkit-transition: .4s;
-transition: .4s;
+.form-control {
+	margin-right: 20px;
 }
 
 input:checked + .slider {
-background-color: var(--middleYellow);
+	background-color: var(--middleYellow);
 }
 
 input:focus + .slider {
-box-shadow: 0 0 1px var(--middleYellow);
+	box-shadow: 0 0 1px var(--middleYellow);
 }
 
 input:checked + .slider:before {
--webkit-transform: translateX(26px);
--ms-transform: translateX(26px);
-transform: translateX(26px);
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
 }
 
-/* Rounded sliders */
-.slider.round {
-border-radius: 34px;
+p {
+	margin-bottom: 0.5rem !important;
 }
 
-.slider.round:before {
-border-radius: 50%;
+main {
+    
 }
 
-.sliderContainer{
-width: 185px;
-align-items: center !important;
+.main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-p{
-margin-bottom: 0.5rem !important;
+.containerCol {
+    flex: 1 0 auto;
 }
-
+.containerBottom {
+	margin-top: 10px;
+	width: 100%;
+    flex: 0 0 auto;
+}

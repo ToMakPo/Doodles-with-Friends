@@ -15,44 +15,42 @@ const ArtistView = () => {
             })
             .catch(err => console.error(err))
     }, [])
-    console.log('lobby: ', lobby)
-    console.log(totalRounds);
+    console.debug('lobby: ', lobby)
+    console.debug(totalRounds);
     return (
         <div
             id="bootstrap-overrides"
-            className="container sketchBackground">
-            <div className='main'>
-                <h2 className="banner">
-                    <div className="d-flex justify-content-around align-items-center">
+            className="active-game-main main container sketchBackground">
+            <h2 className="banner">
+                <div className="d-flex justify-content-around align-items-center">
 
-                        <div className="d-inline p-2">
-                            THE WORD: { }
-                        </div>
-                        <div className="d-inline p-2 ">
-                            ROUND 1 OF {totalRounds}
-                        </div>
+                    <div className="d-inline p-2">
+                        THE WORD: { }
+                    </div>
+                    <div className="d-inline p-2 ">
+                        ROUND 1 OF {totalRounds}
+                    </div>
 
-                        <div className="d-inline p-2 ">
-                            TIME REMAINING
-                        </div>
+                    <div className="d-inline p-2 ">
+                        TIME REMAINING
                     </div>
-                </h2>
-                <div className="card-deck" style={{
-                    display: 'flex',
-                    alignItems: "stretch",
-                    // flexDirection: 'row'
-                    // flexWrap: 'wrap'
-                }}>
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="">
-                                {/* TODO: Check if this is the active player */}
-                                <Canvas active={true}/> 
-                            </div>
-                        </div>
-                    </div>
-                    <ChatBox lobby={{code: 'D5EA12C14'}} user={{username: 'ToMakPo'}}/>
                 </div>
+            </h2>
+            <div className="card-deck" style={{
+                display: 'flex',
+                alignItems: "stretch",
+                // flexDirection: 'row'
+                // flexWrap: 'wrap'
+            }}>
+                <div className="card">
+                    <div className="card-body">
+                        <div className="">
+                            {/* TODO: Check if this is the active player */}
+                            <Canvas active={true}/> 
+                        </div>
+                    </div>
+                </div>
+                <ChatBox lobby={{code: 'D5EA12C14'}} user={{username: 'ToMakPo'}}/>
             </div>
         </div>
     )

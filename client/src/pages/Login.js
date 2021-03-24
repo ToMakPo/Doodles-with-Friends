@@ -25,49 +25,44 @@ const Login = _ => {
             history.push('/home')
         } catch (err) {
             // Handle error responses from the API
-            console.log(err.response?.data);
+            console.debug(err.response?.data);
         }
     }
 
     return (
         <div
             id="bootstrap-overrides"
-            className=" sketchBackground">
-            <div className="main container" >
-                <div className="card-deck">
-                    <div className="card">
-                        <h2 className="card-header">Existing Users</h2>
-                        <div className="card-body d-flex justify-content-around align-items-center">
-                            <form 
-                                className="d-flex"
-                                onSubmit={handleSubmit}>
-                                <input
-                                    id='username'
-                                    type="text"
-                                    autoComplete="username"
-                                    ref={usernameInput}
-                                    autoFocus
-                                    placeholder="USERNAME"
-                                />
-                                <input
-                                    id='password'
-                                    type="password"
-                                    ref={passwordInput}
-                                    autoComplete="current-password"
-                                    placeholder="PASSWORD"
-                                />
-                                <button type="submit" className="btn btn-primary">Log In</button>
-                            </form>
-                        </div>
+            className="login-main main sketchBackground">
+            <div className="card-deck">
+                <div className="card">
+                    <h2 className="card-header">Existing Users</h2>
+                    <div className="card-body d-flex justify-content-around align-items-center">
+                        <form 
+                            className="d-flex"
+                            onSubmit={handleSubmit}>
+                            <input
+                                id='username'
+                                type="text"
+                                autoComplete="username"
+                                ref={usernameInput}
+                                autoFocus
+                                placeholder="USERNAME"
+                            />
+                            <input
+                                id='password'
+                                type="password"
+                                ref={passwordInput}
+                                autoComplete="current-password"
+                                placeholder="PASSWORD"
+                            />
+                            <button type="submit" className="btn btn-primary">Log In</button>
+                        </form>
                     </div>
                 </div>
-                <p>Don't have an account yet?
-                    <Link to='/signup'> Sign up</Link>
-                </p>
             </div>
-            <div className='toast'>
-                sdfsdf
-            </div>
+            <p>Don't have an account yet?
+                <Link to='/signup'> Sign up</Link>
+            </p>
         </div>
     )
 }

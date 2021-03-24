@@ -38,6 +38,7 @@ class API {
      * @returns {Promise}
      */
     login(userData) {
+        console.debug({userData});
         return this.axios.post("/api/login", userData);
     }
 
@@ -47,7 +48,7 @@ class API {
 
     createLobby(host) {
         const code = Math.floor(Math.random() * 36 ** 9).toString(36).padStart(9, '0').toUpperCase()
-        return this.axios.post(`/api/lobby`, { code, host: host._code })
+        return this.axios.post(`/api/lobby`, { code, host })
     }
 
     getLobby(code) {
@@ -57,8 +58,13 @@ class API {
         return this.axios.put(`/api/lobby/${code}`, body);
     }
     //WaitingRoom.js calls the method below. The method below triggers the corresponding back end route in api.js: router.get('/user/:code', (req, res) => {...
-    getPlayer(code){
-        return this.axios.get(`/api/user/${code}`)
+    getPlayer(id){
+        return this.axios.get(`/api/user/${id}`)
+    }
+
+    getCategories() {
+        console.debug('getting catagories');
+        return this.axios.get('/api/wordbank/catagories')
     }
 }
 
