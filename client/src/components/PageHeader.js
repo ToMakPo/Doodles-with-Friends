@@ -5,7 +5,7 @@ import LogoutButton from "./LogoutButton"
 import '../styles/PageHeader.css'
 import '../styles/palette.css'
 
-const PageHeader = (loggedIn) => {
+const PageHeader = ({ loggedIn }) => {
     return (
         <>
             <header>

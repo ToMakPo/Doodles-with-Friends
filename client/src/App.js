@@ -18,14 +18,14 @@ import { useAuthTokenStore, useIsAuthenticated } from "./utils/auth";
 import "./styles/palette.css"
 
 const App = () => {
-    const [lobby, setLobby] = useState()
+	const [lobby, setLobby] = useState()
 
 	useAuthTokenStore();
 	const isAuthenticated = useIsAuthenticated() || false;
 
 	const history = useHistory()
 
-	function fixURL(defaultPage, ...ifs) {	
+	function fixURL(defaultPage, ...ifs) {
 		const pathname = window.location.pathname.split('/')[1]
 
 		if (pathname === '' || ifs.includes(pathname)) {
@@ -45,9 +45,9 @@ const App = () => {
 		<LobbyContext.Provider value={lobby}>
 			<WordBankProvider>
 				{
-				// true ? <ActiveGame/>: //TODO: remove this line
-				<Router>
-					<PageHeader loggedIn={isAuthenticated}/>
+					// true ? <ActiveGame/>: //TODO: remove this line
+					<Router>
+						<PageHeader loggedIn={isAuthenticated} />
 
 					<main>
 						{!isAuthenticated ? (

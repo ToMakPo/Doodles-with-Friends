@@ -10,7 +10,6 @@ import io from 'socket.io-client'
 
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
-
 const WaitingRoom = () => {
     const [lobby, setLobby] = useState({});
     const [players, setPlayers] = useState([])
@@ -251,5 +250,4 @@ const WaitingRoom = () => {
         </div>
     )
 }
-
 export default WaitingRoom

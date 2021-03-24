@@ -7,10 +7,8 @@ import API from '../utils/API'
 import '../styles/palette.css'
 import '../styles/Home.css'
 
-const Home = ({setLobby}) => {
+const Home = ({ setLobby }) => {
     const AuthUser = useAuthenticatedUser()
-    console.debug({AuthUser});
-    
     const history = useHistory()
     const gameCodeRef = useRef()
 
@@ -22,7 +20,7 @@ const Home = ({setLobby}) => {
             })
             .catch(err => console.error(err))
     }
-    
+
     function joinLobby(event) {
         event.preventDefault()
         const code = gameCodeRef.current.value.toUpperCase().trim()
