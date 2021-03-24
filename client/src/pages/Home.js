@@ -15,7 +15,7 @@ const Home = ({ setLobby }) => {
     function hostGame(event) {
         event.preventDefault()
         API.createLobby(AuthUser)
-            .then(({data}) => {
+            .then(({ data }) => {
                 loadLobby(data.code)
             })
             .catch(err => console.error(err))
@@ -25,12 +25,12 @@ const Home = ({ setLobby }) => {
         event.preventDefault()
         const code = gameCodeRef.current.value.toUpperCase().trim()
         loadLobby(code)
-        window.location.assign(`/waiting-room/${gameCodeRef.current.value}`)
+        history.push(`/waiting-room/${gameCodeRef.current.value}`)
     }
 
     function loadLobby(code) {
         API.getLobby(code)
-            .then(({data}) => {
+            .then(({ data }) => {
                 const lobby = data[0]
                 setLobby(lobby)
                 history.push(`/waiting-room/${lobby.code}`);
