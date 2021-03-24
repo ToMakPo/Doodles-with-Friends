@@ -70,7 +70,7 @@ const WaitingRoom = () => {
             }],
         })
             .then(data => {
-                console.log("updateLobby data: ",data)
+                console.log("updateLobby data: ", data)
                 nextPage()
             })
     }
