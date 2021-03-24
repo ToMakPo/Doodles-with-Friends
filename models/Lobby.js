@@ -38,7 +38,7 @@ const lobbySchema = new mongoose.Schema(
             }
         }],
         rules: {
-            maxRotations: number,
+            maxRotations: Number,
             category: String
         },
         userWords: [String],
