@@ -1,10 +1,8 @@
-import React, { useEffect, useState, /*useReducer, */useRef, useContext } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router";
 import { useWordBankContext } from "../utils/GlobalState"
 import { useAuthenticatedUser } from "../utils/auth";
-import LobbyContext from "../utils/LobbyContext";
 import ChatBox from "../components/ChatBox"
-import testPeopleAPI from "../utils/testPeopleAPI";
 import testCategoriesAPI from '../utils/testCategoriesAPI';
 import PlayerList from "../components/PlayerList";
 import API from "../utils/API";
@@ -104,6 +102,8 @@ const WaitingRoom = () => {
                             <CategoryList
                                 categoriesProp={categories}
                                 setSelectedCategory={setSelectedCategory}
+                                user={AuthUser._id}
+                                host={lobby.host}
                             />
                             <hr></hr>
                             <div className="card-body">
@@ -159,6 +159,7 @@ const WaitingRoom = () => {
                                     aria-label="Recipient's username"
                                     aria-describedby="basic-addon2"
                                     ref={numRoundsRef}
+                                    disabled={AuthUser._id !== lobby.host}
                                 />
                             </div>
                         </div>
