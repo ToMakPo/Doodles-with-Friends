@@ -25,13 +25,7 @@ const WaitingRoom = () => {
             })
             .catch(err => console.error(err))
     }, [])
-    // const [attendees, setAttendees] = useState({
-    // });
-    // useEffect(()=>{
-    //     const peopleTestArray =["Danny", "Aaron", "Makai", "Mike"]//the below is just to test the setAttendees function
-    //     console.log(peopleTestArray)
-    //     setAttendees(peopleTestArray)
-    // },[])
+
     //Populate Categories function
     const [categories, setCategories] = useState([])
     const [selectedCategory, setSelectedCategory] = useState('')
@@ -49,17 +43,10 @@ const WaitingRoom = () => {
     //Functionality to render the PlayerList    
     const [players, setPlayers] = useState([])
     useEffect(() => {
-        //OLD DEVELOPMENT CODE START
-        // testPeopleAPI.getPeople()
-        // .then( ({data}) => {
-        //     data.forEach(element => console.log(element.name))
-        //     setPlayers(data)
-        // })
-        //OLD DEVELOPMENT CODE END
+
         for (const player of players) {
             API.getPlayer(player._id)
                 .then(({ data }) => {
-                    // data.forEach(element => console.log(element.name))
                     setPlayers(data)
                 })
                 .catch(err => console.log(err))
@@ -78,13 +65,14 @@ const WaitingRoom = () => {
         id = lobby.id
         const rounds = parseInt(numRoundsRef.current.value)
         API.updateLobby(id, {
+            // userWords:[listOfCustomWords],
             games: [{
                 category: selectedCategory,
-                maxRotations: rounds
-            }]
+                maxRotations: rounds,
+            }],
         })
             .then(data => {
-                console.log(data)
+                console.log("updateLobby data: ",data)
                 nextPage()
             })
     }

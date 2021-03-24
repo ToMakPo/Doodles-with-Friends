@@ -17,7 +17,8 @@ const ArtistView = () => {
             .catch(err => console.error(err))
     }, [])
     console.log('lobby: ', lobby)
-    console.log(totalRounds);
+    console.log("totalRounds: ", totalRounds);
+    console.log("userWords: ")
     return (
         <div
             id="bootstrap-overrides"
