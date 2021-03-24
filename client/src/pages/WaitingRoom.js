@@ -9,14 +9,12 @@ import API from "../utils/API";
 import CategoryList from "../components/CategoryList";
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
-
 const WaitingRoom = () => {
     const [lobby, setLobby] = useState({});
     // const {lobby} = useContext(LobbyContext)
     console.log('WaitingRoom - lobby:', lobby)
     const AuthUser = useAuthenticatedUser()
     console.log('WaitingRoom - user:', AuthUser);
-
     useEffect(() => {
         const lobbyId = window.location.pathname.split('room/')[1]
         API.getLobby(lobbyId)
@@ -31,18 +29,15 @@ const WaitingRoom = () => {
     const [selectedCategory, setSelectedCategory] = useState('')
     useEffect(() => {
         testCategoriesAPI.getCategories()
-
             .then(({ data }) => {
                 console.log("data: ", data)
                 setCategories(data)
             })
     }, [setCategories])
-
     //Functionality for the Add Words using the GlobalState
     const customWordInputRef = useRef()
     const [listOfCustomWords, dispatch] =
         useWordBankContext();
-
     //Functionality to render the PlayerList    
     const [players, setPlayers] = useState([])
     useEffect(() => {
@@ -54,9 +49,7 @@ const WaitingRoom = () => {
                 })
                 .catch(err => console.log(err))
         }
-
     }, [players])
-
     function handleSubmit(event) {
         event.preventDefault();
         dispatch({
@@ -70,22 +63,21 @@ const WaitingRoom = () => {
         id = lobby.id
         const rounds = parseInt(numRoundsRef.current.value)
         API.updateLobby(id, {
+            // userWords:[listOfCustomWords],
             games: [{
                 category: selectedCategory,
-                maxRotations: rounds
-            }]
+                maxRotations: rounds,
+            }],
         })
             .then(data => {
-                console.log(data)
+                console.log("updateLobby data: ", data)
                 nextPage()
             })
     }
-
     const history = useHistory()
     const nextPage = () => {
         console.log(lobby)
         history.push(`/active-game/${lobby.id}`);
-
     }
     console.log(lobby)
     console.log("players: ", players)
@@ -96,7 +88,6 @@ const WaitingRoom = () => {
             className="main container containerCol sketchBackground">
             <div className="row sketchBackground">
                 <div className="card-deck">
-
                     {/* Column 1 */}
                     <div className="card">
                         <h2 className="card-header">Game Code: {lobby === undefined ? `no lobby` : lobby.id}</h2>
@@ -108,7 +99,6 @@ const WaitingRoom = () => {
                     <div className="card">
                         <h2 className="card-header">Options:</h2>
                         <div style={{ padding: "0px 10px" }}>
-
                             <CategoryList
                                 categoriesProp={categories}
                                 setSelectedCategory={setSelectedCategory}
@@ -197,5 +187,4 @@ const WaitingRoom = () => {
         </div>
     )
 }
-
 export default WaitingRoom
