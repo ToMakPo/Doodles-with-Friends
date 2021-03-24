@@ -18,7 +18,6 @@ const testCategoriesAPI = {
                 {
                     id: 3,
                     category: "body",
-
                 },
                 {
                     id: 4,

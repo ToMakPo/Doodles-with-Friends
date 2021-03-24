@@ -1,7 +1,7 @@
 footer{
-    background-image: url("./assets/banner.jpg");
-    background-size: 100%;
-    background-position: center;
+    background-image: url('./assets/bannerTile.jpg');
+    background-position-y: 65%;
+    background-size: 20%;
     display: flex;
     flex-direction: column;
 }

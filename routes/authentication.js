@@ -62,7 +62,7 @@ router.post("/login", validateBodyWith(loginValidator), async (req, res) => {
             user: secureUser
         })
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ default: "Something went wrong trying to log in." });
     }
 });
@@ -94,7 +94,7 @@ router.post("/register", validateBodyWith(registerValidator), async (req, res) =
         res.json(secureUser);
 
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ default: "Something went wrong creating your account." });
     }
 });

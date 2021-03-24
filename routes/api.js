@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const db = require('../models');
+const wordbank = require('../lib/wordBank')
 
-router.get('/lobby/:id', (req, res) => {
+router.get('/lobby/:code', (req, res) => {
     db.Lobby
-        .find({ id: req.params.id })
+        .find({ code: req.params.code })
         .then(data => res.json(data))
         .catch(err => res.status(422).json(err))
 })
@@ -15,16 +16,15 @@ router.post('/lobby', (req, res) => {
         .catch(err => res.status(422).json(err))
 })
 
-router.put('/lobby/:id', (req, res) => {
+router.put('/lobby/:code', (req, res) => {
     db.Lobby
-        .findOneAndUpdate({ id: req.params.id }, req.body)
+        .findOneAndUpdate({ code: req.params.code }, req.body)
         .then(data => res.json(data))
         .catch(err => res.status(422).json(err));
 })
 
 // This route is called by the corresponding API.js front end route which returns the user to be rendered in the PlayerList component.
 router.get('/user/:id', (req, res) => {
-    console.log('getting user:', req.params.id);
     db.User
         .findById(req.params.id)
         .then(data => res.json(data))
@@ -37,4 +37,16 @@ router.put('/user/:id', (req, res) => {
         .then(data => res.json(data))
         .catch(err => res.status(422).json(err))
 })
+
+router.get('/wordbank/catagories', (req, res) => {
+    const catagories = wordbank.getCategories();
+    res.json(catagories)
+})
+
+router.get('/wordbank/:catagory', (req, res) => {
+    const catagory = req.params.catagory
+    console.debug({catagory});
+    res.json(wordbank.getCategory(catagory))
+})
+
 module.exports = router;

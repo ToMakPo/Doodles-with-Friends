@@ -35,7 +35,7 @@ const App = () => {
 	}
 
 	if (!isAuthenticated) {
-		console.log({ isAuthenticated });
+		console.debug({isAuthenticated});
 		fixURL('login', 'home', 'waiting-room', 'active-game', 'score-board')
 	} else {
 		fixURL('home', 'login', 'signup')
@@ -49,28 +49,28 @@ const App = () => {
 					<Router>
 						<PageHeader loggedIn={isAuthenticated} />
 
-						<main>
-							{!isAuthenticated ? (
-								<Switch>
-									<Route exact path='/login' component={Login} />
-									<Route exact path='/signup' component={Signup} />
-
-									<Route component={Login} />
-									{/* <Route render={_ => <div>PageNotFound (logged out)</div>} /> */}
-								</Switch>
-							) : (
-								<Switch>
-									<Route exact path='/home' render={_ => <Home setLobby={setLobby} />} />
-									<Route exact path='/waiting-room/:roomId' component={WaitingRoom} />
-									<Route exact path='/active-game/:roomId' component={ActiveGame} />
-									<Route exact path='/score-board/:roomId' component={ScoreBoard} />
-									<Route render={_ => <Home setLobby={setLobby} />} />
-									{/* <Route render={PageNotFound} /> */}
-								</Switch>
-							)}
-						</main>
-
-					</Router>
+					<main>
+						{!isAuthenticated ? (
+							<Switch>
+								<Route exact path='/login' component={Login} />
+								<Route exact path='/signup' component={Signup} />
+								
+								<Route component={Login} />
+								{/* <Route render={_ => <div>PageNotFound (logged out)</div>} /> */}
+							</Switch>
+						) : (
+							<Switch>
+								<Route exact path='/home' render={_ => <Home setLobby={setLobby}/>} />
+								<Route exact path='/waiting-room/:lobbyCode' component={WaitingRoom} />
+								<Route exact path='/active-game/:lobbyCode' component={ActiveGame} />
+								<Route exact path='/score-board/:lobbyCode' component={ScoreBoard} />
+								<Route render={_ => <Home setLobby={setLobby}/>} />
+								{/* <Route render={PageNotFound} /> */}
+							</Switch>
+						)}
+					</main>
+					
+				</Router>
 				}
 				<PageFooter />
 			</WordBankProvider>
