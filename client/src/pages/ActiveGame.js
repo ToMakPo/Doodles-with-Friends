@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
 import ChatBox from "../components/ChatBox"
-import Timer from "../components/Timer"
+import ReactDOM from 'react-dom';
+import Countdown from "react-countdown"
 import API from "../utils/API"
 const { default: Canvas } = require("../components/Canvas")
+const Completionist = () => <span>You are good to go!</span>;
+
 
 const ArtistView = () => {
     const [lobby, setLobby] = useState({})
@@ -35,7 +38,11 @@ const ArtistView = () => {
                         </div>
 
                         <div className="d-inline p-2 ">
-                            TIME REMAINING: <Timer/>
+                            TIME REMAINING:     
+                            <Countdown date={Date.now() + 10000}>
+                            <br></br>
+                                <Completionist />
+                            </Countdown>
                         </div>
                     </div>
                 </h2>
