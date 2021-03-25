@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { useLogin } from "../utils/auth"
-import { Link, useHistory } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import '../styles/palette.css'
 import '../styles/Login.css'
@@ -10,7 +10,6 @@ const Login = _ => {
     const usernameInput = useRef('')
     const passwordInput = useRef('')
     const [errorMsg, setErrorMsg] = useState('')
-    const history = useHistory()
 
     const login = useLogin();
 
