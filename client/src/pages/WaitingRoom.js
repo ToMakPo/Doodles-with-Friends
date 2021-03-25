@@ -27,7 +27,7 @@ const WaitingRoom = () => {
         addPlayer: id => socket.current.emit('addPlayer', code, id),
         updateRotations: count => socket.current.emit('updateRotations', code, count),
         updateCategory: category => socket.current.emit('updateCategory', code, category),
-        startGame: _ => socket.current.emit('startGame', code)
+        buildGame: _ => socket.current.emit('buildGame', code, rotations, category)
     }
 
     function changeRules(rules) {
@@ -86,7 +86,7 @@ const WaitingRoom = () => {
             }]
         }).then(data => {
             console.debug(data);
-            emit.startGame()
+            emit.buildGame()
         })
     }
 

@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const apiRoutes = require("./routes")
 const PORT = process.env.PORT || 3001
 const db = require('./models');
+const wordBank = require('./lib/wordBank')
 
 const app = express()
 app.use(express.urlencoded({ extended: true }))
@@ -47,8 +48,7 @@ function newConnection(socket) {
     socket.on('addPlayer', addPlayer)
     socket.on('updateRotations', updateRotations)
     socket.on('updateCategory', updateCategory)
-    socket.on('startGame', startGame)
-    socket.on('playerIsReady', buildGame)
+    socket.on('buildGame', buildGame)
 
     function addPlayer(code, id) {
         db.Lobby.findOneAndUpdate(
@@ -88,18 +88,90 @@ function newConnection(socket) {
             })
     }
 
-    function startGame(code) {
-        io.emit(`${code}-triggerStart`)
-    }
-
-    function buildGame(code, player, words) {
+    function buildGame(code, rotations, category) {
         db.Lobby.findOne({ code })
             .then(lobby => {
-                lobby.rules.category = category
+                const wordList = wordBank.getCategory(category)
+                const players = randomizePlayerOrder(lobby)
+                const answer = getRandomWord(wordList)
+
+                const game = {
+                    rotations,
+                    category,
+                    wordList,
+                    rounds: [{
+                        answer,
+                        artist: players[0],
+                        winner: null
+                    }],
+                    players,
+                    playerIndex: 0,
+                    currentRotation: 0,
+                    winner: null
+                }
+
+                lobby.games.push(game)
                 lobby.save()
-                io.emit(`${code}-setCategory`, category)
+
+                io.emit(`${code}-startGame`)
             })
-        io.emit(`${code}-startGame`)
+    }
+
+    function getActiveGame(lobby) {
+        const index = lobby.games.length - 1
+        return index > -1 ? lobby[index] : null
+    }
+
+    function randomizePlayerOrder(lobby) {
+        const oldList = [...lobby.players]
+        const newList = []
+
+        while (oldList.length > 0) {
+            const len = oldList.length
+            const randomIndex = Math.floor(Math.random() * len - 1)
+            const randomPlayer = oldList.splice(randomIndex, 1)
+            newList.push(randomPlayer)
+        }
+
+        return newList
+    }
+
+    function getRandomWord(wordList) {
+        const rand = Math.floor(Math.random() * wordList.length)
+        const word = wordList.splice(rand, 1)[0]
+        return word
+    }
+
+    function startNextRound(code) {
+        db.Lobby.findOne({ code })
+            .then(lobby => {
+                const game = getActiveGame(lobby)
+                const count = game.players.length
+                game.playerIndex++
+                if (game.playerIndex == count) {
+                    game.playerIndex == 0
+                    game.currentRotation++
+                    if (game.currentRotation == game.rotations) {
+                        /// The game is over. Do not move to next round.
+                        return endGame(lobby)
+                    }
+                }
+
+                game.rounds.push({
+                    answer: getRandomWord(game.wordList),
+                    artist: game.players[game.playerIndex],
+                    winner: null
+                })
+
+                lobby.save()
+                
+                io.emit(`${code}-startNextRound`)
+            })
+    }
+
+    function endGame(lobby) {
+        //TODO: end the game
+        io.emit(`${code}-endGame`)
     }
 
     // socket.on('setColor', (code, color) => {

@@ -4,17 +4,17 @@ const wordBank = require('../lib/wordBank')
 
 const lobbySchema = new mongoose.Schema(
     {
-        code: { //The game code that will be displayed to the players. Not to be confused with _id used by the database.
+        code: { //The lobby code that will be displayed to the players. Not to be confused with _id used by the database.
             type: String,
             trim: true
         },
-        host: {
+        host: { //The player that is hosting this lobby
             type: mongoose.Schema.Types.ObjectId,
             ref: User
         },
-        games: [{
-            category: String,
-            wordBank: [String],
+        games: [{ //A list of games played in this lobby
+            category: String, //The catagory of the words being played
+            wordList: [String], //The list of words that could be selected 
             rotations: {
                 type: Number,
                 default: 5
@@ -30,17 +30,17 @@ const lobbySchema = new mongoose.Schema(
                     ref: User
                 }
             }],
-            activeIndex: Number,
-            activeRotation: Number,
+            playerIndex: Number,
+            currentRotation: Number,
+            players: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: User
+            }],
             winner: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: User
             }
         }],
-        gameIndex: {
-            type: Number,
-            default: -1
-        },
         rules: {
             rotations: {
                 type: Number,
@@ -51,7 +51,6 @@ const lobbySchema = new mongoose.Schema(
                 default: 'any'
             }
         },
-        userWords: [String],
         players: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: User
@@ -87,22 +86,6 @@ lobbySchema.methods.addPlayerToLobby = function (player) {
  */
 lobbySchema.method.addUserWordsToGame = function (words) {
     this.userWords.concat(words)
-    this.save()
-
-    return this
-}
-
-/** Move to the next player in the queue */
-lobbySchema.methods.randomizePlayerOrder = function () {
-    const tempList = [...this.players]
-    this.players = []
-
-    while (tempList.length > 0) {
-        const len = tempList.length
-        const randomIndex = Math.floor(Math.random() * len - 1)
-        const randomPlayer = tempList.splice(randomIndex, 1)
-        this.players.push(randomPlayer)
-    }
     this.save()
 
     return this
