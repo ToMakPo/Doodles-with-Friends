@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom"
 
 import '../styles/palette.css'
 import '../styles/Login.css'
+import swal from "sweetalert"
 
 const Login = _ => {
     const usernameInput = useRef('')
@@ -18,14 +19,25 @@ const Login = _ => {
 
         const username = usernameInput.current.value;
         const password = passwordInput.current.value;
-        
+
         try {
-            login({ username, password });
+
+            await login({ username, password });
+
             // User has been successfully logged in and added to state. Perform any additional actions you need here such as redirecting to a new page.
-            history.push('/home')
+
         } catch (err) {
+
             // Handle error responses from the API
-            console.debug(err.response?.data);
+
+            if (err.response && err.response.data) {
+                swal({
+                    title: "Invalid Code",
+                    text: err.response.data.default || err.response.data.password,
+                    icon: "error",
+                });
+            };
+
         }
     }
 
@@ -37,7 +49,7 @@ const Login = _ => {
                 <div className="card">
                     <h2 className="card-header">Existing Users</h2>
                     <div className="card-body d-flex justify-content-around align-items-center">
-                        <form 
+                        <form
                             className="d-flex"
                             onSubmit={handleSubmit}>
                             <input
