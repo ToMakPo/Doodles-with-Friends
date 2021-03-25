@@ -39,13 +39,15 @@
 }
 
 #bootstrap-overrides .banner{
-  background-color: var(--mediumAquamarine);
-
-  border: 1px solid var(--mediumAquamarine);
+  /* font-family: 'Sedgwick Ave', cursive; */
+  background-color: var(--cultured);
+  border: 1px solid var(--xanadu);
   border-radius: 0.25em;
+  width:100%
 }
-.jumbotron{
+.jumbotron .h1{
   background-color: var(--cultured) !important;
+  color:var(--cinnabar)
 }
 #bootstrap-overrides footer{
   background-color: var(--cultured) !important;
@@ -74,4 +76,8 @@
 #bootstrap-overrides .gameCode{
   background-color: var(--cultured);
   font-family: 'arial';;
+}
+
+.timerElement{
+  color:var(--cinnabar)
 }

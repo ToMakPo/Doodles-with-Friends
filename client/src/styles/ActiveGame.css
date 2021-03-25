@@ -1,0 +1,18 @@
+.card-body{
+    min-width:600px
+}
+.canvasCard{
+    min-width:600px;
+
+}
+.canvasContainer{
+    min-width:600px
+}
+@media (min-width:1200px){
+	.card{
+		flex: 1 0;
+		margin-right: 15px;
+		margin-bottom:5px;
+		margin-left: 15px
+	}
+}
