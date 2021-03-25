@@ -129,7 +129,7 @@ const WaitingRoom = () => {
             id="bootstrap-overrides"
             className="waiting-room-main main container">
             <div className="row containerCol">
-                <div className="card-deck">
+                <div className="card-deck ">
                     {/* Column 1 */}
                     <div className="card">
                         <h2 className="card-header">Game Code:
@@ -262,7 +262,7 @@ const WaitingRoom = () => {
                                 col
                                 btn btn-primary 
                                 btn-lg 
-                                btn-block" type="button"
+                                " type="button"
                             onClick={hostGame}
                             disabled={!isHost}
                         >Start Game</button>
