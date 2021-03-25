@@ -25,35 +25,27 @@ const Timer = () => {
 
             if (seconds === 0  ) {
                 console.log("END ROUND")
+                console.log("Update Word")
+                console.log("Change Artist")
                 setTurns(turns-1);
-                // console.log("turns: ", turns)
-                // console.log("rounds: ", rounds)
+
                 setSeconds(initialSeconds)
 
                 if (turns === 0 ) {
                     console.log("NEW ROUND")
-                    // rounds--
+                    console.log("Update the Round")
+
                     setRounds(rounds-1)
-                    // console.log("turns: ", turns)
-                    // console.log("rounds: ", rounds)
                     setTurns(initialTurns-1)
-                    // setSeconds(initialSeconds)
+
                 }
             }
-                // if(rounds === 0){
-                //     console.log("GAME OVER")
-                //     //     console.log("Update Word")
-                //     //     console.log("Change Artist")
-                //     //     console.log("Update the Round")
-                //     //     console.log("Restart the clock")
-                //         clearInterval(countdown)
-                //     } 
 
-                
         }, 1000);
 
         if(!rounds){
             clearInterval(countdown)
+            console.log("VIEW SCOREBOARD")
         }
         return ()=> {
             clearInterval(countdown);
