@@ -25,7 +25,7 @@ const Home = ({ setLobby }) => {
         event.preventDefault()
         const code = gameCodeRef.current.value.toUpperCase().trim()
         loadLobby(code)
-        history.push(`/waiting-room/${gameCodeRef.current.value}`)
+
     }
 
     function loadLobby(code) {
@@ -33,7 +33,13 @@ const Home = ({ setLobby }) => {
             .then(({ data }) => {
                 const lobby = data[0]
                 setLobby(lobby)
-                history.push(`/waiting-room/${lobby.code}`);
+                if (lobby) {
+
+                    history.push(`/waiting-room/${lobby.code}`);
+                }
+                else {
+                    return
+                }
             })
             .catch(err => console.error(err))
     }

@@ -25,17 +25,17 @@ const WaitingRoom = () => {
 
     const socket = useRef()
     const [emit] = useState({
-        addPlayer: player => socket.emit('addPlayer', lobby, player),
-        updateRotations: count => socket.emit('updateRotations', lobby, count),
-        updateCatagory: category => socket.emit('updateCatagory', lobby, category),
-        startGame: _ => socket.emit('startGame', lobby)
+        addPlayer,//: player => socket.emit('addPlayer', lobby, player),
+        updateRotations,//: count => socket.emit('updateRotations', lobby, count),
+        updateCatagory,//: category => socket.emit('updateCatagory', lobby, category),
+        startGame//: _ => socket.emit('startGame', lobby)
     })
 
     useEffect(() => {
         (async _ => {
             // get lobby
             const lobbyCode = window.location.pathname.split('room/')[1]
-            const {data: [thisLobby]} = await API.getLobby(lobbyCode)
+            const { data: [thisLobby] } = await API.getLobby(lobbyCode)
             setLobby(thisLobby)
 
             // set up sockets
@@ -46,7 +46,7 @@ const WaitingRoom = () => {
             setPlayers(playerList)
 
             // get user
-            const {data: user} = await API.getPlayer(userId)
+            const { data: user } = await API.getPlayer(userId)
             const player = {
                 id: user._id,
                 username: user.username
@@ -54,12 +54,12 @@ const WaitingRoom = () => {
             setIsHost(userId === thisLobby.host)
             setPlayer(player)
             emit.addPlayer(player)
-            
-            const {data: catagoryList} = await API.getCategories()
+
+            const { data: catagoryList } = await API.getCategories()
             setCategories(catagoryList)
         })()
     }, [])
-    
+
     // const [attendees, setAttendees] = useState([]);
 
     // useEffect(()=>{
@@ -84,7 +84,7 @@ const WaitingRoom = () => {
     //console.debug(lobby)
     //console.debug("players: ", players)
     //console.debug(selectedCategory)
-    
+
 
     function hostGame(event) {
         event.preventDefault()
@@ -104,25 +104,25 @@ const WaitingRoom = () => {
     ///   SOCKETS   ///
     ///////////////////
 
-    
+
     function setupSockets(lobby) {
         // socket.current = io.connect('/')
         // socket.current.on(`${lobby.code}-addPlayer`, addPlayer)
     }
 
-        /// these functions should only be called by sockets
-        function addPlayer(player) {
-            setPlayers([...players, player])
-        }
-        function updateRotations(count) {
-            setRotations(count)
-        }
-        function updateCatagory(category) {
-            setCategory(category)
-        }
-        function startGame() {
-            history.push(`/active-game/${lobby.code}`);
-        }
+    /// these functions should only be called by sockets
+    function addPlayer(player) {
+        setPlayers([...players, player])
+    }
+    function updateRotations(count) {
+        setRotations(count)
+    }
+    function updateCatagory(category) {
+        setCategory(category)
+    }
+    function startGame() {
+        history.push(`/active-game/${lobby.code}`);
+    }
 
     return (
         <div
@@ -142,7 +142,7 @@ const WaitingRoom = () => {
                     <div className="card">
                         <h2 className="card-header">Options:</h2>
                         <div className="card-body">
-                            <div style={{marginBottom: 5}}>
+                            <div style={{ marginBottom: 5 }}>
                                 <label htmlFor="num-rotations-input">
                                     Number of Rounds</label>
                                 <input
@@ -160,7 +160,7 @@ const WaitingRoom = () => {
                                     disabled={!isHost}
                                 />
                             </div>
-                            
+
                             <div>
                                 <label htmlFor="category-selector">
                                     Category</label>
@@ -178,11 +178,11 @@ const WaitingRoom = () => {
 
                                     <option value='any'>Any</option>
                                     <option disabled>------------</option>
-                                    {categories.map(category => 
+                                    {categories.map(category =>
                                         <option
                                             key={category}
                                             value={category}>
-                                                {category}
+                                            {category}
                                         </option>
                                     )}
                                 </select>
@@ -207,9 +207,9 @@ const WaitingRoom = () => {
                                 </div>
                                 <div>
                                     <button
-                                        className="col btn btnAdd btn-block" 
+                                        className="col btn btnAdd btn-block"
                                         type="submit">
-                                            +
+                                        +
                                     </button>
                                 </div>
                             </form>
@@ -221,9 +221,9 @@ const WaitingRoom = () => {
                                             <button
                                                 className="btn btnDel"
                                                 onClick={_ => dispatch({
-                                                        type: "deleteWord",
-                                                        id: word.id
-                                                    })}
+                                                    type: "deleteWord",
+                                                    id: word.id
+                                                })}
                                             >x</button>
                                         </li>
                                     ))}
