@@ -43,10 +43,10 @@ router.get('/wordbank/catagories', (req, res) => {
     res.json(catagories)
 })
 
-router.get('/wordbank/:catagory', (req, res) => {
-    const catagory = req.params.catagory
-    console.debug({catagory});
-    res.json(wordbank.getCategory(catagory))
+router.get('/wordbank/:category', (req, res) => {
+    const category = req.params.category
+    console.debug({category});
+    res.json(wordbank.getCategory(category))
 })
 
 module.exports = router;
