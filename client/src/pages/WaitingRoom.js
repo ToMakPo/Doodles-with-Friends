@@ -121,7 +121,8 @@ const WaitingRoom = () => {
         setCategory(category)
     }
     function startGame() {
-        history.push(`/active-game/${lobby.code}`);
+        const lobbyCode = window.location.pathname.split('room/')[1]
+        history.push(`/active-game/${lobbyCode}`);
     }
 
     return (

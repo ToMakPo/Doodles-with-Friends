@@ -1,3 +1,5 @@
+import { set } from "mongoose"
+import { use } from "passport"
 import { useEffect, useState } from "react"
 import ChatBox from "../components/ChatBox"
 import Timer from "../components/Timer"
@@ -7,16 +9,45 @@ const { default: Canvas } = require("../components/Canvas")
 const ArtistView = () => {
     const [lobby, setLobby] = useState({})
     const [totalRounds, setTotalRounds] = useState()
+    const [players, setPlayers] = useState([])
+    const [activePlayer, setActivePlayer] = useState()
     useEffect(() => {
         const lobbyCode = window.location.pathname.split('game/')[1]
         API.getLobby(lobbyCode)
             .then(data => {
                 setLobby(data.data[0])
                 setTotalRounds(data.data[0].games[0].maxRotations)
+                getUserNames(data.data[0].players)
+
             })
             .catch(err => console.error(err))
     }, [])
-    console.debug('lobby: ', lobby)
+
+    const getUserNames = (users) => {
+        // const users = ["604fd87b412eb92698d08f52",
+        //     "60502f10402f6509f0b6aea7",
+        //     "605aa93c775a9c39dca9b0e7",
+        //     "60580bf371fdf237182395b3"]
+        API.getPlayers(users)
+            .then(({ data }) => {
+                const usernames = []
+                for (let i = 0; i < data.length; i++) {
+                    const username = data[i].username;
+                    console.log(username)
+                    usernames.push(username)
+                }
+                setPlayers(usernames)
+                console.log(data)
+            })
+            .catch(err => console.log(err))
+    }
+    const selectRandomPlayer = () => {
+
+        const randomPlayer = players.splice(Math.floor(Math.random() * players.length), 1)
+        setActivePlayer(randomPlayer)
+    }
+    console.log('lobby: ', lobby)
+    console.log(players);
     console.debug(totalRounds);
     return (
         <div
@@ -33,7 +64,11 @@ const ArtistView = () => {
                     </div>
 
                     <div className="d-inline p-2 ">
-                        TIME REMAINING: <Timer/>
+                        TIME REMAINING: <Timer />
+                    </div>
+                    <div>
+                        ACTIVE PLAYER: {activePlayer === undefined ? 'No Players' : activePlayer}
+                        <button type='button' onClick={selectRandomPlayer}>active player</button>
                     </div>
                 </div>
             </h2>
@@ -43,15 +78,16 @@ const ArtistView = () => {
                 // flexDirection: 'row'
                 // flexWrap: 'wrap'
             }}>
+
                 <div className="card">
                     <div className="card-body">
                         <div className="">
                             {/* TODO: Check if this is the active player */}
-                            <Canvas active={true}/> 
+                            <Canvas active={true} />
                         </div>
                     </div>
                 </div>
-                <ChatBox lobby={{code: 'D5EA12C14'}} user={{username: 'ToMakPo'}}/>
+                <ChatBox lobby={{ code: 'D5EA12C14' }} user={{ username: 'ToMakPo' }} />
             </div>
         </div>
     )
