@@ -56,18 +56,20 @@ const ArtistView = () => {
             </h2>
             <div className="card-deck" style={{
                 display: 'flex',
+                justifyContent:"center",
                 alignItems: "stretch",
-                // flexDirection: 'row',
-                // flexWrap: 'wrap'
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                width:"100%",
             }}>
-                <div className="card canvasCard">
-                    <div className="card-body ">
+                {/* <div className="card canvasCard"> */}
+                    {/* <div className="card-body "> */}
                         <div className="canvasContainer">
                             {/* TODO: Check if this is the active player */}
                             <Canvas active={true}/> 
                         </div>
-                    </div>
-                </div>
+                    {/* </div> */}
+                {/* </div> */}
                 <ChatBox lobby={{code: 'D5EA12C14'}} user={{username: 'ToMakPo'}}/>
             </div>
         </div>
