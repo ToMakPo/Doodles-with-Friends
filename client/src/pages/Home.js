@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { useHistory } from 'react-router'
 import { useAuthenticatedUser } from '../utils/auth'
 // import { Link } from 'react-router-dom'
+import swal from 'sweetalert';
 import API from '../utils/API'
 
 import '../styles/palette.css'
@@ -34,10 +35,14 @@ const Home = ({ setLobby }) => {
                 const lobby = data[0]
                 setLobby(lobby)
                 if (lobby) {
-
                     history.push(`/waiting-room/${lobby.code}`);
                 }
                 else {
+                    swal({
+                        title: "Invalid Code",
+                        text: "Please Enter Valid Game Code",
+                        icon: "error",
+                    });
                     return
                 }
             })
