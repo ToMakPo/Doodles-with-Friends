@@ -16,7 +16,7 @@ const ArtistView = () => {
         API.getLobby(lobbyCode)
             .then(data => {
                 setLobby(data.data[0])
-                setTotalRounds(data.data[0].games[0].maxRotations)
+                setTotalRounds(data.data[0].games[0].rotations)
             })
             .catch(err => console.error(err))
     }, [])
