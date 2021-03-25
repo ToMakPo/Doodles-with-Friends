@@ -9,7 +9,7 @@ const Timer = () => {
         let initialRounds = 2
 
     const [seconds, setSeconds ] =  useState(initialSeconds);
-    const [turns, setTurns ] =  useState(initialTurns);
+    const [turns, setTurns ] =  useState(initialTurns-1);
     const [rounds, setRounds ] =  useState(initialRounds);
     // let turns = 3
     // let rounds = 2
@@ -25,35 +25,27 @@ const Timer = () => {
 
             if (seconds === 0  ) {
                 console.log("END ROUND")
+                console.log("Update Word")
+                console.log("Change Artist")
                 setTurns(turns-1);
-                // console.log("turns: ", turns)
-                // console.log("rounds: ", rounds)
+
                 setSeconds(initialSeconds)
 
                 if (turns === 0 ) {
                     console.log("NEW ROUND")
-                    // rounds--
+                    console.log("Update the Round")
+
                     setRounds(rounds-1)
-                    // console.log("turns: ", turns)
-                    // console.log("rounds: ", rounds)
-                    setTurns(initialTurns)
-                    // setSeconds(initialSeconds)
+                    setTurns(initialTurns-1)
+
                 }
             }
-                // if(rounds === 0){
-                //     console.log("GAME OVER")
-                //     //     console.log("Update Word")
-                //     //     console.log("Change Artist")
-                //     //     console.log("Update the Round")
-                //     //     console.log("Restart the clock")
-                //         clearInterval(countdown)
-                //     } 
 
-                
         }, 1000);
 
         if(!rounds){
             clearInterval(countdown)
+            console.log("VIEW SCOREBOARD")
         }
         return ()=> {
             clearInterval(countdown);
