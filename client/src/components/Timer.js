@@ -9,7 +9,7 @@ const Timer = () => {
         let initialRounds = 2
 
     const [seconds, setSeconds ] =  useState(initialSeconds);
-    const [turns, setTurns ] =  useState(initialTurns);
+    const [turns, setTurns ] =  useState(initialTurns-1);
     const [rounds, setRounds ] =  useState(initialRounds);
     // let turns = 3
     // let rounds = 2
@@ -36,7 +36,7 @@ const Timer = () => {
                     setRounds(rounds-1)
                     // console.log("turns: ", turns)
                     // console.log("rounds: ", rounds)
-                    setTurns(initialTurns)
+                    setTurns(initialTurns-1)
                     // setSeconds(initialSeconds)
                 }
             }
