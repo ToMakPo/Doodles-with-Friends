@@ -5,6 +5,7 @@ import API from "../utils/API";
 
 import '../styles/palette.css'
 import '../styles/Signup.css'
+import swal from "sweetalert";
 
 const Signup = _ => {
     const usernameInput = useRef('')
@@ -27,7 +28,14 @@ const Signup = _ => {
             // User has been successfully registered, logged in and added to state. Perform any additional actions you need here such as redirecting to a new page.
         } catch (err) {
             // Handle error responses from the API. This will include
-            console.error(err.response?.data);
+
+            if (err.response && err.response.data) {
+                swal({
+                    title: "Create User Unsuccessful",
+                    text: err.response.data.username || err.response.data.password,
+                    icon: "error",
+                });
+            };
         }
     }
 
@@ -37,32 +45,32 @@ const Signup = _ => {
             className="signup-main main sketchBackground">
             <div className="card-deck">
                 <div className="card">
-                <h2 className="card-header">Sign Up</h2>
-                <div className="card-body d-flex justify-content-around align-items-center">
-                    <form 
-                        className="d-flex"
-                        onSubmit={handleSubmit}>
-                        <input
-                            id='username'
-                            type="text"
-                            autoComplete="username"
-                            ref={usernameInput}
-                            autoFocus
-                            placeholder="USERNAME"
-                        />
-                        <input
-                            id='password'
-                            type="password"
-                            ref={passwordInput}
-                            autoComplete="current-password"
-                            placeholder="PASSWORD"
-                        />
-                        <button type="submit" className="btn btn-primary">Submit</button>
-                    </form>
-                </div>
+                    <h2 className="card-header">Sign Up</h2>
+                    <div className="card-body d-flex justify-content-around align-items-center">
+                        <form
+                            className="d-flex"
+                            onSubmit={handleSubmit}>
+                            <input
+                                id='username'
+                                type="text"
+                                autoComplete="username"
+                                ref={usernameInput}
+                                autoFocus
+                                placeholder="USERNAME"
+                            />
+                            <input
+                                id='password'
+                                type="password"
+                                ref={passwordInput}
+                                autoComplete="current-password"
+                                placeholder="PASSWORD"
+                            />
+                            <button type="submit" className="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <p>Already have an account? 
+            <p>Already have an account?
                 <Link to='/login'> Login</Link>
             </p>
         </div>
