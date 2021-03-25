@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
 import ChatBox from "../components/ChatBox"
 import Timer from "../components/Timer"
+import Countdown from "react-countdown"
 import API from "../utils/API"
 const { default: Canvas } = require("../components/Canvas")
+
+
 
 const ArtistView = () => {
     const [lobby, setLobby] = useState({})
@@ -28,13 +31,16 @@ const ArtistView = () => {
                     <div className="d-inline p-2">
                         THE WORD: { }
                     </div>
+                    
                     <div className="d-inline p-2 ">
                         ROUND 1 OF {totalRounds}
                     </div>
 
                     <div className="d-inline p-2 ">
-                        TIME REMAINING: <Timer/>
+                        TIME REMAINING:     
+                        <Timer />
                     </div>
+                    {/* </div> */}
                 </div>
             </h2>
             <div className="card-deck" style={{

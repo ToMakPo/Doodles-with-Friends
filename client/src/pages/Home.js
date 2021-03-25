@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { useHistory } from 'react-router'
 import { useAuthenticatedUser } from '../utils/auth'
 // import { Link } from 'react-router-dom'
+import swal from 'sweetalert';
 import API from '../utils/API'
 
 import '../styles/palette.css'
@@ -15,7 +16,7 @@ const Home = ({ setLobby }) => {
     function hostGame(event) {
         event.preventDefault()
         API.createLobby(AuthUser)
-            .then(({data}) => {
+            .then(({ data }) => {
                 loadLobby(data.code)
             })
             .catch(err => console.error(err))
@@ -25,15 +26,25 @@ const Home = ({ setLobby }) => {
         event.preventDefault()
         const code = gameCodeRef.current.value.toUpperCase().trim()
         loadLobby(code)
-        window.location.assign(`/waiting-room/${gameCodeRef.current.value}`)
+
     }
 
     function loadLobby(code) {
         API.getLobby(code)
-            .then(({data}) => {
+            .then(({ data }) => {
                 const lobby = data[0]
                 setLobby(lobby)
-                history.push(`/waiting-room/${lobby.code}`);
+                if (lobby) {
+                    history.push(`/waiting-room/${lobby.code}`);
+                }
+                else {
+                    swal({
+                        title: "Invalid Code",
+                        text: "Please Enter Valid Game Code",
+                        icon: "error",
+                    });
+                    return
+                }
             })
             .catch(err => console.error(err))
     }
