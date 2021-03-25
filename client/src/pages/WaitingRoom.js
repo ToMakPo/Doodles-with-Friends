@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useHistory } from "react-router";
-import { useWordBankContext } from "../utils/GlobalState"
+import { useEffect, useState, useRef } from "react"
+import { useHistory } from "react-router"
 import { useAuthenticatedUser } from '../utils/auth'
 
 import ChatBox from "../components/ChatBox"
@@ -14,13 +13,11 @@ const WaitingRoom = () => {
     const code = window.location.pathname.split('room/')[1]
     const [lobby, setLobby] = useState({});
     const [players, setPlayers] = useState([])
-    const [player, setPlayer] = useState({})
     const [isHost, setIsHost] = useState(false)
     
     const [rotations, setRotations] = useState(3)
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState('')
-    const [words, setWords] = useState([])
 
     const history = useHistory()
     const userId = useAuthenticatedUser()._id
@@ -43,19 +40,16 @@ const WaitingRoom = () => {
             // get lobby
             const {data: [thisLobby]} = await API.getLobby(code)
             setLobby(thisLobby)
-            console.log({thisLobby});
 
             // set up sockets
             setupSockets()
 
             // get player list
             const playerList = thisLobby.players
-            console.log(playerList);
             setPlayers(playerList)
 
             // get user
             // const {data: {_id}} = await API.getPlayer(userId)
-            // console.log(data);
             setIsHost(userId === thisLobby.host)
             emit.addPlayer(userId)
 
@@ -68,20 +62,19 @@ const WaitingRoom = () => {
     }, [])
 
     //Functionality for the Add Words using the GlobalState
-    const customWordInputRef = useRef()
-    const [listOfCustomWords, dispatch] = useWordBankContext();
+    // const customWordInputRef = useRef()
+    // const [listOfCustomWords, dispatch] = useWordBankContext();
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        const newWord = customWordInputRef.current.value
-        dispatch({
-            type: "newWord",
-            name: newWord
-        })
-        setWords([...words, newWord])
-        customWordInputRef.current.focus()
-        customWordInputRef.current.value = "";
-    }    
+    // function handleSubmit(event) {
+    //     event.preventDefault();
+    //     const newWord = customWordInputRef.current.value
+    //     dispatch({
+    //         type: "newWord",
+    //         name: newWord
+    //     })
+    //     customWordInputRef.current.focus()
+    //     customWordInputRef.current.value = "";
+    // }    
 
     function hostGame(event) {
         event.preventDefault()
@@ -105,15 +98,10 @@ const WaitingRoom = () => {
         socket.current.on(`${code}-setPlayers`, setPlayers)
         socket.current.on(`${code}-setRotations`, setRotations)
         socket.current.on(`${code}-setCategory`, setCategory)
-        socket.current.on(`${code}-triggerStart`, triggerStart)
         socket.current.on(`${code}-startGame`, startGame)
     }
 
     /// these functions should only be called by sockets
-    function triggerStart() {
-        console.log({words});
-        socket.current.emit('playerIsReady', code, player, words)
-    }
     function startGame() {
         history.push(`/active-game/${lobby.code}`);
     }
