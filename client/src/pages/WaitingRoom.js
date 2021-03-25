@@ -27,7 +27,7 @@ const WaitingRoom = () => {
     const [emit] = useState({
         addPlayer,//: player => socket.emit('addPlayer', lobby, player),
         updateRotations,//: count => socket.emit('updateRotations', lobby, count),
-        updateCatagory,//: category => socket.emit('updateCatagory', lobby, category),
+        updateCategory,//: category => socket.emit('updateCategory', lobby, category),
         startGame//: _ => socket.emit('startGame', lobby)
     })
 
@@ -117,7 +117,7 @@ const WaitingRoom = () => {
         function updateRotations(count) {
             setRotations(count)
         }
-        function updateCatagory(category) {
+        function updateCategory(category) {
             setCategory(category)
         }
         function startGame() {
@@ -147,12 +147,14 @@ const WaitingRoom = () => {
                                 flex-row
                                 justify-content-center
                                 align-items-center">
-                                <label htmlFor="num-rotations-input">
+                                <label 
+                                className="mr-2"
+                                htmlFor="num-rotations-input">
                                     Number of Rounds: </label>
                                 <input
                                     id='num-rotations-input'
                                     type="number"
-                                    className="form-control col mr-0"
+                                    className="form-control col mx-auto"
                                     aria-label="Recipient's username"
                                     aria-describedby="basic-addon2"
                                     min={1}
@@ -171,16 +173,17 @@ const WaitingRoom = () => {
                                 justify-content-center
                                 align-items-center">
                                 <label 
-                                className = "col-auto p-0" htmlFor="category-selector">
+                                className = "col-auto p-0 mr-2" htmlFor="category-selector">
                                     Category:</label>
                                 <select 
                                     id="category-selector"
+                                    style={{height: 38}}
                                     className=" col-auto btn btn-primary dropDN col flex-grow-1"
                                     type="button"
                                     defaultValue=''
                                     onChange={event => {
                                         const category = event.target.value
-                                        emit.updateCatagory(category)
+                                        emit.updateCategory(category)
                                     }}
                                     disabled={!isHost}
                                     name="categories">
@@ -203,7 +206,7 @@ const WaitingRoom = () => {
                                 
                                 d-flex 
                                 flex-row
-                                justify-content-center
+                                justify-content-between
                                 align-items-center
                                     "
                                 onSubmit={handleSubmit}>
@@ -226,7 +229,7 @@ const WaitingRoom = () => {
                                 </div>
                             </form>
                             <div>
-                                <ul className="list-group">
+                                <ul className="">
                                     {listOfCustomWords.map(word => (
                                         <li className="" key={word.id}>
                                             {word.name + " "}
