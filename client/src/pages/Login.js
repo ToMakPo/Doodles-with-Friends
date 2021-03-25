@@ -32,7 +32,7 @@ const Login = _ => {
 
             if (err.response && err.response.data) {
                 swal({
-                    title: "Invalid Code",
+                    title: "Login Unsuccessful",
                     text: err.response.data.default || err.response.data.password,
                     icon: "error",
                 });
