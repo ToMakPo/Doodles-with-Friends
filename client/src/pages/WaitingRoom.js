@@ -212,7 +212,7 @@ const WaitingRoom = () => {
                                 align-items-center
                                     "
                                 onSubmit={handleSubmit}>
-                                <div className="col-auto p-0">
+                                <div className="col p-0">
                                     <input
                                         type="text"
                                         className="form-control"
