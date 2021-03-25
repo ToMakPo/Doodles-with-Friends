@@ -37,9 +37,19 @@ const lobbySchema = new mongoose.Schema(
                 ref: User
             }
         }],
+        gameIndex: {
+            type: Number,
+            default: -1
+        },
         rules: {
-            rotations: Number,
-            category: String
+            rotations: {
+                type: Number,
+                default: 3
+            },
+            category: {
+                type: String,
+                default: 'any'
+            }
         },
         userWords: [String],
         players: [{
@@ -100,7 +110,7 @@ lobbySchema.methods.randomizePlayerOrder = function() {
 
 /**
  * Create a bank of words to choose from for the game.
- * @param {String} category the catagory of the words being played. 
+ * @param {String} category the category of the words being played. 
  * @returns {[String]} the list of words to add to the word bank.
  */
 lobbySchema.methods.buildWordBank = function(category) {
@@ -124,7 +134,7 @@ lobbySchema.methods.buildWordBank = function(category) {
 
 /**
  * Start the new game.
- * @param {String} category The catagory of the words being played.
+ * @param {String} category The category of the words being played.
  * @param {Number} rotations The maximumn number of rotations.
  */
 lobbySchema.methods.startNewGame = function(category, rotations) {

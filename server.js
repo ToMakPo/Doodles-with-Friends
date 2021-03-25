@@ -46,8 +46,9 @@ function newConnection(socket) {
 
     socket.on('addPlayer', addPlayer)
     socket.on('updateRotations', updateRotations)
-    socket.on('updateCatagory', updateCatagory)
+    socket.on('updateCategory', updateCategory)
     socket.on('startGame', startGame)
+    socket.on('playerIsReady', buildGame)
 
     function addPlayer(code, id) {
         db.Lobby.findOneAndUpdate(
@@ -70,18 +71,35 @@ function newConnection(socket) {
     }
 
     function updateRotations(code, rotations) {
-        db.Lobby.findOneAndUpdate(
-            { code },
-            { rules: { rotations }}
-        )
+        db.Lobby.findOne({ code })
+            .then(lobby => {
+                lobby.rules.rotations = rotations
+                lobby.save()
+                io.emit(`${code}-setRotations`, rotations)
+            })
     }
 
-    function updateCatagory(code, category) {
-
+    function updateCategory(code, category) {
+        db.Lobby.findOne({ code })
+            .then(lobby => {
+                lobby.rules.category = category
+                lobby.save()
+                io.emit(`${code}-setCategory`, category)
+            })
     }
 
     function startGame(code) {
+        io.emit(`${code}-triggerStart`)
+    }
 
+    function buildGame(code, player, words) {
+        db.Lobby.findOne({ code })
+            .then(lobby => {
+                lobby.rules.category = category
+                lobby.save()
+                io.emit(`${code}-setCategory`, category)
+            })
+        io.emit(`${code}-startGame`)
     }
 
     // socket.on('setColor', (code, color) => {

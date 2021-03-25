@@ -16,10 +16,11 @@ const WaitingRoom = () => {
     const [players, setPlayers] = useState([])
     const [player, setPlayer] = useState({})
     const [isHost, setIsHost] = useState(false)
-
+    
     const [rotations, setRotations] = useState(3)
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState('')
+    const [words, setWords] = useState([])
 
     const history = useHistory()
     const userId = useAuthenticatedUser()._id
@@ -28,8 +29,13 @@ const WaitingRoom = () => {
     const emit = {
         addPlayer: id => socket.current.emit('addPlayer', code, id),
         updateRotations: count => socket.current.emit('updateRotations', code, count),
-        updateCatagory: category => socket.current.emit('updateCatagory', code, category),
+        updateCategory: category => socket.current.emit('updateCategory', code, category),
         startGame: _ => socket.current.emit('startGame', code)
+    }
+
+    function changeRules(rules) {
+        setRotations(rules.rotations)
+        setCategory(rules.category)
     }
 
     useEffect(() => {
@@ -37,9 +43,10 @@ const WaitingRoom = () => {
             // get lobby
             const {data: [thisLobby]} = await API.getLobby(code)
             setLobby(thisLobby)
+            console.log({thisLobby});
 
             // set up sockets
-            setupSockets(lobby)
+            setupSockets()
 
             // get player list
             const playerList = thisLobby.players
@@ -51,11 +58,12 @@ const WaitingRoom = () => {
             // console.log(data);
             setIsHost(userId === thisLobby.host)
             emit.addPlayer(userId)
+
+            // set rules
+            changeRules(thisLobby.rules)
             
-            API.updateLobby(code, {rotations, category})
-            
-            const {data: catagoryList} = await API.getCategories()
-            setCategories(catagoryList)
+            const {data: categoryList} = await API.getCategories()
+            setCategories(categoryList)
         })()
     }, [])
 
@@ -65,10 +73,13 @@ const WaitingRoom = () => {
 
     function handleSubmit(event) {
         event.preventDefault();
+        const newWord = customWordInputRef.current.value
         dispatch({
             type: "newWord",
-            name: customWordInputRef.current.value
-        });
+            name: newWord
+        })
+        setWords([...words, newWord])
+        customWordInputRef.current.focus()
         customWordInputRef.current.value = "";
     }    
 
@@ -89,16 +100,19 @@ const WaitingRoom = () => {
     ///////////////////
     ///   SOCKETS   ///
     ///////////////////
-    
-    function setupSockets(lobby) {
+    function setupSockets() {
         socket.current = io.connect('/')
         socket.current.on(`${code}-setPlayers`, setPlayers)
         socket.current.on(`${code}-setRotations`, setRotations)
+        socket.current.on(`${code}-setCategory`, setCategory)
+        socket.current.on(`${code}-triggerStart`, triggerStart)
+        socket.current.on(`${code}-startGame`, startGame)
     }
 
     /// these functions should only be called by sockets
-    function updateCatagory(category) {
-        setCategory(category)
+    function triggerStart() {
+        console.log({words});
+        socket.current.emit('playerIsReady', code, player, words)
     }
     function startGame() {
         history.push(`/active-game/${lobby.code}`);
@@ -151,9 +165,10 @@ const WaitingRoom = () => {
                                     defaultValue=''
                                     onChange={event => {
                                         const category = event.target.value
-                                        emit.updateCatagory(category)
+                                        emit.updateCategory(category)
                                     }}
                                     disabled={!isHost}
+                                    value={category}
                                     name="categories">
 
                                     <option value='any'>Any</option>
@@ -168,7 +183,7 @@ const WaitingRoom = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className="card-body">
+                        {/* <div className="card-body">
                             <form
                                 className="d-flex 
                                     flex-grow-1
@@ -201,15 +216,15 @@ const WaitingRoom = () => {
                                             <button
                                                 className="btn btnDel"
                                                 onClick={_ => dispatch({
-                                                        type: "deleteWord",
-                                                        id: word.id
-                                                    })}
+                                                    type: "deleteWord",
+                                                    id: word.id
+                                                })}
                                             >x</button>
                                         </li>
                                     ))}
                                 </ul>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Column 3 */}
