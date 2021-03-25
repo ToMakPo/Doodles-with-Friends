@@ -45,7 +45,7 @@ const App = () => {
 		<LobbyContext.Provider value={lobby}>
 			<WordBankProvider>
 				{
-					// true ? <ActiveGame/>: //TODO: remove this line
+					//true ? <WaitingRoom/>: //TODO: remove this line
 					<Router>
 						<PageHeader loggedIn={isAuthenticated} />
 

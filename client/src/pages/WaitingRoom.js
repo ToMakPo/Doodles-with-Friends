@@ -27,7 +27,7 @@ const WaitingRoom = () => {
     const [emit] = useState({
         addPlayer,//: player => socket.emit('addPlayer', lobby, player),
         updateRotations,//: count => socket.emit('updateRotations', lobby, count),
-        updateCatagory,//: category => socket.emit('updateCatagory', lobby, category),
+        updateCategory,//: category => socket.emit('updateCategory', lobby, category),
         startGame//: _ => socket.emit('startGame', lobby)
     })
 
@@ -117,12 +117,11 @@ const WaitingRoom = () => {
     function updateRotations(count) {
         setRotations(count)
     }
-    function updateCatagory(category) {
+    function updateCategory(category) {
         setCategory(category)
     }
     function startGame() {
-        const lobbyCode = window.location.pathname.split('room/')[1]
-        history.push(`/active-game/${lobbyCode}`);
+        history.push(`/active-game/${lobby.code}`);
     }
 
     return (
@@ -133,7 +132,9 @@ const WaitingRoom = () => {
                 <div className="card-deck">
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code: {lobby === undefined ? `no lobby` : lobby.code}</h2>
+                        <h2 className="card-header">Game Code:
+                        <div className="gameCode">{lobby === undefined ? `no lobby` : lobby.code}</div>
+                        </h2>
                         <div className="card-body">
                             <PlayerList players={players} />
                         </div>
@@ -143,13 +144,19 @@ const WaitingRoom = () => {
                     <div className="card">
                         <h2 className="card-header">Options:</h2>
                         <div className="card-body">
-                            <div style={{ marginBottom: 5 }}>
-                                <label htmlFor="num-rotations-input">
-                                    Number of Rounds</label>
+                            <div style={{ marginBottom: 10 }}
+                                className="d-flex 
+                                flex-row
+                                justify-content-center
+                                align-items-center">
+                                <label
+                                    className="mr-2"
+                                    htmlFor="num-rotations-input">
+                                    Number of Rounds: </label>
                                 <input
                                     id='num-rotations-input'
                                     type="number"
-                                    className="form-control col"
+                                    className="form-control col mx-auto"
                                     aria-label="Recipient's username"
                                     aria-describedby="basic-addon2"
                                     min={1}
@@ -162,17 +169,23 @@ const WaitingRoom = () => {
                                 />
                             </div>
 
-                            <div>
-                                <label htmlFor="category-selector">
-                                    Category</label>
+                            <div style={{ marginBottom: 10 }}
+                                className="d-flex 
+                                flex-row
+                                justify-content-center
+                                align-items-center">
+                                <label
+                                    className="col-auto p-0 mr-2" htmlFor="category-selector">
+                                    Category:</label>
                                 <select
                                     id="category-selector"
-                                    className="btn btn-primary dropDN col flex-grow-1"
+                                    style={{ height: 38 }}
+                                    className=" col-auto btn btn-primary dropDN col flex-grow-1"
                                     type="button"
                                     defaultValue=''
                                     onChange={event => {
                                         const category = event.target.value
-                                        emit.updateCatagory(category)
+                                        emit.updateCategory(category)
                                     }}
                                     disabled={!isHost}
                                     name="categories">
@@ -188,48 +201,53 @@ const WaitingRoom = () => {
                                     )}
                                 </select>
                             </div>
-                        </div>
-                        <div className="card-body">
-                            <form
-                                className="d-flex 
-                                    flex-grow-1
-                                    justify-content-center
-                                    row"
-                                onSubmit={handleSubmit}>
-                                <div>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Enter Custom Word"
-                                        aria-label="Recipient's username"
-                                        aria-describedby="basic-addon2"
-                                        ref={customWordInputRef}
-                                    />
-                                </div>
-                                <div>
-                                    <button
-                                        className="col btn btnAdd btn-block"
-                                        type="submit">
-                                        +
+                            <div style={{ marginBottom: 5 }}>
+                                <form
+                                    className="
+                                
+                                
+                                d-flex 
+                                flex-row
+                                justify-content-between
+                                align-items-center
+                                    "
+                                    onSubmit={handleSubmit}>
+                                    <div className="col p-0">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Enter Custom Word"
+                                            aria-label="Recipient's username"
+                                            aria-describedby="basic-addon2"
+                                            ref={customWordInputRef}
+                                        />
+                                    </div>
+                                    <div className="col-auto p-0">
+                                        <button
+                                            className="btn btnAdd btn-block"
+                                            type="submit">
+                                            +
                                     </button>
+                                    </div>
+                                </form>
+                                <div>
+                                    <ul className="">
+                                        {listOfCustomWords.map(word => (
+                                            <li className="" key={word.id}>
+                                                {word.name + " "}
+                                                <button
+                                                    className="btn btnDel"
+                                                    onClick={_ => dispatch({
+                                                        type: "deleteWord",
+                                                        id: word.id
+                                                    })}
+                                                >x</button>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
-                            </form>
-                            <div>
-                                <ul className="list-group">
-                                    {listOfCustomWords.map(word => (
-                                        <li className="" key={word.id}>
-                                            {word.name + " "}
-                                            <button
-                                                className="btn btnDel"
-                                                onClick={_ => dispatch({
-                                                    type: "deleteWord",
-                                                    id: word.id
-                                                })}
-                                            >x</button>
-                                        </li>
-                                    ))}
-                                </ul>
                             </div>
+
                         </div>
                     </div>
 

@@ -4,7 +4,9 @@ import { useEffect, useState } from "react"
 import ChatBox from "../components/ChatBox"
 import Timer from "../components/Timer"
 import API from "../utils/API"
+import ReactDOM from "react-dom";
 const { default: Canvas } = require("../components/Canvas")
+
 
 const ArtistView = () => {
     const [lobby, setLobby] = useState({})
@@ -24,10 +26,6 @@ const ArtistView = () => {
     }, [])
 
     const getUserNames = (users) => {
-        // const users = ["604fd87b412eb92698d08f52",
-        //     "60502f10402f6509f0b6aea7",
-        //     "605aa93c775a9c39dca9b0e7",
-        //     "60580bf371fdf237182395b3"]
         API.getPlayers(users)
             .then(({ data }) => {
                 const usernames = []
@@ -59,6 +57,7 @@ const ArtistView = () => {
                     <div className="d-inline p-2">
                         THE WORD: { }
                     </div>
+
                     <div className="d-inline p-2 ">
                         ROUND 1 OF {totalRounds}
                     </div>
@@ -70,6 +69,7 @@ const ArtistView = () => {
                         ACTIVE PLAYER: {activePlayer === undefined ? 'No Players' : activePlayer}
                         <button type='button' onClick={selectRandomPlayer}>active player</button>
                     </div>
+
                 </div>
             </h2>
             <div className="card-deck" style={{

@@ -2,33 +2,60 @@ import React from 'react'
 import '../styles/Timer.css'
 
 import { useState, useEffect } from 'react';
-const Timer = (props:any) => {
-    const {initialMinute = 2,initialSeconds = 0} = props;
-    const [ minutes, setMinutes ] = useState(initialMinute);
+const Timer = () => {
+ 
+        let initialSeconds = 5
+        let initialTurns = 3
+        let initialRounds = 2
+
     const [seconds, setSeconds ] =  useState(initialSeconds);
+    const [turns, setTurns ] =  useState(initialTurns-1);
+    const [rounds, setRounds ] =  useState(initialRounds);
+    // let turns = 3
+    // let rounds = 2
+    
     useEffect(()=>{
-    let myInterval = setInterval(() => {
-            if (seconds > 0) {
-                setSeconds(seconds - 1);
-            }
-            if (seconds === 0) {
-                if (minutes === 0) {
-                    clearInterval(myInterval)
-                } else {
-                    setMinutes(minutes - 1);
-                    setSeconds(59);
+
+        var countdown = setInterval(() => {
+
+            setSeconds(seconds - 1);
+            console.log("Seconds: ", seconds)
+            console.log("turns: ", turns)
+            console.log("rounds: ", rounds)
+
+            if (seconds === 0  ) {
+                console.log("END ROUND")
+                console.log("Update Word")
+                console.log("Change Artist")
+                setTurns(turns-1);
+
+                setSeconds(initialSeconds)
+
+                if (turns === 0 ) {
+                    console.log("NEW ROUND")
+                    console.log("Update the Round")
+
+                    setRounds(rounds-1)
+                    setTurns(initialTurns-1)
+
                 }
-            } 
-        }, 1000)
+            }
+
+        }, 1000);
+
+        if(!rounds){
+            clearInterval(countdown)
+            console.log("VIEW SCOREBOARD")
+        }
         return ()=> {
-            clearInterval(myInterval);
+            clearInterval(countdown);
         };
     });
     return (
         <div >
-        { minutes === 0 && seconds === 0
+        { seconds === 0
             ? null
-            : <p className="timerElement"> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</p> 
+            : <p className="timerElement"> {seconds }</p> 
         }
         </div>
     )

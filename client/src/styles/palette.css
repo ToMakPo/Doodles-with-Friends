@@ -70,3 +70,8 @@
   background-color: var(--fusciaCrayola);
   border-color: var(--fusciaCrayola);
 }
+
+#bootstrap-overrides .gameCode{
+  background-color: var(--cultured);
+  font-family: 'arial';;
+}
