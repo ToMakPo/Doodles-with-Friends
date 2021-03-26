@@ -14,7 +14,7 @@ const WaitingRoom = () => {
     const [lobby, setLobby] = useState({});
     const [players, setPlayers] = useState([])
     const [isHost, setIsHost] = useState(false)
-    
+
     const [rotations, setRotations] = useState(3)
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState('')
@@ -38,7 +38,7 @@ const WaitingRoom = () => {
     useEffect(() => {
         (async _ => {
             // get lobby
-            const {data: [thisLobby]} = await API.getLobby(code)
+            const { data: [thisLobby] } = await API.getLobby(code)
             setLobby(thisLobby)
 
             // set up sockets
@@ -55,8 +55,8 @@ const WaitingRoom = () => {
 
             // set rules
             changeRules(thisLobby.rules)
-            
-            const {data: categoryList} = await API.getCategories()
+
+            const { data: categoryList } = await API.getCategories()
             setCategories(categoryList)
         })()
     }, [])
@@ -103,7 +103,8 @@ const WaitingRoom = () => {
 
     /// these functions should only be called by sockets
     function startGame() {
-        history.push(`/active-game/${lobby.code}`);
+        const code = window.location.pathname.split('room/')[1]
+        history.push(`/active-game/${code}`);
     }
 
     return (
@@ -126,14 +127,14 @@ const WaitingRoom = () => {
                     <div className="card">
                         <h2 className="card-header">Options:</h2>
                         <div className="card-body">
-                            <div style={{marginBottom: 10}}
-                            className="d-flex 
+                            <div style={{ marginBottom: 10 }}
+                                className="d-flex 
                                 flex-row
                                 justify-content-center
                                 align-items-center">
-                                <label 
-                                className="mr-2"
-                                htmlFor="num-rotations-input">
+                                <label
+                                    className="mr-2"
+                                    htmlFor="num-rotations-input">
                                     Number of Rounds: </label>
                                 <input
                                     id='num-rotations-input'
@@ -150,18 +151,18 @@ const WaitingRoom = () => {
                                     disabled={!isHost}
                                 />
                             </div>
-                            
-                            <div style={{marginBottom: 10}}
-                            className="d-flex 
+
+                            <div style={{ marginBottom: 10 }}
+                                className="d-flex 
                                 flex-row
                                 justify-content-center
                                 align-items-center">
-                                <label 
-                                className = "col-auto p-0 mr-2" htmlFor="category-selector">
+                                <label
+                                    className="col-auto p-0 mr-2" htmlFor="category-selector">
                                     Category:</label>
-                                <select 
+                                <select
                                     id="category-selector"
-                                    style={{height: 38}}
+                                    style={{ height: 38 }}
                                     className=" col-auto btn btn-primary dropDN col flex-grow-1"
                                     type="button"
                                     defaultValue=''
@@ -184,10 +185,9 @@ const WaitingRoom = () => {
                                     )}
                                 </select>
                             </div>
-                        </div>
-                        {/* <div className="card-body">
-                            <form
-                                className="
+                            {/* <div style={{ marginBottom: 5 }}>
+                                <form
+                                    className="
                                 
                                 
                                 d-flex 
@@ -195,42 +195,43 @@ const WaitingRoom = () => {
                                 justify-content-between
                                 align-items-center
                                     "
-                                onSubmit={handleSubmit}>
-                                <div className="col p-0">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Enter Custom Word"
-                                        aria-label="Recipient's username"
-                                        aria-describedby="basic-addon2"
-                                        ref={customWordInputRef}
-                                    />
-                                </div>
-                                <div className="col-auto p-0">
-                                    <button
-                                        className="btn btnAdd btn-block" 
-                                        type="submit">
-                                        +
+                                    onSubmit={handleSubmit}>
+                                    <div className="col p-0">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Enter Custom Word"
+                                            aria-label="Recipient's username"
+                                            aria-describedby="basic-addon2"
+                                            ref={customWordInputRef}
+                                        />
+                                    </div>
+                                    <div className="col-auto p-0">
+                                        <button
+                                            className="btn btnAdd btn-block"
+                                            type="submit">
+                                            +
                                     </button>
+                                    </div>
+                                </form>
+                                <div>
+                                    <ul className="">
+                                        {listOfCustomWords.map(word => (
+                                            <li className="" key={word.id}>
+                                                {word.name + " "}
+                                                <button
+                                                    className="btn btnDel"
+                                                    onClick={_ => dispatch({
+                                                        type: "deleteWord",
+                                                        id: word.id
+                                                    })}
+                                                >x</button>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
-                            </form>
-                            <div>
-                                <ul className="">
-                                    {listOfCustomWords.map(word => (
-                                        <li className="" key={word.id}>
-                                            {word.name + " "}
-                                            <button
-                                                className="btn btnDel"
-                                                onClick={_ => dispatch({
-                                                    type: "deleteWord",
-                                                    id: word.id
-                                                })}
-                                            >x</button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div> */}
+                            </div> */}
+                        </div>
                     </div>
 
                     {/* Column 3 */}
