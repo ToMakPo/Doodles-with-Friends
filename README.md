@@ -10,7 +10,7 @@ When a player navigates to the website they are asked to either create a user na
 
 ## TECHNOLOGIES USED
 
-For this application we used
+For this application we used Javascript, React, Node, Nodemon, Sockets.io, Sweetalerts, Mongoose, MongoDB, JWT, Axios, Express, BCrypts, Fastest-Validator, and Passport.
 
 ## CONTRIBUTIONS
 
@@ -22,7 +22,11 @@ We value your feedback! Please contact us using our below Github profiles. Thank
 
 ## LINK TO THE APP
 
+https://postnet-doodles-with-friends.herokuapp.com/
+
 ## LINK TO SLIDES
+
+https://docs.google.com/presentation/d/1WZs7E5ru2bfcO8mFKdpb0T702NHANB2mXf8rujsDQcw/edit?usp=sharing
 
 ## HOW THE APP LOOKS
 
