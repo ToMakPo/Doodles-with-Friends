@@ -58,3 +58,16 @@ main {
 	font-size: 1.5rem;
 	white-space: nowrap;
 }
+
+/* cards need to have a min with of 250 px and the @media min-width is at760 with a flex:1 0 */
+.card-deck .card{
+	min-width: 300px;
+}
+@media (min-width:960px){
+	.card{
+		flex: 1 0;
+		margin-right: 15px;
+		margin-bottom:5px;
+		margin-left: 15px
+	}
+}

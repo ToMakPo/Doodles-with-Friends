@@ -8,6 +8,8 @@
     --celadonBlue: #337ca0;
     --aeroBlue: #B5FFE9;
     --fusciaCrayola: #CB48B7;
+    --BSCardHeaderBackground: rgba(0,0,0,.03);
+    --BSCardHeaderBorder: rgba(0,0,0,.125);
   }
 
   /* for adding a background to the container but I think it gets too busy */
@@ -39,13 +41,15 @@
 }
 
 #bootstrap-overrides .banner{
-  background-color: var(--mediumAquamarine);
-
-  border: 1px solid var(--mediumAquamarine);
+  /* font-family: 'Sedgwick Ave', cursive; */
+  background-color: var(--BSCardHeaderBackground);
+  border: 1px solid var(--BSCardHeaderBorder);
   border-radius: 0.25em;
+  width:100%
 }
-.jumbotron{
+.jumbotron .h1{
   background-color: var(--cultured) !important;
+  color:var(--cinnabar)
 }
 #bootstrap-overrides footer{
   background-color: var(--cultured) !important;
@@ -74,4 +78,8 @@
 #bootstrap-overrides .gameCode{
   background-color: var(--cultured);
   font-family: 'arial';;
+}
+
+.timerElement{
+  color:var(--cinnabar)
 }
