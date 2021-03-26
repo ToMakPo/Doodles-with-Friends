@@ -10,6 +10,8 @@ When a player navigates to the website they are asked to either create a user na
 
 ## TECHNOLOGIES USED
 
+For this application we used
+
 ## CONTRIBUTIONS
 
 Contributions can be made by submitting issues, bugs, or new feature requests at the below Github page. You can clone the repo and submit pull requests there.
@@ -18,4 +20,15 @@ Contributions can be made by submitting issues, bugs, or new feature requests at
 
 We value your feedback! Please contact us using our below Github profiles. Thank you!
 
-##
+## LINK TO THE APP
+
+## LINK TO SLIDES
+
+## HOW THE APP LOOKS
+
+## DEVELOPERS GITHUB CONTACT INFO:
+
+- Danny Zosh'air https://github.com/DanZosh
+- Makai Post https://github.com/ToMakPo
+- Aaron Parnell https://github.com/aparnell0130
+- Mike Belliveau https://github.com/mbveau
