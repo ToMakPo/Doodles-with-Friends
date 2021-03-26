@@ -48,7 +48,7 @@ const App = () => {
 					<Router>
 						<PageHeader loggedIn={isAuthenticated} />
 
-					{true ? <ScoreBoard/>: //TODO: remove this line
+					{/* {true ? <ScoreBoard/>: //TODO: remove this line */}
 
 					<main>
 						{!isAuthenticated ? (
@@ -70,7 +70,7 @@ const App = () => {
 							</Switch>
 						)}
 					</main>
-					}
+					{/* } // manual switch end */}
 				</Router>
 				
 				}
