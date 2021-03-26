@@ -133,7 +133,7 @@ const WaitingRoom = () => {
                                 justify-content-center
                                 align-items-center">
                                 <label
-                                    className="mr-2"
+                                    className="mr-2 my-0"
                                     htmlFor="num-rotations-input">
                                     Number of Rounds: </label>
                                 <input
@@ -158,7 +158,7 @@ const WaitingRoom = () => {
                                 justify-content-center
                                 align-items-center">
                                 <label
-                                    className="col-auto p-0 mr-2" htmlFor="category-selector">
+                                    className="col-auto p-0 mr-2 my-0" htmlFor="category-selector">
                                     Category:</label>
                                 <select
                                     id="category-selector"
