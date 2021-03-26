@@ -115,10 +115,16 @@ const WaitingRoom = () => {
                 <div className="card-deck ">
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code:
-                        <div className="gameCode">{lobby === undefined ? `no lobby` : lobby.code}</div>
-                        </h2>
+                        <h2 className="card-header">Details:</h2>
                         <div className="card-body">
+                        <div className="d-flex 
+                                flex-row
+                                justify-content-center
+                                align-items-between">
+                            <h5 className="mr-3 mt-1 mb-0" >Game Code: </h5>
+                            <h4 className="gameCode mb-0">{lobby === undefined ? `no lobby` : lobby.code}</h4>
+                        </div>
+                        <hr></hr>
                             <PlayerList players={players} />
                         </div>
                     </div>

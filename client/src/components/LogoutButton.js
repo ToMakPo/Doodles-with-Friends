@@ -8,7 +8,7 @@ function LogoutButton() {
     return (
         <div id="bootstrap-overrides" >
             <button
-                className= "btn logout mt-2 ml-2" 
+                className= "btn logout mt-2 mr-2" 
                 onClick={logout}>
                     Logout
             </button>

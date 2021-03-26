@@ -81,7 +81,8 @@ const ArtistView = () => {
 
                 </div>
             </h2>
-            <div className="card-deck" style={{
+            <div className="card-deck activeGameFlex" 
+            style={{
                 display: 'flex',
                 justifyContent: "center",
                 alignItems: "stretch",

@@ -76,8 +76,9 @@
 }
 
 #bootstrap-overrides .gameCode{
-  background-color: var(--cultured);
-  font-family: 'arial';;
+  /* background-color: var(--cultured); */
+  font-family: 'arial';
+  color:var(--cinnabar)
 }
 
 .timerElement{
@@ -88,3 +89,4 @@ h5, li, label {
   font-family: 'Sedgwick Ave', cursive;
 
 }
+
