@@ -53,3 +53,8 @@ main {
 	width: 100%;
     flex: 0 0 auto;
 }
+
+.gameCode {
+	font-size: 1.5rem;
+	white-space: nowrap;
+}
