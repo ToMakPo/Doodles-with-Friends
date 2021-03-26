@@ -60,14 +60,6 @@ const WaitingRoom = () => {
         })()
     }, [])
 
-    // const [attendees, setAttendees] = useState([]);
-
-    // useEffect(()=>{
-    //     const peopleTestArray =["Danny", "Aaron", "Makai", "Mike"]//the below is just to test the setAttendees function
-    //     console.debug(peopleTestArray)
-    //     setAttendees(peopleTestArray)
-    // },[])
-
     //Functionality for the Add Words using the GlobalState
     const customWordInputRef = useRef()
     const [listOfCustomWords, dispatch] = useWordBankContext();
@@ -80,11 +72,6 @@ const WaitingRoom = () => {
         });
         customWordInputRef.current.value = "";
     }
-
-    //console.debug(lobby)
-    //console.debug("players: ", players)
-    //console.debug(selectedCategory)
-
 
     function hostGame(event) {
         event.preventDefault()
@@ -121,7 +108,8 @@ const WaitingRoom = () => {
         setCategory(category)
     }
     function startGame() {
-        history.push(`/active-game/${lobby.code}`);
+        const lobbyCode = window.location.pathname.split('room/')[1]
+        history.push(`/active-game/${lobbyCode}`);
     }
 
     return (

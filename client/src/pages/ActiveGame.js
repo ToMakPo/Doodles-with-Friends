@@ -1,5 +1,3 @@
-import { set } from "mongoose"
-import { use } from "passport"
 import { useEffect, useState } from "react"
 import ChatBox from "../components/ChatBox"
 import Timer from "../components/Timer"
@@ -20,7 +18,6 @@ const ArtistView = () => {
                 setLobby(data.data[0])
                 setTotalRounds(data.data[0].games[0].maxRotations)
                 getUserNames(data.data[0].players)
-
             })
             .catch(err => console.error(err))
     }, [])
@@ -44,6 +41,7 @@ const ArtistView = () => {
         const randomPlayer = players.splice(Math.floor(Math.random() * players.length), 1)
         setActivePlayer(randomPlayer)
     }
+
     console.log('lobby: ', lobby)
     console.log(players);
     console.debug(totalRounds);
@@ -63,11 +61,11 @@ const ArtistView = () => {
                     </div>
 
                     <div className="d-inline p-2 ">
-                        TIME REMAINING: <Timer />
+                        TIME REMAINING: <Timer selectRandomPlayer={selectRandomPlayer} />
                     </div>
                     <div>
                         ACTIVE PLAYER: {activePlayer === undefined ? 'No Players' : activePlayer}
-                        <button type='button' onClick={selectRandomPlayer}>active player</button>
+                        {/* <button type='button' onClick={selectRandomPlayer}>active player</button> */}
                     </div>
 
                 </div>
