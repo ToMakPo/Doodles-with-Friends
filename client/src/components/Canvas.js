@@ -52,6 +52,9 @@ const Canvas = ({active}) => {
     }
 
     return (
+        <div className="card canvasCard">
+        <div className="card-body ">
+        <div className="canvasContainer">
         <div id='canvas-component'>
             <div id='draw-area'>
                 <canvas
@@ -130,6 +133,9 @@ const Canvas = ({active}) => {
                     </button>
                 </div>
             }
+        </div>
+        </div>
+        </div>
         </div>
     )
 }

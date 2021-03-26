@@ -4,18 +4,18 @@ const wordBank = require('../lib/wordBank')
 
 const lobbySchema = new mongoose.Schema(
     {
-        code: { //The game code that will be displayed to the players. Not to be confused with _id used by the database.
+        code: { //The lobby code that will be displayed to the players. Not to be confused with _id used by the database.
             type: String,
             trim: true
         },
-        host: {
+        host: { //The player that is hosting this lobby
             type: mongoose.Schema.Types.ObjectId,
             ref: User
         },
-        games: [{
-            category: String,
-            wordBank: [String],
-            maxRotations: {
+        games: [{ //A list of games played in this lobby
+            category: String, //The catagory of the words being played
+            wordList: [String], //The list of words that could be selected 
+            rotations: {
                 type: Number,
                 default: 5
             },
@@ -30,18 +30,27 @@ const lobbySchema = new mongoose.Schema(
                     ref: User
                 }
             }],
-            activeIndex: Number,
-            activeRotation: Number,
+            playerIndex: Number,
+            currentRotation: Number,
+            players: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: User
+            }],
             winner: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: User
             }
         }],
         rules: {
-            maxRotations: Number,
-            category: String
+            rotations: {
+                type: Number,
+                default: 3
+            },
+            category: {
+                type: String,
+                default: 'any'
+            }
         },
-        userWords: [String],
         players: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: User
@@ -82,25 +91,9 @@ lobbySchema.method.addUserWordsToGame = function (words) {
     return this
 }
 
-/** Move to the next player in the queue */
-lobbySchema.methods.randomizePlayerOrder = function () {
-    const tempList = [...this.players]
-    this.players = []
-
-    while (tempList.length > 0) {
-        const len = tempList.length
-        const randomIndex = Math.floor(Math.random() * len - 1)
-        const randomPlayer = tempList.splice(randomIndex, 1)
-        this.players.push(randomPlayer)
-    }
-    this.save()
-
-    return this
-}
-
 /**
  * Create a bank of words to choose from for the game.
- * @param {String} category the catagory of the words being played. 
+ * @param {String} category the category of the words being played. 
  * @returns {[String]} the list of words to add to the word bank.
  */
 lobbySchema.methods.buildWordBank = function (category) {
@@ -124,17 +117,17 @@ lobbySchema.methods.buildWordBank = function (category) {
 
 /**
  * Start the new game.
- * @param {String} category The catagory of the words being played.
- * @param {Number} maxRotations The maximumn number of rotations.
+ * @param {String} category The category of the words being played.
+ * @param {Number} rotations The maximumn number of rotations.
  */
-lobbySchema.methods.startNewGame = function (category, maxRotations) {
+lobbySchema.methods.startNewGame = function(category, rotations) {
     this.randomizePlayerOrder()
 
     const newGame = {
         code: Math.floor(Math.random() * 36 ** 9).toString(36).toUpperCase().padStart(9, '0'),
         category,
         wordBank: this.buildWordBank(),
-        maxRotations,
+        rotations,
         rounds: [],
         activeIndex: -1,
         activeRotation: 0,
@@ -156,7 +149,7 @@ lobbySchema.methods.startNextRound = function (game) {
     if (game.activeIndex === 0) game.activeRotation++
     const artist = this.players[game.activeIndex]
     if (artist.activeLobby === this) { //Check that this artist has not left the lobby.
-        if (game.activeRotation < game.maxRotations) {
+        if (game.activeRotation < game.rotations) {
             const round = {
                 answer: game.wordBank.splice(Math.floor(Math.random() * game.wordBank.length - 1), 1),
                 artist,

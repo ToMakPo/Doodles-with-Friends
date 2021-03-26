@@ -11,7 +11,7 @@ import '../styles/Home.css'
 const Home = ({ setLobby }) => {
     const AuthUser = useAuthenticatedUser()
     const history = useHistory()
-    const gameCodeRef = useRef()
+    const codeInput = useRef()
 
     function hostGame(event) {
         event.preventDefault()
@@ -24,9 +24,8 @@ const Home = ({ setLobby }) => {
 
     function joinLobby(event) {
         event.preventDefault()
-        const code = gameCodeRef.current.value.toUpperCase().trim()
+        const code = codeInput.current.value.toUpperCase().trim()
         loadLobby(code)
-
     }
 
     function loadLobby(code) {
@@ -70,7 +69,7 @@ const Home = ({ setLobby }) => {
                         <h5 className="card-title">JOIN AN EXISTING GAME</h5>
                         <sup className="card-text">You are joining a game your friend already started</sup>
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" ref={gameCodeRef} placeholder="Game Code" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+                            <input type="text" className="form-control" ref={codeInput} placeholder="Game Code" aria-label="Recipient's username" aria-describedby="basic-addon2" />
                             <div className="input-group-append">
                                 <button className="btn-primary btn btn-block"
                                     type="button"

@@ -63,7 +63,6 @@ class API {
     }
 
     getCategories() {
-        console.debug('getting catagories');
         return this.axios.get('/api/wordbank/catagories')
     }
 

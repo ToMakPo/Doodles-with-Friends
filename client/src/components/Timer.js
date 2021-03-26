@@ -20,7 +20,10 @@ const Timer = ({ selectRandomPlayer }) => {
 
             setSeconds(seconds - 1);
             console.log("Seconds: ", seconds)
+            if (seconds === 10) {
+                selectRandomPlayer()
 
+            }
 
             if (seconds === 0) {
                 console.log("END ROUND")
@@ -28,7 +31,6 @@ const Timer = ({ selectRandomPlayer }) => {
                 console.log("Change Artist")
                 console.log("turns: ", turns)
                 console.log("rounds: ", rounds)
-                selectRandomPlayer()
                 setTurns(turns - 1);
 
                 setSeconds(initialSeconds)

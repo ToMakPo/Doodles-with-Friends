@@ -3,6 +3,8 @@ import ChatBox from "../components/ChatBox"
 import Timer from "../components/Timer"
 import API from "../utils/API"
 import ReactDOM from "react-dom";
+import '../styles/palette.css'
+import '../styles/ActiveGame.css'
 const { default: Canvas } = require("../components/Canvas")
 
 
@@ -16,8 +18,8 @@ const ArtistView = () => {
         API.getLobby(lobbyCode)
             .then(data => {
                 setLobby(data.data[0])
-                setTotalRounds(data.data[0].games[0].maxRotations)
                 getUserNames(data.data[0].players)
+                setTotalRounds(data.data[0].games[0].rotations)
             })
             .catch(err => console.error(err))
     }, [])
@@ -52,8 +54,12 @@ const ArtistView = () => {
             <h2 className="banner">
                 <div className="d-flex justify-content-around align-items-center">
 
-                    <div className="d-inline p-2">
-                        THE WORD: { }
+                    <div className="d-inline p-1">
+                        THE WORD:
+                        <hr></hr>
+                        <div>
+                            <p>{ }test</p>
+                        </div>
                     </div>
 
                     <div className="d-inline p-2 ">
@@ -72,19 +78,20 @@ const ArtistView = () => {
             </h2>
             <div className="card-deck" style={{
                 display: 'flex',
+                justifyContent: "center",
                 alignItems: "stretch",
-                // flexDirection: 'row'
-                // flexWrap: 'wrap'
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                width: "100%",
             }}>
-
-                <div className="card">
-                    <div className="card-body">
-                        <div className="">
-                            {/* TODO: Check if this is the active player */}
-                            <Canvas active={true} />
-                        </div>
-                    </div>
+                {/* <div className="card canvasCard"> */}
+                {/* <div className="card-body "> */}
+                <div className="canvasContainer">
+                    {/* TODO: Check if this is the active player */}
+                    <Canvas active={true} />
                 </div>
+                {/* </div> */}
+                {/* </div> */}
                 <ChatBox lobby={{ code: 'D5EA12C14' }} user={{ username: 'ToMakPo' }} />
             </div>
         </div>

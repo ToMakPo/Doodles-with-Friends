@@ -4,9 +4,13 @@ const PlayerList = ({ players }) => {
     return (
         <div>
             <h5 className="card-title">Attending Players:</h5>
-            <ol>
-                {players.map(player => <li key={player.id}>{player.username}</li>)}
-            </ol>
+            <ul>
+                {players.map(player => 
+                    <li key={player.id}>
+                        {player.username}
+                        {player.isHost && ' 👑'}
+                    </li>)}
+            </ul>
         </div>
     )
 }

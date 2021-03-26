@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useHistory } from "react-router";
-import { useWordBankContext } from "../utils/GlobalState"
+import { useEffect, useState, useRef } from "react"
+import { useHistory } from "react-router"
 import { useAuthenticatedUser } from '../utils/auth'
 
 import ChatBox from "../components/ChatBox"
@@ -11,9 +10,9 @@ import io from 'socket.io-client'
 import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
 const WaitingRoom = () => {
+    const code = window.location.pathname.split('room/')[1]
     const [lobby, setLobby] = useState({});
     const [players, setPlayers] = useState([])
-    const [player, setPlayer] = useState({})
     const [isHost, setIsHost] = useState(false)
 
     const [rotations, setRotations] = useState(3)
@@ -24,92 +23,88 @@ const WaitingRoom = () => {
     const userId = useAuthenticatedUser()._id
 
     const socket = useRef()
-    const [emit] = useState({
-        addPlayer,//: player => socket.emit('addPlayer', lobby, player),
-        updateRotations,//: count => socket.emit('updateRotations', lobby, count),
-        updateCategory,//: category => socket.emit('updateCategory', lobby, category),
-        startGame//: _ => socket.emit('startGame', lobby)
-    })
+    const emit = {
+        addPlayer: id => socket.current.emit('addPlayer', code, id),
+        updateRotations: count => socket.current.emit('updateRotations', code, count),
+        updateCategory: category => socket.current.emit('updateCategory', code, category),
+        buildGame: _ => socket.current.emit('buildGame', code, rotations, category)
+    }
+
+    function changeRules(rules) {
+        setRotations(rules.rotations)
+        setCategory(rules.category)
+    }
 
     useEffect(() => {
         (async _ => {
             // get lobby
-            const lobbyCode = window.location.pathname.split('room/')[1]
-            const { data: [thisLobby] } = await API.getLobby(lobbyCode)
+            const { data: [thisLobby] } = await API.getLobby(code)
             setLobby(thisLobby)
 
             // set up sockets
-            setupSockets(lobby)
+            setupSockets()
 
             // get player list
             const playerList = thisLobby.players
             setPlayers(playerList)
 
             // get user
-            const { data: user } = await API.getPlayer(userId)
-            const player = {
-                id: user._id,
-                username: user.username
-            }
+            // const {data: {_id}} = await API.getPlayer(userId)
             setIsHost(userId === thisLobby.host)
-            setPlayer(player)
-            emit.addPlayer(player)
+            emit.addPlayer(userId)
 
-            const { data: catagoryList } = await API.getCategories()
-            setCategories(catagoryList)
+            // set rules
+            changeRules(thisLobby.rules)
+
+            const { data: categoryList } = await API.getCategories()
+            setCategories(categoryList)
         })()
     }, [])
 
     //Functionality for the Add Words using the GlobalState
-    const customWordInputRef = useRef()
-    const [listOfCustomWords, dispatch] = useWordBankContext();
+    // const customWordInputRef = useRef()
+    // const [listOfCustomWords, dispatch] = useWordBankContext();
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        dispatch({
-            type: "newWord",
-            name: customWordInputRef.current.value
-        });
-        customWordInputRef.current.value = "";
-    }
+    // function handleSubmit(event) {
+    //     event.preventDefault();
+    //     const newWord = customWordInputRef.current.value
+    //     dispatch({
+    //         type: "newWord",
+    //         name: newWord
+    //     })
+    //     customWordInputRef.current.focus()
+    //     customWordInputRef.current.value = "";
+    // }    
 
     function hostGame(event) {
         event.preventDefault()
 
         API.updateLobby(lobby.code, {
             games: [{
-                category: category,
-                maxRotations: rotations
+                category,
+                rotations
             }]
         }).then(data => {
             console.debug(data);
-            emit.startGame()
+            emit.buildGame()
         })
     }
 
     ///////////////////
     ///   SOCKETS   ///
     ///////////////////
-
-
-    function setupSockets(lobby) {
-        // socket.current = io.connect('/')
-        // socket.current.on(`${lobby.code}-addPlayer`, addPlayer)
+    function setupSockets() {
+        socket.current = io.connect('/')
+        socket.current.on(`${code}-setPlayers`, setPlayers)
+        socket.current.on(`${code}-setRotations`, setRotations)
+        socket.current.on(`${code}-setCategory`, setCategory)
+        socket.current.on(`${code}-startGame`, startGame)
     }
 
     /// these functions should only be called by sockets
-    function addPlayer(player) {
-        setPlayers([...players, player])
-    }
-    function updateRotations(count) {
-        setRotations(count)
-    }
-    function updateCategory(category) {
-        setCategory(category)
-    }
     function startGame() {
-        const lobbyCode = window.location.pathname.split('room/')[1]
-        history.push(`/active-game/${lobbyCode}`);
+        const code = window.location.pathname.split('room/')[1]
+        history.push(`/active-game/${code}`);
     }
 
     return (
@@ -117,7 +112,7 @@ const WaitingRoom = () => {
             id="bootstrap-overrides"
             className="waiting-room-main main container">
             <div className="row containerCol">
-                <div className="card-deck">
+                <div className="card-deck ">
                     {/* Column 1 */}
                     <div className="card">
                         <h2 className="card-header">Game Code:
@@ -176,6 +171,7 @@ const WaitingRoom = () => {
                                         emit.updateCategory(category)
                                     }}
                                     disabled={!isHost}
+                                    value={category}
                                     name="categories">
 
                                     <option value='any'>Any</option>
@@ -189,7 +185,7 @@ const WaitingRoom = () => {
                                     )}
                                 </select>
                             </div>
-                            <div style={{ marginBottom: 5 }}>
+                            {/* <div style={{ marginBottom: 5 }}>
                                 <form
                                     className="
                                 
@@ -234,8 +230,7 @@ const WaitingRoom = () => {
                                         ))}
                                     </ul>
                                 </div>
-                            </div>
-
+                            </div> */}
                         </div>
                     </div>
 
@@ -250,7 +245,7 @@ const WaitingRoom = () => {
                                 col
                                 btn btn-primary 
                                 btn-lg 
-                                btn-block" type="button"
+                                " type="button"
                             onClick={hostGame}
                             disabled={!isHost}
                         >Start Game</button>

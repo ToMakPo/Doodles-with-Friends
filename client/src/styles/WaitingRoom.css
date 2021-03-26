@@ -9,8 +9,9 @@
 	--aeroBlue: #337ca0;
 }
 
-ol {
+ul {
 	padding-left: 20px;
+	list-style-type: none;
 }
 .form-control {
 	margin-right: 20px;
@@ -51,4 +52,17 @@ main {
 	margin-top: 10px;
 	width: 100%;
     flex: 0 0 auto;
+}
+/* cards need to have a min with of 250 px and the @media min-width is at760 with a flex:1 0 */
+
+.card-deck .card{
+	min-width: 300px;
+}
+@media (min-width:960px){
+	.card{
+		flex: 1 0;
+		margin-right: 15px;
+		margin-bottom:5px;
+		margin-left: 15px
+	}
 }
