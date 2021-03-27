@@ -31,6 +31,15 @@ router.get('/user/:id', (req, res) => {
         .catch(err => res.status(422).json(err))
 })
 
+router.post('/users', (req, res) => {
+    db.User
+        .find()
+        .where('_id')
+        .in(req.body)
+        .then(data => res.json(data))
+        .catch(err => res.status(422).json(err))
+})
+
 router.put('/user/:id', (req, res) => {
     db.User
         .findOneAndUpdate({ _id: req.params.id }, req.body)
@@ -45,7 +54,7 @@ router.get('/wordbank/catagories', (req, res) => {
 
 router.get('/wordbank/:category', (req, res) => {
     const category = req.params.category
-    console.debug({category});
+    console.debug({ category });
     res.json(wordbank.getCategory(category))
 })
 

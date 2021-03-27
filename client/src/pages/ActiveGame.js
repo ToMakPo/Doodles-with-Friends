@@ -73,7 +73,7 @@ const ArtistView = () => {
         // socket.current.on(`${code}-setCategory`, setCategory)
         // socket.current.on(`${code}-startGame`, startGame)
     }
-    
+
     return (
         <div
             id="bootstrap-overrides"
