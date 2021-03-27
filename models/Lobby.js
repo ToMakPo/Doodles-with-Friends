@@ -52,11 +52,17 @@ const lobbySchema = new mongoose.Schema(
             }
         },
         chatLog: [{
-            userId: String, 
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: User
+            }, 
             username: String,
             messageType: String,
             text: String,
-            timeStamp: Date
+            timeStamp: {
+                type: Date,
+                default: Date.now
+            }
         }],
         players: [{
             type: mongoose.Schema.Types.ObjectId,

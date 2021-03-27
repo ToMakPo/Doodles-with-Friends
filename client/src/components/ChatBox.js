@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useRef, useEffect } from 'react'
 import { useAuthenticatedUser } from '../utils/auth'
 
@@ -9,7 +10,7 @@ import '../styles/Chat.css'
 const ChatMessage = ({ username, text, fromSelf }) => {
     console.log({fromSelf});
     return (
-        <div className={'chat-message' + (fromSelf ? ' fromSelf' : '')}>
+        <div className={'chat-message output' + (fromSelf ? ' fromSelf' : '')}>
             <small>{username}</small>
             <span>{text}</span>
         </div>
@@ -18,7 +19,7 @@ const ChatMessage = ({ username, text, fromSelf }) => {
 const GuessMessage = ({ username, text, fromSelf }) => {
     console.log('adding guess message');
     return (
-        <div className={'guess-message' + (fromSelf ? ' fromSelf' : '')}>
+        <div className={'guess-message output' + (fromSelf ? ' fromSelf' : '')}>
             <small>{username}</small>
             <span>{text}</span>
         </div>
@@ -26,7 +27,7 @@ const GuessMessage = ({ username, text, fromSelf }) => {
 }
 const AnswerMessage = ({ username, text }) => {
     return (
-        <div className={'answer-message'}>
+        <div className={'answer-message log'}>
             <span><strong>{username}</strong> got it!!!!</span>
             <small>The answer is:</small>
             <h3>{text}</h3>
@@ -35,7 +36,7 @@ const AnswerMessage = ({ username, text }) => {
 }
 const TimedOutMessage = ({ text }) => {
     return (
-        <div className={'timed-out-message'}>
+        <div className={'timed-out-message log'}>
             <span>Sorry! You ran out of time.</span>
             <small>The answer is:</small>
             <h3>{text}</h3>
@@ -44,7 +45,7 @@ const TimedOutMessage = ({ text }) => {
 }
 const NewGameMessage = ({ text }) => {
     return (
-        <div className={'new-game-message'}>
+        <div className={'new-game-message log'}>
             <span>Time to start a new game.</span>
             <small>The artist for this round is:</small>
             <h3>{text}</h3>
@@ -53,7 +54,7 @@ const NewGameMessage = ({ text }) => {
 }
 const NewRoundMessage = ({ text }) => {
     return (
-        <div className={'new-round-message'}>
+        <div className={'new-round-message log'}>
             <span>Time to start a new round.</span>
             <small>The artist for this round is:</small>
             <h3>{text}</h3>
@@ -62,7 +63,7 @@ const NewRoundMessage = ({ text }) => {
 }
 const EndGameMessage = () => {
     return (
-        <div className={'end-game-message'}>
+        <div className={'end-game-message log'}>
             <span>Thank you for playing</span>
             <h3>Doodle with Friends</h3>
         </div>
@@ -82,23 +83,19 @@ const ChatBox = () => {
     const socket = useRef()
     const chatInput = useRef()
 
-    useEffect(() => {
-        (async _ => {
-            // get lobby
-            const data = await API.getLobby(code)
-            const {data: [lobby]} = await API.getLobby(code)
-            console.log({data});
+    useEffect(async _ => {
+        // get lobby
+        const {data: [lobby]} = await API.getLobby(code)
 
-            // set up sockets
-            setupSockets()
+        // set up sockets
+        setupSockets()
 
-            // get user
-            const {data: {username}} = await API.getPlayer(userId)
-            setUsername(username)
+        // get user
+        const {data: {username}} = await API.getPlayer(userId)
+        setUsername(username)
 
-            // get log
-            setChatLog(lobby.chatLog)
-        })()
+        // get log
+        setChatLog(lobby.chatLog)
     }, [])
 
     function chatInputOnInput(event) {
