@@ -10,9 +10,10 @@
     flex: 1 0 auto;
     border: 1px solid #666;
     border-radius: 3px;
+    min-height: 200px;
 }
 
-#chat-input-box {
+#chat-input-form {
     flex: 0 0 auto;
     display: flex;
     align-items: stretch;
@@ -27,6 +28,79 @@
     flex: 0 0 auto;
     width: 36px
 }
+
+#chat-log .answer-message {
+    color: #195;
+}
+
+#chat-log div {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+#chat-log small {
+    font-size: 0.6rem;
+}
+
+#chat-log span {
+    width: fit-content;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background-color: #ddd;
+    color: #666;
+    border: 1px solid #ddd;
+}
+
+#chat-log .fromSelf span {
+    background-color: #cfb;
+    border: 1px solid #cfb;
+}
+
+#chat-log .guess-message span {
+    box-sizing: content-box;
+    border: 1px dashed #666;
+    position: relative;
+}
+
+#chat-log .guess-message span::before {
+    content: '?';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    font-size: 10px;
+    width: 13px;
+    height: 13px;
+    text-align: center;
+    background-color: #b4d;
+    color: white;
+    font-weight: bold;
+    display: block;
+    border-radius: 50%;
+    font-family: monospace;
+}
+
+
+#chat-log .answer-message span::before {
+    content: '✓';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    font-size: 10px;
+    width: 13px;
+    height: 13px;
+    text-align: center;
+    background-color: #195;
+    color: white;
+    font-weight: bold;
+    display: block;
+    border-radius: 50%;
+    font-family: monospace;
+}
+
+
+
+
 
 
 
