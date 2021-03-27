@@ -69,9 +69,13 @@ const Home = ({ setLobby }) => {
                         <h5 className="card-title">JOIN AN EXISTING GAME</h5>
                         <sup className="card-text">You are joining a game your friend already started</sup>
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" ref={codeInput} placeholder="Game Code" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+                            <input type="text" 
+                            className="form-control
+                            m-0" 
+                            style={{height:48}}
+                            ref={codeInput} placeholder="Game Code" aria-label="Recipient's username" aria-describedby="basic-addon2" />
                             <div className="input-group-append">
-                                <button className="btn-primary btn btn-block"
+                                <button className="btn-primary btn btn-block "
                                     type="button"
                                     onClick={joinLobby}
                                 >JOIN GAME</button>

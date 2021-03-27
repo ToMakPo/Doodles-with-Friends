@@ -41,7 +41,7 @@
 }
 
 #bootstrap-overrides .banner{
-  /* font-family: 'Sedgwick Ave', cursive; */
+  font-family: 'Sedgwick Ave', cursive;
   background-color: var(--BSCardHeaderBackground);
   border: 1px solid var(--BSCardHeaderBorder);
   border-radius: 0.25em;
@@ -71,15 +71,22 @@
   color: var(--cinnabar);
 }
 #bootstrap-overrides .dropDN{
-  background-color: var(--fusciaCrayola);
-  border-color: var(--fusciaCrayola);
+  background-color: var(--celadonBlue);
+  border-color: var(--celadonBlue);
 }
 
 #bootstrap-overrides .gameCode{
-  background-color: var(--cultured);
-  font-family: 'arial';;
+  /* background-color: var(--cultured); */
+  font-family: 'arial';
+  color:var(--cinnabar)
 }
 
 .timerElement{
   color:var(--cinnabar)
 }
+
+h5, li, label {
+  font-family: 'Sedgwick Ave', cursive;
+
+}
+

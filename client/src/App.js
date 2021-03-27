@@ -45,9 +45,10 @@ const App = () => {
 		<LobbyContext.Provider value={lobby}>
 			<WordBankProvider>
 				{
-					//true ? <WaitingRoom/>: //TODO: remove this line
 					<Router>
 						<PageHeader loggedIn={isAuthenticated} />
+
+					{/* {true ? <ScoreBoard/>: //TODO: remove this line */}
 
 					<main>
 						{!isAuthenticated ? (
@@ -69,8 +70,9 @@ const App = () => {
 							</Switch>
 						)}
 					</main>
-					
+					{/* } // manual switch end */}
 				</Router>
+				
 				}
 				<PageFooter />
 			</WordBankProvider>
