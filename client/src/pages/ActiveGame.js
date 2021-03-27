@@ -55,28 +55,34 @@ const ArtistView = () => {
                 <div className="d-flex justify-content-around align-items-center">
 
                     <div className="d-inline p-1">
-                        THE WORD:
+                        DRAW
                         <hr></hr>
-                        <div>
-                            <p>{ }test</p>
-                        </div>
+                        <div><p>{ }ANYTHING</p></div>
                     </div>
 
                     <div className="d-inline p-2 ">
-                        ROUND 1 OF {totalRounds}
+                        ROUND 
+                        <hr></hr>
+                        <div><p>1 OF {totalRounds}</p></div>
                     </div>
 
                     <div className="d-inline p-2 ">
-                        TIME REMAINING: <Timer selectRandomPlayer={selectRandomPlayer} />
+                        TIME 
+                        <hr></hr>
+                        <Timer selectRandomPlayer={selectRandomPlayer} />
                     </div>
                     <div>
-                        ACTIVE PLAYER: {activePlayer === undefined ? 'No Players' : activePlayer}
+                        Artist
+                        <hr></hr>
+                        <div><p>{activePlayer === undefined ? 'No Players' : activePlayer}</p></div>
+                        
                         {/* <button type='button' onClick={selectRandomPlayer}>active player</button> */}
                     </div>
 
                 </div>
             </h2>
-            <div className="card-deck" style={{
+            <div className="card-deck activeGameFlex" 
+            style={{
                 display: 'flex',
                 justifyContent: "center",
                 alignItems: "stretch",

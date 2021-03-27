@@ -115,10 +115,16 @@ const WaitingRoom = () => {
                 <div className="card-deck ">
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code:
-                        <div className="gameCode">{lobby === undefined ? `no lobby` : lobby.code}</div>
-                        </h2>
+                        <h2 className="card-header">Details:</h2>
                         <div className="card-body">
+                        <div className="d-flex 
+                                flex-row
+                                justify-content-center
+                                align-items-between">
+                            <h5 className="mr-3 mt-1 mb-0" >Game Code: </h5>
+                            <h4 className="gameCode mb-0">{lobby === undefined ? `no lobby` : lobby.code}</h4>
+                        </div>
+                        <hr></hr>
                             <PlayerList players={players} />
                         </div>
                     </div>
@@ -133,7 +139,7 @@ const WaitingRoom = () => {
                                 justify-content-center
                                 align-items-center">
                                 <label
-                                    className="mr-2"
+                                    className="mr-2 my-0"
                                     htmlFor="num-rotations-input">
                                     Number of Rounds: </label>
                                 <input
@@ -158,7 +164,7 @@ const WaitingRoom = () => {
                                 justify-content-center
                                 align-items-center">
                                 <label
-                                    className="col-auto p-0 mr-2" htmlFor="category-selector">
+                                    className="col-auto p-0 mr-2 my-0" htmlFor="category-selector">
                                     Category:</label>
                                 <select
                                     id="category-selector"

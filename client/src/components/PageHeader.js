@@ -8,7 +8,7 @@ import '../styles/palette.css'
 const PageHeader = ({ loggedIn }) => {
     return (
         <>
-            <header>
+            <header className="mb-3">
                 <Jumbotron />
                 {loggedIn && <LogoutButton />}
             </header>

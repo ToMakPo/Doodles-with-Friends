@@ -7,8 +7,12 @@ const ScoreBoard = () => {
     return (
         <div
             id="bootstrap-overrides"
-            className="score-board-main main container sketchBackground">
-            <div className="card-deck">
+            className="score-board-main 
+            main 
+            container 
+            sketchBackground">
+            <div className="card-deck
+            ">
                 <div className="card">
                     <h2 className="card-header">
                         Score Board
@@ -20,7 +24,12 @@ const ScoreBoard = () => {
                     </ol>
                     <button type="button" className="btn btn-primary btn-lg btn-block">PLAY AGAIN</button>
                 </div>
+                {/* <div 
+                style={{minWidth:600}}
+                > */}
+
                 <ChatBox />
+                {/* </div> */}
             </div>
         </div>
     )
