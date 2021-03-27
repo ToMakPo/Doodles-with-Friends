@@ -11,18 +11,46 @@ import '../styles/ScoreBoard.css'
 
 const ScoreBoard = () => {
     const [code] = useState(window.location.pathname.split('/')[2])
-
+    const [rounds, setRounds] = useState({})
+    const [usernames, setUsernames] = useState([])
     const history = useHistory()
     // const userId = useAuthenticatedUser()._id.toString()
 
     const socket = useRef()
+    useEffect(() => {
+        API.getLobby(code)
+            .then(({ data }) => {
+                setRounds(data[0].games[0].rounds)
+                getIDs(data[0].games[0].rounds)
+            })
+    }, [])
+
+    const getIDs = (round) => {
+        let ids = []
+        for (let i = 0; i < round.length; i++) {
+            const id = round[i].winner;
+            ids.push(id)
+            console.log(id)
+        }
+        console.log(ids)
+        getUsernames(ids)
+    }
+    const getUsernames = (ids) => {
+        API.getPlayers(ids)
+            .then(({ data }) => {
+                setUsernames(data)
+                console.log('usernames', data)
+            })
+    }
+
+    console.log(rounds)
     const emit = {
-        playAgain: _ => socket.current.emit('playAgain', code ) //triggers the server
+        playAgain: _ => socket.current.emit('playAgain', code) //triggers the server
 
     }
     useEffect(() => {
         API.getLobby(code)
-            .then(({data: [lobby]}) => {
+            .then(({ data: [lobby] }) => {
                 setupSockets()
             })
             .catch(err => console.error(err))
@@ -32,11 +60,11 @@ const ScoreBoard = () => {
         socket.current.on(`${code}-goToWaitingRoom`, goToWaitingRoom)
     }
 
-    function playAgain(event){ //triggered by the play again button
+    function playAgain(event) { //triggered by the play again button
         event.preventDefault()
         emit.playAgain() //triggers line 20
-    } 
-//line 40 gets triggered with the sockets from the server
+    }
+    //line 40 gets triggered with the sockets from the server
     function goToWaitingRoom() {
         history.push(`/waiting-room/${code}`);
     }
@@ -57,15 +85,18 @@ const ScoreBoard = () => {
                     <h2 className="card-header">
                         Score Board
                     </h2>
-                    <ol className="list-group list-group-flush">
-                        <li className="list-group-item">An item</li>
-                        <li className="list-group-item">A second item</li>
-                        <li className="list-group-item">A third item</li>
-                    </ol>
-                    <button 
-                    type="button" 
-                    className="btn btn-primary btn-lg btn-block"
-                    onClick={playAgain}
+                    <div>
+                        <ul className="list-group list-group-flush">
+                            {usernames ? usernames.map(username => (
+                                <li key={username.username}>{username.username}</li>
+                            )) : 'no winners'}
+                        </ul>
+                    </div>
+
+                    <button
+                        type="button"
+                        className="btn btn-primary btn-lg btn-block"
+                        onClick={playAgain}
                     >PLAY AGAIN</button>
                 </div>
                 {/* <div 
