@@ -50,6 +50,7 @@ function newConnection(socket) {
     socket.on('buildGame', buildGame)
     socket.on('submitChat', submitChat)
     socket.on('endRound', endRound)
+    socket.on('playAgain', playAgain)
 
     function submitChat(code, data) {
         db.Lobby.findOneAndUpdate({ code }, {$push: {chatLog: data}})
@@ -157,6 +158,12 @@ function newConnection(socket) {
                     .then(_ => io.emit(`${code}-startGame`))
             })
     }
+    
+    //playAgain
+    function playAgain(code){
+        io.emit(`${code}-goToWaitingRoom`)
+    }
+
 
     function getActiveGame(lobby) {
         const index = (lobby?.games?.length || 0) - 1

@@ -103,8 +103,8 @@ const WaitingRoom = () => {
                 <div className="card-deck ">
                     {/* Column 1 */}
                     <div className="card">
-                        <h2 className="card-header">Game Code:
-                        <div className="gameCode">{code || `no lobby`}</div>
+                        <h2 className="card-header">Details:
+                        {/* <div className="gameCode">{code || `no lobby`}</div> */}
                         </h2>
                         <div className="card-body">
                         <div className="d-flex 
@@ -135,7 +135,7 @@ const WaitingRoom = () => {
                                 <input
                                     id='num-rotations-input'
                                     type="number"
-                                    className="form-control col mx-auto"
+                                    className="form-control col mx-auto text-center"
                                     aria-label="Recipient's username"
                                     aria-describedby="basic-addon2"
                                     min={1}
