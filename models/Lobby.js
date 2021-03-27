@@ -51,6 +51,13 @@ const lobbySchema = new mongoose.Schema(
                 default: 'any'
             }
         },
+        chatLog: [{
+            userId: String, 
+            username: String,
+            messageType: String,
+            text: String,
+            timeStamp: Date
+        }],
         players: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: User

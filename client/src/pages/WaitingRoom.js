@@ -11,7 +11,6 @@ import '../styles/palette.css'
 import '../styles/WaitingRoom.css'
 const WaitingRoom = () => {
     const code = window.location.pathname.split('room/')[1]
-    const [lobby, setLobby] = useState({});
     const [players, setPlayers] = useState([])
     const [isHost, setIsHost] = useState(false)
     
@@ -20,7 +19,7 @@ const WaitingRoom = () => {
     const [category, setCategory] = useState('')
 
     const history = useHistory()
-    const userId = useAuthenticatedUser()._id
+    const userId = useAuthenticatedUser()._id.toString()
 
     const socket = useRef()
     const emit = {
@@ -39,7 +38,6 @@ const WaitingRoom = () => {
         (async _ => {
             // get lobby
             const {data: [thisLobby]} = await API.getLobby(code)
-            setLobby(thisLobby)
 
             // set up sockets
             setupSockets()
@@ -78,16 +76,7 @@ const WaitingRoom = () => {
 
     function hostGame(event) {
         event.preventDefault()
-
-        API.updateLobby(lobby.code, {
-            games: [{
-                category,
-                rotations
-            }]
-        }).then(data => {
-            console.debug(data);
-            emit.buildGame()
-        })
+        emit.buildGame()
     }
 
     ///////////////////
@@ -103,7 +92,7 @@ const WaitingRoom = () => {
 
     /// these functions should only be called by sockets
     function startGame() {
-        history.push(`/active-game/${lobby.code}`);
+        history.push(`/active-game/${code}`);
     }
 
     return (
@@ -115,7 +104,7 @@ const WaitingRoom = () => {
                     {/* Column 1 */}
                     <div className="card">
                         <h2 className="card-header">Game Code:
-                        <div className="gameCode">{lobby === undefined ? `no lobby` : lobby.code}</div>
+                        <div className="gameCode">{code === undefined ? `no lobby` : code}</div>
                         </h2>
                         <div className="card-body">
                             <PlayerList players={players} />
@@ -164,7 +153,6 @@ const WaitingRoom = () => {
                                     style={{height: 38}}
                                     className=" col-auto btn btn-primary dropDN col flex-grow-1"
                                     type="button"
-                                    defaultValue=''
                                     onChange={event => {
                                         const category = event.target.value
                                         emit.updateCategory(category)
@@ -240,11 +228,7 @@ const WaitingRoom = () => {
             <div className="containerBottom">
                 <div className="card-deck">
                     <div className="card-body row">
-                        <button className="
-                                col
-                                btn btn-primary 
-                                btn-lg 
-                                " type="button"
+                        <button className="col btn btn-primary btn-lg "
                             onClick={hostGame}
                             disabled={!isHost}
                         >Start Game</button>

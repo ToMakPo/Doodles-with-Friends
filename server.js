@@ -37,7 +37,6 @@ const server = app.listen(PORT, () => {
 
 /// SOCKET.IO ///
 const socket = require('socket.io');
-const { Lobby } = require("./models");
 const io = socket(server)
 
 io.on('connection', newConnection)
@@ -49,6 +48,48 @@ function newConnection(socket) {
     socket.on('updateRotations', updateRotations)
     socket.on('updateCategory', updateCategory)
     socket.on('buildGame', buildGame)
+    socket.on('submitChat', submitChat)
+    socket.on('endRound', endRound)
+
+    function submitChat(code, data) {
+        db.Lobby.findOneAndUpdate({ code }, {$push: {chatLog: data}})
+            .then(({_id}) => {
+                db.Lobby
+                    .findById(_id)
+                    .then(lobby => {
+                        io.emit(`${code}-updataChatLog`, lobby.chatLog)
+                        
+                        if (data.messageType == 'guess') {
+                            const round = getActiveRound(lobby)
+                            const artist = round.artist
+                            const sender = data.userId
+                            const answer = round.answer.toLowerCase()
+                            const guess = data.text.toLowerCase()
+                            if (guess == answer && sender != artist) {
+                                const newData = {...data, messageType: answer}
+                                lobby.update({$push: {chatLog: newData}}).then(_ => {
+                                    endRound(code, data.userId)
+                                })
+                            }
+                        }
+                    })
+            })
+    }
+
+    function timedOut(code) {
+        
+    }
+
+    function logMessage(code, data) {
+        db.Lobby.findOneAndUpdate({ code }, {$push: {chatLog: data}})
+    }
+
+    function endRound(code, winner) {
+        db.Lobby.findOne({ code })
+            .then(lobby => {
+
+            })
+    }
 
     function addPlayer(code, id) {
         db.Lobby.findOneAndUpdate(
@@ -110,16 +151,22 @@ function newConnection(socket) {
                     winner: null
                 }
 
-                lobby.games.push(game)
-                lobby.save()
-
-                io.emit(`${code}-startGame`)
+                db.Lobby
+                    .findById(lobby._id)
+                    .update({$push: {games: game}, })
+                    .then(_ => io.emit(`${code}-startGame`))
             })
     }
 
     function getActiveGame(lobby) {
-        const index = lobby.games.length - 1
-        return index > -1 ? lobby[index] : null
+        const index = (lobby?.games?.length || 0) - 1
+        return index > -1 ? lobby.games[index] : null
+    }
+
+    function getActiveRound(lobby) {
+        const game = getActiveGame(lobby)
+        const index = (game?.rounds?.length || 0) - 1
+        return index > -1 ? game.rounds[index] : null
     }
 
     function randomizePlayerOrder(lobby) {
