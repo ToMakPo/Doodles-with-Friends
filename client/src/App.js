@@ -26,12 +26,12 @@ const App = () => {
 	const history = useHistory()
 
 	function fixURL(defaultPage, ...ifs) {
-		const pathname = window.location.pathname.split('/')[1]
+	// 	const pathname = window.location.pathname.split('/')[1]
 
-		if (pathname === '' || ifs.includes(pathname)) {
-			window.history.replaceState(null, '', '/' + defaultPage)
-			history?.push(defaultPage)
-		}
+	// 	if (pathname === '' || ifs.includes(pathname)) {
+	// 		window.history.replaceState(null, '', '/' + defaultPage)
+	// 		history?.push(defaultPage)
+	// 	}
 	}
 
 	if (!isAuthenticated) {
@@ -70,7 +70,9 @@ const App = () => {
 							</Switch>
 						)}
 					</main>
-					{/* } // manual switch end */}
+					{/* }  */}
+					
+					
 				</Router>
 				
 				}
