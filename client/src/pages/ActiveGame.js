@@ -47,22 +47,17 @@ const ArtistView = () => {
 
     useEffect(() => {
         const time = countDown - 1
-        console.log(time);
         if (countDown > 0) {
+            console.log(time);
             const timer = setTimeout(() => {
                 setCountDown(time)
             }, 1000)
             return () => clearTimeout(timer);
         } else {
-            setCountDown(0)
-            endRound(null)
+            socket.current.emit('timedOut', code)
         }
     }, [countDown])
-
-    function endRound(winner) {
-        socket.current.emit('endRound', code, winner)
-    }
-
+    
     ///////////////////
     ///   SOCKETS   ///
     ///////////////////

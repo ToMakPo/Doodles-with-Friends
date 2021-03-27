@@ -29,8 +29,8 @@
     width: 36px
 }
 
-#chat-log .answer-message {
-    color: #195;
+#cha-log * {
+    position: relative;
 }
 
 #chat-log div {
@@ -43,7 +43,7 @@
     font-size: 0.6rem;
 }
 
-#chat-log span {
+#chat-log .output span {
     width: fit-content;
     padding: 3px 8px;
     border-radius: 3px;
@@ -60,7 +60,6 @@
 #chat-log .guess-message span {
     box-sizing: content-box;
     border: 1px dashed #666;
-    position: relative;
 }
 
 #chat-log .guess-message span::before {
@@ -80,6 +79,10 @@
     font-family: monospace;
 }
 
+#chat-log .answer-message {
+    color: #195;
+    text-align: center;
+}
 
 #chat-log .answer-message span::before {
     content: '✓';

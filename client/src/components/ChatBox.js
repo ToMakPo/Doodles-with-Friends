@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useRef, useEffect } from 'react'
 import { useAuthenticatedUser } from '../utils/auth'
 
@@ -9,7 +10,7 @@ import '../styles/Chat.css'
 const ChatMessage = ({ username, text, fromSelf }) => {
     console.log({fromSelf});
     return (
-        <div className={'chat-message' + (fromSelf ? ' fromSelf' : '')}>
+        <div className={'chat-message output' + (fromSelf ? ' fromSelf' : '')}>
             <small>{username}</small>
             <span>{text}</span>
         </div>
@@ -18,7 +19,7 @@ const ChatMessage = ({ username, text, fromSelf }) => {
 const GuessMessage = ({ username, text, fromSelf }) => {
     console.log('adding guess message');
     return (
-        <div className={'guess-message' + (fromSelf ? ' fromSelf' : '')}>
+        <div className={'guess-message output' + (fromSelf ? ' fromSelf' : '')}>
             <small>{username}</small>
             <span>{text}</span>
         </div>

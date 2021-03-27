@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef } from "react"
 import { useHistory } from "react-router"
 import { useAuthenticatedUser } from '../utils/auth'
@@ -72,7 +73,7 @@ const WaitingRoom = () => {
     //     })
     //     customWordInputRef.current.focus()
     //     customWordInputRef.current.value = "";
-    // }    
+    // }
 
     function hostGame(event) {
         event.preventDefault()

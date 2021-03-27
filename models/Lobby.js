@@ -52,7 +52,10 @@ const lobbySchema = new mongoose.Schema(
             }
         },
         chatLog: [{
-            userId: String, 
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: User
+            }, 
             username: String,
             messageType: String,
             text: String,

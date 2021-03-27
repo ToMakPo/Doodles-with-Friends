@@ -49,35 +49,59 @@ function newConnection(socket) {
     socket.on('updateCategory', updateCategory)
     socket.on('buildGame', buildGame)
     socket.on('submitChat', submitChat)
-    socket.on('endRound', endRound)
+    socket.on('timedOut', timedOut)
 
-    function submitChat(code, data) {
-        db.Lobby.findOneAndUpdate({ code }, {$push: {chatLog: data}})
-            .then(({_id}) => {
-                db.Lobby
-                    .findById(_id)
-                    .then(lobby => {
-                        io.emit(`${code}-updataChatLog`, lobby.chatLog)
-                        
-                        if (data.messageType == 'guess') {
-                            const round = getActiveRound(lobby)
-                            const artist = round.artist
-                            const sender = data.userId
-                            const answer = round.answer.toLowerCase()
-                            const guess = data.text.toLowerCase()
-                            if (guess == answer && sender != artist) {
-                                const newData = {...data, messageType: answer}
-                                lobby.update({$push: {chatLog: newData}}).then(_ => {
-                                    endRound(code, data.userId)
-                                })
-                            }
-                        }
-                    })
-            })
+    async function submitChat(code, data) {
+        const lobby = await db.Lobby.findOne({ code })
+        const type = data.messageType
+
+        if (type === 'guess') {
+            const round = getActiveRound(lobby)
+            const answer = round?.answer?.toLowerCase() || ''
+            const guess = data.text.toLowerCase()
+            const artist = round?.artist || null
+            const sender = data.userId
+
+            if (sender != artist) {
+                await lobby.update({$push: {chatLog: data}})
+
+                if (guess == answer) {
+                    const answerMessage = {
+                        ...data,
+                        messageType: 'answer',
+                        text: round?.answer
+                    }
+                    await lobby.update({$push: {chatLog: answerMessage}, })
+                    endRound(code, sender)
+                }
+
+                updataChatLog(code)
+            }
+        } else {
+            await lobby.update({$push: {chatLog: data}})
+            updataChatLog(code)
+        }
     }
 
-    function timedOut(code) {
-        
+    async function timedOut(code) {
+        console.log('timed out');
+        const lobby = await db.Lobby.findOne({ code })
+        const round = getActiveRound(lobby)
+        const timedOutMessage = {
+            messageType: 'timedOut',
+            text: round?.answer
+        }
+        await lobby.update({$push: {chatLog: timedOutMessage}})
+        endRound(code, null)
+    }
+
+    function updataChatLog(code) {
+        db.Lobby
+            .findOne({ code })
+            .then(lobby => {
+                console.log(lobby);
+                io.emit(`${code}-updataChatLog`, lobby.chatLog)
+            })
     }
 
     function logMessage(code, data) {
@@ -157,6 +181,10 @@ function newConnection(socket) {
                     .then(_ => io.emit(`${code}-startGame`))
             })
     }
+
+    // function returnToLobby() {
+    //     io.emit(`${code}-returnToLobby`)
+    // }
 
     function getActiveGame(lobby) {
         const index = (lobby?.games?.length || 0) - 1
