@@ -27,15 +27,15 @@ const App = () => {
 	const history = useHistory()
 
 	function fixURL(defaultPage, ...ifs) {
-		const pathname = window.location.pathname.split('/')[1]
-		console.log({defaultPage, ifs});
-		console.log(pathname);
-		console.log(ifs.includes(pathname));
+		// const pathname = window.location.pathname.split('/')[1]
+		// console.log({defaultPage, ifs});
+		// console.log(pathname);
+		// console.log(ifs.includes(pathname));
 
-		if (pathname === '' || ifs.includes(pathname)) {
-			window.history.replaceState(null, '', '/' + defaultPage)
-			history?.push(defaultPage)
-		}
+	// 	if (pathname === '' || ifs.includes(pathname)) {
+	// 		window.history.replaceState(null, '', '/' + defaultPage)
+	// 		history?.push(defaultPage)
+	// 	}
 	}
 
 	useEffect(() => {
@@ -75,7 +75,9 @@ const App = () => {
 							</Switch>
 						)}
 					</main>
-					{/* } // manual switch end */}
+					{/* }  */}
+					
+					
 				</Router>
 				
 				}

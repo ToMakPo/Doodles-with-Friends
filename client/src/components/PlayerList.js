@@ -6,10 +6,12 @@ const PlayerList = ({ players }) => {
             <h5 className="card-title">Attending Players:</h5>
             <ul>
                 {players.map(player => 
-                    <li key={player.id}>
+                    <li className="my-2" 
+                    key={player.id}>
                         {player.username}
                         {player.isHost && ' 👑'}
                     </li>)}
+
             </ul>
         </div>
     )

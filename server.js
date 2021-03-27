@@ -50,6 +50,7 @@ function newConnection(socket) {
     socket.on('buildGame', buildGame)
     socket.on('submitChat', submitChat)
     socket.on('timedOut', timedOut)
+    socket.on('playAgain', playAgain)
 
     async function submitChat(code, data) {
         const lobby = await db.Lobby.findOne({ code })
@@ -181,6 +182,12 @@ function newConnection(socket) {
                     .then(_ => io.emit(`${code}-startGame`))
             })
     }
+    
+    //playAgain
+    function playAgain(code){
+        io.emit(`${code}-goToWaitingRoom`)
+    }
+
 
     // function returnToLobby() {
     //     io.emit(`${code}-returnToLobby`)
