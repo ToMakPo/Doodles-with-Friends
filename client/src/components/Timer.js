@@ -1,9 +1,9 @@
 import '../styles/Timer.css'
 
-const Timer = ({countDown}) => {
+const Timer = ({countdown}) => {
     function getTime() {
-        const m = Math.floor(countDown / 60)
-        const s = Math.floor(countDown % 60).toString().padStart(2, '0')
+        const m = Math.floor(countdown / 60)
+        const s = Math.floor(countdown % 60).toString().padStart(2, '0')
         return `${m}:${s}`
     }
 

@@ -73,19 +73,19 @@ function newConnection(socket) {
                         text: round?.answer
                     }
                     await lobby.update({$push: {chatLog: answerMessage}, })
-                    endRound(code, sender)
+                    await updataChatLog(code)
+                    endRound(code)
+                } else {
+                    await updataChatLog(code)
                 }
-
-                updataChatLog(code)
             }
         } else {
             await lobby.update({$push: {chatLog: data}})
-            updataChatLog(code)
+            await updataChatLog(code)
         }
     }
 
     async function timedOut(code) {
-        console.log('timed out');
         const lobby = await db.Lobby.findOne({ code })
         const round = getActiveRound(lobby)
         const timedOutMessage = {
@@ -93,27 +93,20 @@ function newConnection(socket) {
             text: round?.answer
         }
         await lobby.update({$push: {chatLog: timedOutMessage}})
+        await updataChatLog(code)
         endRound(code, null)
     }
 
-    function updataChatLog(code) {
+    async function updataChatLog(code) {
         db.Lobby
             .findOne({ code })
             .then(lobby => {
-                console.log(lobby);
                 io.emit(`${code}-updataChatLog`, lobby.chatLog)
             })
     }
 
-    function logMessage(code, data) {
-        db.Lobby.findOneAndUpdate({ code }, {$push: {chatLog: data}})
-    }
-
-    function endRound(code, winner) {
-        db.Lobby.findOne({ code })
-            .then(lobby => {
-
-            })
+    function endRound(code) {
+        startNextRound(code)
     }
 
     function addPlayer(code, id) {
@@ -154,9 +147,9 @@ function newConnection(socket) {
             })
     }
 
-    function buildGame(code, rotations, category) {
+    async function buildGame(code, rotations, category) {
         db.Lobby.findOne({ code })
-            .then(lobby => {
+            .then(async lobby => {
                 const wordList = wordBank.getCategory(category)
                 const players = randomizePlayerOrder(lobby)
                 const answer = getRandomWord(wordList)
@@ -176,22 +169,25 @@ function newConnection(socket) {
                     winner: null
                 }
 
+                const artist = await db.User.findById(players[0])
+
+                const newGameMessage = {
+                    messageType: 'newGame',
+                    text: artist.username
+                }
+                await lobby.update({$push: {chatLog: newGameMessage}})
+                
+
                 db.Lobby
                     .findById(lobby._id)
-                    .update({$push: {games: game}, })
+                    .update({$push: {games: game}})
                     .then(_ => io.emit(`${code}-startGame`))
             })
     }
     
-    //playAgain
     function playAgain(code){
         io.emit(`${code}-goToWaitingRoom`)
     }
-
-
-    // function returnToLobby() {
-    //     io.emit(`${code}-returnToLobby`)
-    // }
 
     function getActiveGame(lobby) {
         const index = (lobby?.games?.length || 0) - 1
@@ -226,7 +222,7 @@ function newConnection(socket) {
 
     function startNextRound(code) {
         db.Lobby.findOne({ code })
-            .then(lobby => {
+            .then(async lobby => {
                 const game = getActiveGame(lobby)
                 const count = game.players.length
                 game.playerIndex++
@@ -239,15 +235,26 @@ function newConnection(socket) {
                     }
                 }
 
-                game.rounds.push({
+                const round = {
                     answer: getRandomWord(game.wordList),
                     artist: game.players[game.playerIndex],
                     winner: null
-                })
+                }
+                game.rounds.push(round)
+
+                const artist = await db.User.findById(game.players[0])
+
+                const NewRoundMessage = {
+                    messageType: 'newRound',
+                    text: artist.username
+                }
+                lobby.chatLog.push(NewRoundMessage)
 
                 lobby.save()
+
+                await updataChatLog(code)
                 
-                io.emit(`${code}-startNextRound`)
+                io.emit(`${code}-startNextRound`, round)
             })
     }
 

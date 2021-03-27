@@ -59,7 +59,10 @@ const lobbySchema = new mongoose.Schema(
             username: String,
             messageType: String,
             text: String,
-            timeStamp: Date
+            timeStamp: {
+                type: Date,
+                default: Date.now
+            }
         }],
         players: [{
             type: mongoose.Schema.Types.ObjectId,
