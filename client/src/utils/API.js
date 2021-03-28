@@ -56,6 +56,10 @@ class API {
     updateLobby(code, body) {
         return this.axios.put(`/api/lobby/${code}`, body);
     }
+
+    deleteLobby(code) {
+        return this.axios.delete(`/api/lobby/${code}`)
+    }
     //WaitingRoom.js calls the method below. The method below triggers the corresponding back end route in api.js: router.get('/user/:code', (req, res) => {...
     getPlayer(id) {
         return this.axios.get(`/api/user/${id}`)
