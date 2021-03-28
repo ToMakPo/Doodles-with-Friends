@@ -16,7 +16,6 @@ const [currentTime, setCurrentTime] = useState(null)
                 if (times.length-1 <= times.indexOf(currentTime)) return;
                 setCurrentTimeIndex(currentTimeIndex+1)
                 setCurrentTime(new Date(times[currentTimeIndex+1]))
-                console.log("onComplete fired")
             }}
             renderer={({seconds, completed})=>{
                 if (completed) return <span>Next</span>

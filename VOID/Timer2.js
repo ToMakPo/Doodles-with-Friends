@@ -23,7 +23,6 @@ const Timer2 = () => {
           
               if(secondsLeft === 0) {
                 clearInterval(timerInterval);
-                console.log("time's up");
               }
           
             }, 1000);

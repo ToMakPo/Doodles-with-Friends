@@ -13,7 +13,6 @@ import CustomSwitch from "../components/CustomSwitch";
 
 const WaitingRoom = () => {
     // const { lobby } = useContext(GameContext)
-    // console.debug(lobby)
 
     const [players, setPlayers] = useState([])
 
@@ -43,7 +42,6 @@ const WaitingRoom = () => {
     useEffect(() =>{
         testPeopleAPI.getPeople()
         .then( ({data})=>{
-            // data.forEach(element => console.debug(element.name))
             setPlayers(data)
         })
 
@@ -57,19 +55,6 @@ const WaitingRoom = () => {
         });
         customWordInputRef.current.value = "";
     }
-
-    // const printPeople = event => {
-    //     event.preventDefault();
-
-    //     console.debug("Getting people")
-
-    //     testPeopleAPI.getPeople()
-    //         .then( ({data})=>{
-
-    //             data.forEach(element => console.debug(element.name))
-    //             setPlayers(data)
-    //         })
-    // }
 
     return (
         <div

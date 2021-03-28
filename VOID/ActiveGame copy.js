@@ -30,13 +30,11 @@ const ArtistView = () => {
                 const usernames = []
                 for (let i = 0; i < data.length; i++) {
                     const username = data[i].username;
-                    console.log(username)
                     usernames.push(username)
                 }
                 setPlayers(usernames)
-                console.log(data)
             })
-            .catch(err => console.log(err))
+            .catch(err => console.error(err))
     }
     const selectRandomPlayer = () => {
 
@@ -44,9 +42,6 @@ const ArtistView = () => {
         setActivePlayer(randomPlayer)
     }
 
-    console.log('lobby: ', lobby)
-    console.log(players);
-    console.debug(totalRounds);
     return (
         <div
             id="bootstrap-overrides"

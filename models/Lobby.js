@@ -39,7 +39,16 @@ const lobbySchema = new mongoose.Schema(
             winner: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: User
-            }
+            },
+            results: [{
+                playerId: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: User
+                },
+                username: String,
+                score: Number,
+                rank: Number
+            }]
         }],
         rules: {
             rotations: {
@@ -78,162 +87,6 @@ const lobbySchema = new mongoose.Schema(
         }
     }
 )
-
-/**Add a player to the lobby before the game starts.
- * 
- * @param {mongoose.Schema.Types.ObjectId} playerId
- */
-lobbySchema.methods.addPlayerToLobby = function (player) {
-    player.activeLobby = this
-    player.save()
-
-    this.players.push(player)
-    this.save()
-
-    return this
-}
-
-/**
- * Words given by the users before the game starts.
- * @param {[String]} words An array of words that will be added to the word bank.
- */
-lobbySchema.method.addUserWordsToGame = function (words) {
-    this.userWords.concat(words)
-    this.save()
-
-    return this
-}
-
-/**
- * Create a bank of words to choose from for the game.
- * @param {String} category the category of the words being played. 
- * @returns {[String]} the list of words to add to the word bank.
- */
-lobbySchema.methods.buildWordBank = function (category) {
-    const set = new Set(this.userWords)
-
-    const options = category === 'all'
-        ? wordBank.getAll()
-        : wordBank.getCategory(category)
-
-    while (set.size < 100 && options.length > 0) {
-        const rand = Math.floor(Math.random() * options.length - 1)
-        const word = options.splice(rand, 1)
-        set.add(word)
-    }
-
-    this.userWords = []
-    this.save()
-
-    return [...set]
-}
-
-/**
- * Start the new game.
- * @param {String} category The category of the words being played.
- * @param {Number} rotations The maximumn number of rotations.
- */
-lobbySchema.methods.startNewGame = function(category, rotations) {
-    this.randomizePlayerOrder()
-
-    const newGame = {
-        code: Math.floor(Math.random() * 36 ** 9).toString(36).toUpperCase().padStart(9, '0'),
-        category,
-        wordBank: this.buildWordBank(),
-        rotations,
-        rounds: [],
-        activeIndex: -1,
-        activeRotation: 0,
-        activeRound: null,
-        winner: null
-    }
-    this.games.push(newGame)
-    this.save()
-
-    return this
-}
-
-/**
- * Start the next round of the game.
- * @param {Lobby.game} game The game being played
- */
-lobbySchema.methods.startNextRound = function (game) {
-    game.activeIndex = (game.activeIndex + 1) % this.players.length
-    if (game.activeIndex === 0) game.activeRotation++
-    const artist = this.players[game.activeIndex]
-    if (artist.activeLobby === this) { //Check that this artist has not left the lobby.
-        if (game.activeRotation < game.rotations) {
-            const round = {
-                answer: game.wordBank.splice(Math.floor(Math.random() * game.wordBank.length - 1), 1),
-                artist,
-                winner: null
-            }
-            game.rounds.push(round)
-            game.activeRound = round
-        } else {
-            //TODO: end the game.
-        }
-
-        this.save()
-        return this
-    } else {
-        return this.startNextRound(game)
-    }
-}
-
-/**
- * End this round and start the next.
- * @param {Lobby.game} game The game being played
- * @param {mongoose.Schema.Types.ObjectId} winnerId The id of the winner for this round.
- */
-lobbySchema.methods.endRound = function (game, winnerId) {
-    game.activeRound.winner = winnerId
-    this.save()
-    this.startNextRound(game)
-    return this
-}
-
-/**
- * End the game.
- * @param {Lobby.game} game The game being played
- */
-lobbySchema.methods.endGame = function (game) {
-    const players = this.players.reduce((obj, player) => obj[player] = 0, {})
-    for (const round of game.rounds) {
-        if (game.winner != null) {
-            players[round.artist]++
-            players[round.winner]++
-            round.artist.totalPoints++
-            round.winner.totalPoints++
-        }
-    }
-
-    const [gameWinner] = Object
-        .entries(players)
-        .reduce(([current, max], { player, total }) =>
-            total > max ? [player, total] : [current, max], [null, 0])
-
-    gameWinner.gamesWon++
-    this.players.forEach(player => {
-        player.gamesPlayed++
-        player.activeGame = null
-        player.save()
-    });
-
-    game.winner = gameWinner
-    this.save()
-}
-
-/** Close this lobby */
-lobbySchema.methods.closeLobby = function () {
-    endDate = Date.now()
-    this.save()
-
-    this.players.forEach(player => {
-        player.activeLobby = null
-        player.save()
-    });
-}
 
 const Lobby = mongoose.model("lobby", lobbySchema)
 
