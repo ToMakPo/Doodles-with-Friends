@@ -21,10 +21,13 @@ const ScoreBoard = () => {
     useEffect(() => {
         API.getLobby(code)
             .then(({ data }) => {
-                setRounds(data[0].games[0].rounds)
-                getIDs(data[0].games[0].rounds)
+                const games = data[0].games.length - 1
+                console.log(games)
+                setRounds(data[0].games[games].rounds)
+                getIDs(data[0].games[games].rounds)
             })
     }, [])
+
     console.log(userIds)
     const getIDs = (round) => {
         let ids = []
