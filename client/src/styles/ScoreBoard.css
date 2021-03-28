@@ -7,3 +7,37 @@
 h2{
     text-align: center;
 }
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.player-score {
+    display: flex;
+    gap: 15px;
+}
+
+.player-score * {
+    font-family: cursive;
+}
+
+.player-score.rank-1 {
+    font-size: 1.75em;
+}
+
+.player-score.rank-2 {
+    font-size: 1.5em;
+}
+
+.player-score.rank-3 {
+    font-size: 1.25em;
+}

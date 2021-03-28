@@ -74,6 +74,8 @@ function newConnection(socket) {
                     }
                     await lobby.update({$push: {chatLog: answerMessage}, })
                     await updataChatLog(code)
+                    round.winner = sender
+                    lobby.save()
                     endRound(code)
                 } else {
                     await updataChatLog(code)
@@ -101,6 +103,7 @@ function newConnection(socket) {
         db.Lobby
             .findOne({ code })
             .then(lobby => {
+                // console.log('lobby:', lobby);
                 io.emit(`${code}-updataChatLog`, lobby.chatLog)
             })
     }
@@ -220,47 +223,138 @@ function newConnection(socket) {
         return word
     }
 
-    function startNextRound(code) {
-        db.Lobby.findOne({ code })
-            .then(async lobby => {
-                const game = getActiveGame(lobby)
-                const count = game.players.length
-                game.playerIndex++
-                if (game.playerIndex == count) {
-                    game.playerIndex == 0
-                    game.currentRotation++
-                    if (game.currentRotation == game.rotations) {
-                        /// The game is over. Do not move to next round.
-                        return endGame(lobby)
-                    }
-                }
+    async function startNextRound(code) {
+        let lobby = await db.Lobby.findOne({ code })
+        const game = getActiveGame(lobby)
+        const count = game.players.length
+        console.log('---------------');
+        
+        // console.log('playerIndex:', game.playerIndex);
+        game.playerIndex++
+        console.log('playerIndex:', game.playerIndex);
+        console.log('count:', count);
+        
+        console.log('playerIndex == count:', game.playerIndex == count);
+        if (game.playerIndex == count) {
+            game.playerIndex = 0
+            console.log('playerIndex:', game.playerIndex);
+            console.log('currentRotation:', game.currentRotation);
+            game.currentRotation++
+            console.log('currentRotation:', game.currentRotation);
+            console.log('rotations:', game.rotations);
+            console.log('currentRotation == rotations:', game.currentRotation == game.rotations);
+            // await game.update({$set: {currentRotation: game.currentRotation}})
+            if (game.currentRotation == game.rotations) {
+                /// The game is over. Do not move to next round.
+                console.log('ENDING GAME');
+                return endGame(lobby, game)
+            }
+        }
+        // await db.Lobby.update({
+        //     '_id': lobby._id,
+        //     'child.id': game._id
+        // }, {
+        //     $inc: {playerIndex: game.playerIndex}
+        // })
 
-                const round = {
-                    answer: getRandomWord(game.wordList),
-                    artist: game.players[game.playerIndex],
-                    winner: null
-                }
-                game.rounds.push(round)
+        const round = {
+            answer: getRandomWord(game.wordList),
+            artist: game.players[game.playerIndex],
+            winner: null
+        }
+        console.log('round:', round);
 
-                const artist = await db.User.findById(game.players[0])
+        game.rounds.push(round)
+        // await game.update({$push: {rounds: round}})
 
-                const NewRoundMessage = {
-                    messageType: 'newRound',
-                    text: artist.username
-                }
-                lobby.chatLog.push(NewRoundMessage)
+        const artist = await db.User.findById(game.players[0])
+        // console.log('artist:', artist);
 
-                lobby.save()
+        const newRoundMessage = {
+            messageType: 'newRound',
+            text: artist.username
+        }
+        // console.log('newRoundMessage:', newRoundMessage);
+        lobby.chatLog.push(newRoundMessage)
 
-                await updataChatLog(code)
-                
-                io.emit(`${code}-startNextRound`, round)
-            })
+        // console.log('lobby:', lobby);
+        lobby = await lobby.save()
+
+        await updataChatLog(code)
+        // console.log('lobby:', lobby);
+        
+        io.emit(`${code}-startNextRound`, game, round)
     }
 
-    function endGame(lobby) {
-        //TODO: end the game
-        io.emit(`${code}-endGame`)
+    async function endGame(lobby, game) {
+        let results = game.players.map(player => {
+            return {
+                playerId: player,
+                username: '',
+                score: 0
+            }
+        })
+
+        console.log('GOING IN');
+        game.rounds.forEach(round => {
+            const artist = round.artist.toString()
+            const winner = round.winner?.toString() || null
+            console.log('round:', {artist, winner});
+
+            if (winner !== null) {
+                for (const result of results) {
+                    const playerId = result.playerId.toString()
+
+                    console.log('result:', result);
+                    console.log('playerId == artist:', result.playerId == artist);
+                    console.log('playerId == winner:', result.playerId == winner);
+                    if (result.playerId == artist || result.playerId == winner) {
+                        console.log('score:', result.score);
+                        result.score++
+                        console.log('score:', result.score);
+                        console.log('result:', result);
+                    }
+                }
+            }
+        })
+        console.log('results:', results);
+        
+        results = results.sort((a, b) => b.score - a.score)
+
+        const lastRank = {
+            score: 999,
+            rank: 0
+        }
+
+        // await results.forEach(async (result, i) => {
+        await asyncForEach(results, async (result, i) => {
+            const player = await db.User.findById(result.playerId)
+
+            const rank = result.score === lastRank.score ? lastRank.rank : (i + 1)
+            lastRank.score = result.score
+            lastRank.rank = rank
+
+            result.username = player.username
+            result.rank = rank
+
+            player.gamesPlayed += 1
+            player.gamesWon += i == 0 ? 1 : 0
+            player.totalPoints += result.score
+            player.save()
+        })
+
+        game.winner = results[0].playerId
+        game.results = results
+
+        lobby.save()
+
+        io.emit(`${lobby.code}-endGame`)
+    }
+
+    async function asyncForEach(array, callback) {
+        for (let index = 0; index < array.length; index++) {
+            await callback(array[index], index, array);
+        }
     }
 
     // socket.on('setColor', (code, color) => {
@@ -279,7 +373,6 @@ function newConnection(socket) {
     //     io.emit(`${code}-endLine`)
     // })
     // socket.on('clearDrawing', (code) => {
-    //     console.debug('sensed clearDrawing');
     //     io.emit(`${code}-clearDrawing`)
     // })
     // socket.on('usePen', (code) => {
@@ -289,15 +382,14 @@ function newConnection(socket) {
     //     io.emit(`${code}-useEraser`)
     // })
     // socket.on('logMessage', (code, sender, message) => {
-    //     console.debug('lobby code:', code);
     //     io.emit(`${code}-logMessage`, sender, message)
     // })
     // socket.on('logGuess', (code, sender, guess) => {
     //     io.emit(`${code}-logGuess`, sender, guess)
-    //     const answer = 'panda'//TODO: lookup answer for this game
+    //     const answer = 'panda'
     //     if (guess.toLowerCase() === answer) {
     //         io.emit(`${code}-guessIsCorrect`, sender, answer)
-    //         //TODO: trigger next round
+    //         //trigger next round
     //     }
     // })
     // socket.on('consoleLog', (code, message) => {

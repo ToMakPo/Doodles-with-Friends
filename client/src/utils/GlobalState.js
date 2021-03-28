@@ -6,7 +6,6 @@ const { Provider } = wordBankContext; //deconstructed provider method
 const reducer = (state, action) => { //this is our reducer method
     switch(action.type){
         case "newWord":
-            // console.log(state)
             return([...state,{
                 name: action.name,
                 id:Date.now()

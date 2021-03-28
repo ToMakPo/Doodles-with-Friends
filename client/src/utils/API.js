@@ -38,7 +38,6 @@ class API {
      * @returns {Promise}
      */
     login(userData) {
-        console.debug({ userData });
         return this.axios.post("/api/login", userData);
     }
 
@@ -67,7 +66,6 @@ class API {
     }
 
     getPlayers(body) {
-        console.log(body)
         return this.axios.post('/api/users', body)
     }
 }

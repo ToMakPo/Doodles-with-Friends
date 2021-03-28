@@ -10,7 +10,7 @@ import Home from './pages/Home'
 import WaitingRoom from './pages/WaitingRoom'
 import ActiveGame from './pages/ActiveGame'
 import ScoreBoard from './pages/ScoreBoard'
-import PageNotFound from './pages/PageNotFound'
+// import PageNotFound from './pages/PageNotFound'
 
 import LobbyContext from './utils/LobbyContext'
 import { WordBankProvider } from './utils/GlobalState'
@@ -28,9 +28,6 @@ const App = () => {
 
 	function fixURL(defaultPage, ...ifs) {
 		const pathname = window.location.pathname.split('/')[1]
-		console.log({ defaultPage, ifs });
-		console.log(pathname);
-		console.log(ifs.includes(pathname));
 
 		if (pathname === '' || ifs.includes(pathname)) {
 			// window.history.replaceState(null, '', '/' + defaultPage)
@@ -52,8 +49,6 @@ const App = () => {
 				{
 					<Router>
 						<PageHeader loggedIn={isAuthenticated} />
-
-						{/* {true ? <ScoreBoard/>: //TODO: remove this line */}
 
 						<main>
 							{!isAuthenticated ? (

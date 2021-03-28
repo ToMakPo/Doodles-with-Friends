@@ -15,7 +15,7 @@ function setupSocket(gameId) {
     socket.on(`${gameId}-logMessage`, logMessage)
     socket.on(`${gameId}-logGuess`, logGuess)
     socket.on(`${gameId}-guessIsCorrect`, logCorrect)
-    socket.on(`${gameId}-consoleLog`, message => console.log(...message))
+    socket.on(`${gameId}-consoleLog`, message => console.info(...message))
 }
 
 const emit = {

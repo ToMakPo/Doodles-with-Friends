@@ -13,6 +13,5 @@ function setGameId(id) {
 }
 
 function getGameId() {
-    console.debug('got game id');
     return gameId
 }

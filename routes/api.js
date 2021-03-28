@@ -54,7 +54,6 @@ router.get('/wordbank/catagories', (req, res) => {
 
 router.get('/wordbank/:category', (req, res) => {
     const category = req.params.category
-    console.debug({ category });
     res.json(wordbank.getCategory(category))
 })
 
