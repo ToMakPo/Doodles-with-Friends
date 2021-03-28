@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef } from "react"
 import { useHistory } from "react-router"
-// import { useAuthenticatedUser } from '../utils/auth'
 
 import ChatBox from "../components/ChatBox"
 import API from "../utils/API";
@@ -55,22 +54,20 @@ const ScoreBoard = () => {
                 <div className="card">
                     <h2 className="card-header">Score Board</h2>
                     <div className="info">
-                        <div>
-                            <ul className="list-group list-group-flush">
-                                {results?.map(({username, score, rank}, i) => (
-                                    <li className={'player-score rank-'+rank} key={i}>
-                                        <span className='rank'>{nth(rank)}</span>
-                                        <span className='username'>{username}</span>
-                                        <span className='score'>{score}</span>
-                                        <span className='metal'>
-                                            {rank === 1 && '🥇'}
-                                            {rank === 2 && '🥈'}
-                                            {rank === 3 && '🥉'}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                        <ul className="list-group list-group-flush">
+                            {results?.map(({username, score, rank}, i) => (
+                                <li className={'player-score rank-'+rank} key={i}>
+                                    <span className='rank'>{nth(rank)}</span>
+                                    <span className='username'>{username}</span>
+                                    <span className='score'>{score}</span>
+                                    <span className='metal'>
+                                        {rank === 1 && '🥇'}
+                                        {rank === 2 && '🥈'}
+                                        {rank === 3 && '🥉'}
+                                    </span>
+                                </li>
+                            ))}
+                        </ul>
                         <button
                             type="button"
                             className="btn btn-primary btn-lg btn-block"
