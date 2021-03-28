@@ -8,7 +8,6 @@ import io from 'socket.io-client'
 import '../styles/Chat.css'
 
 const ChatMessage = ({ username, text, fromSelf }) => {
-    console.log({fromSelf});
     return (
         <div className={'chat-message output' + (fromSelf ? ' fromSelf' : '')}>
             <small>{username}</small>
@@ -17,7 +16,6 @@ const ChatMessage = ({ username, text, fromSelf }) => {
     )
 }
 const GuessMessage = ({ username, text, fromSelf }) => {
-    console.log('adding guess message');
     return (
         <div className={'guess-message output' + (fromSelf ? ' fromSelf' : '')}>
             <small>{username}</small>
@@ -142,7 +140,6 @@ const ChatBox = () => {
                     <div id='chat-log'>{
                         chatLog.map((data, i) => {
                             const fromSelf = data.userId === userId
-                            console.log(data);
                             switch (data.messageType) {
                                 case 'chat': return <ChatMessage key={i} {...data} fromSelf={fromSelf} />
                                 case 'guess': return <GuessMessage key={i} {...data} fromSelf={fromSelf} />

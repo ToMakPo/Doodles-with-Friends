@@ -52,7 +52,6 @@ const ArtistView = () => {
     useEffect(() => {
         const time = countdown - 1
         if (countdown > 0) {
-            console.log(time);
             const timer = setTimeout(() => {
                 setCountdown(time)
             }, 1000)

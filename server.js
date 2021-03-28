@@ -279,7 +279,6 @@ function newConnection(socket) {
     //     io.emit(`${code}-endLine`)
     // })
     // socket.on('clearDrawing', (code) => {
-    //     console.debug('sensed clearDrawing');
     //     io.emit(`${code}-clearDrawing`)
     // })
     // socket.on('usePen', (code) => {
@@ -289,7 +288,6 @@ function newConnection(socket) {
     //     io.emit(`${code}-useEraser`)
     // })
     // socket.on('logMessage', (code, sender, message) => {
-    //     console.debug('lobby code:', code);
     //     io.emit(`${code}-logMessage`, sender, message)
     // })
     // socket.on('logGuess', (code, sender, guess) => {

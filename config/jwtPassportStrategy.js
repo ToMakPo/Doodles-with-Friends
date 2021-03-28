@@ -19,7 +19,7 @@ const authorizeJwtToken = (jwtPayload, done) => {
             return done(null, false);
         })
         .catch(err => {
-            console.debug(err)
+            console.error(err)
             done(null, false);
         });
 

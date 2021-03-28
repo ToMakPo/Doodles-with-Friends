@@ -22,21 +22,17 @@ const ScoreBoard = () => {
         API.getLobby(code)
             .then(({ data }) => {
                 const games = data[0].games.length - 1
-                console.log(games)
                 setRounds(data[0].games[games].rounds)
                 getIDs(data[0].games[games].rounds)
             })
     }, [])
 
-    console.log(userIds)
     const getIDs = (round) => {
         let ids = []
         for (let i = 0; i < round.length; i++) {
             const id = round[i].winner;
             ids.push(id)
-            console.log(id)
         }
-        console.log(ids)
         setUserIds(ids)
         getUsernames(ids)
     }
@@ -44,11 +40,9 @@ const ScoreBoard = () => {
         API.getPlayers(ids)
             .then(({ data }) => {
                 setUsernames(data)
-                console.log('usernames', data)
             })
     }
-
-    console.log(rounds)
+    
     const emit = {
         playAgain: _ => socket.current.emit('playAgain', code) //triggers the server
 

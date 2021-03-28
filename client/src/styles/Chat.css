@@ -1,8 +1,6 @@
 #chat-component {
     display: flex;
     flex-direction: column;
-    /* align-items: stretch; */
-    /* justify-content: stretch; */
     gap: 2px
 }
 
@@ -71,11 +69,6 @@
     background-color: #b4d;
 }
 
-#chat-log .answer-message {
-    color: #195;
-    text-align: center;
-}
-
 #chat-log span::before {
     position: absolute;
     top: -1px;
@@ -92,6 +85,11 @@
     font-family: monospace;
 }
 
+#chat-log .log {
+    text-align: center;
+    color: #888;
+}
+
 #chat-log .log * {
     border: 1px solid transparent;
 }
@@ -104,6 +102,10 @@
     font-size: 1.2em;
 }
 
+#chat-log .answer-message {
+    color: #195;
+}
+
 #chat-log .answer-message span::before {
     content: '✓';
     background-color: #195;
@@ -111,7 +113,6 @@
 
 #chat-log .timed-out-message {
     color: #915;
-    text-align: center;
 }
 
 #chat-log .timed-out-message span::before {
