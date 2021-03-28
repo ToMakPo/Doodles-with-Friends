@@ -12,7 +12,7 @@ import io from 'socket.io-client'
 import '../styles/palette.css'
 import '../styles/ActiveGame.css'
 
-const initialCountdown = 15
+const initialCountdown = 10
 
 const ArtistView = () => {
     const [code] = useState(window.location.pathname.split('/')[2])
@@ -70,7 +70,8 @@ const ArtistView = () => {
         socket.current.on(`${code}-endGame`, endGame)
     }
 
-    function startNextRound(round) {
+    function startNextRound(game, round) {
+        setGame(game)
         setRound(round)
 
         const isArtist = round?.artist === userId
@@ -84,7 +85,8 @@ const ArtistView = () => {
     }
 
     function endGame() {
-        history.push(`/active-game/${code}`);
+        console.log('END GAME');
+        history.push(`/score-board/${code}`);
     }
     
     return (

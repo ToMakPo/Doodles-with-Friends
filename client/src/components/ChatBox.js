@@ -74,12 +74,13 @@ const ChatBox = () => {
     const [userId] = useState(useAuthenticatedUser()._id);
     const [username, setUsername] = useState('');
 
-    const [chatLog, setChatLog] = useState([])
+    const [log, setLog] = useState([])
     const [text, setText] = useState('')
     const [guessing, setGuessing] = useState(false)
 
     const socket = useRef()
     const chatInput = useRef()
+    const chatLog = useRef()
 
     useEffect(async _ => {
         // get lobby
@@ -93,8 +94,12 @@ const ChatBox = () => {
         setUsername(username)
 
         // get log
-        setChatLog(lobby.chatLog)
+        setLog(lobby.chatLog)
     }, [])
+
+    useEffect(() => {
+        chatLog.current.scrollTo({top: chatLog.current.scrollHeight})
+    }, [log])
 
     function chatInputOnInput(event) {
         const input = event.target.value
@@ -129,7 +134,7 @@ const ChatBox = () => {
     ///////////////////
     function setupSockets() {
         socket.current = io.connect('/')
-        socket.current.on(`${code}-updataChatLog`, setChatLog)
+        socket.current.on(`${code}-updataChatLog`, setLog)
     }
 
     return (
@@ -137,8 +142,8 @@ const ChatBox = () => {
             <h2 className="card-header">Chat:  </h2>
             <div className="card-body">
                 <div id='chat-component'>
-                    <div id='chat-log'>{
-                        chatLog.map((data, i) => {
+                    <div id='chat-log' ref={chatLog}>{
+                        log.map((data, i) => {
                             const fromSelf = data.userId === userId
                             switch (data.messageType) {
                                 case 'chat': return <ChatMessage key={i} {...data} fromSelf={fromSelf} />
