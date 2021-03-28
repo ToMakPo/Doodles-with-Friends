@@ -28,12 +28,12 @@ const App = () => {
 
 	function fixURL(defaultPage, ...ifs) {
 		const pathname = window.location.pathname.split('/')[1]
-		console.log({defaultPage, ifs});
+		console.log({ defaultPage, ifs });
 		console.log(pathname);
 		console.log(ifs.includes(pathname));
 
 		if (pathname === '' || ifs.includes(pathname)) {
-			window.history.replaceState(null, '', '/' + defaultPage)
+			// window.history.replaceState(null, '', '/' + defaultPage)
 			history?.push(defaultPage)
 		}
 	}
@@ -53,33 +53,33 @@ const App = () => {
 					<Router>
 						<PageHeader loggedIn={isAuthenticated} />
 
-					{/* {true ? <ScoreBoard/>: //TODO: remove this line */}
+						{/* {true ? <ScoreBoard/>: //TODO: remove this line */}
 
-					<main>
-						{!isAuthenticated ? (
-							<Switch>
-								<Route exact path='/login' component={Login} />
-								<Route exact path='/signup' component={Signup} />
-								
-								<Route component={Login} />
-								{/* <Route render={_ => <div>PageNotFound (logged out)</div>} /> */}
-							</Switch>
-						) : (
-							<Switch>
-								<Route exact path='/home' render={_ => <Home setLobby={setLobby}/>} />
-								<Route exact path='/waiting-room/:lobbyCode' component={WaitingRoom} />
-								<Route exact path='/active-game/:lobbyCode' component={ActiveGame} />
-								<Route exact path='/score-board/:lobbyCode' component={ScoreBoard} />
-								<Route render={_ => <Home setLobby={setLobby}/>} />
-								{/* <Route render={PageNotFound} /> */}
-							</Switch>
-						)}
-					</main>
-					{/* }  */}
-					
-					
-				</Router>
-				
+						<main>
+							{!isAuthenticated ? (
+								<Switch>
+									<Route exact path='/login' component={Login} />
+									<Route exact path='/signup' component={Signup} />
+
+									<Route component={Login} />
+									{/* <Route render={_ => <div>PageNotFound (logged out)</div>} /> */}
+								</Switch>
+							) : (
+								<Switch>
+									<Route exact path='/home' render={_ => <Home setLobby={setLobby} />} />
+									<Route exact path='/waiting-room/:lobbyCode' component={WaitingRoom} />
+									<Route exact path='/active-game/:lobbyCode' component={ActiveGame} />
+									<Route exact path='/score-board/:lobbyCode' component={ScoreBoard} />
+									<Route render={_ => <Home setLobby={setLobby} />} />
+									{/* <Route render={PageNotFound} /> */}
+								</Switch>
+							)}
+						</main>
+						{/* }  */}
+
+
+					</Router>
+
 				}
 				<PageFooter />
 			</WordBankProvider>
