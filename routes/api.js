@@ -25,7 +25,7 @@ router.put('/lobby/:code', (req, res) => {
 
 router.delete('/lobby/:code', (req, res) => {
     db.Lobby
-        .findById({ code: req.params.code })
+        .findOneAndDelete({ code: req.params.code })
         .then(data => data.remove())
         .then(data => res.json(data))
         .catch(err => res.status(422).json(err))
