@@ -84,33 +84,57 @@ const ScoreBoard = () => {
             main 
             container 
             sketchBackground">
-            <div className="card-deck
+            <div className="
+                d-flex 
+                flex-row
+                justify-content-center
+                align-items-between
             ">
-                <div className="card">
+                <div className="card scoreBoardCardEl">
                     <h2 className="card-header">
                         Score Board
                     </h2>
                     <div>
-                        <ul className="list-group list-group-flush">
+                        <ul className="
+                         p-5
+                         justify-content-center
+                        align-items-between
+                        list-group">
+                                {/* <li 
+                                    
+                                    className="
+                                        list-group-item 
+                                        justify-content-center
+                                        align-items-center"
+                                >
+                                    <h3 className="text-center m-0"> 
+                                        test
+                                    </h3>
+                                </li> */}
                             {usernames ? usernames.map(username => (
-                                <li key={username.username}>{username.username} {userIds.filter((v) => (v === username._id)).length}</li>
+                                <li 
+                                    key={username.username}
+                                    className="
+                                        list-group-item 
+                                        justify-content-center
+                                        align-items-center"
+                                >
+                                    <h3 className="text-center m-0"> 
+                                        {username.username} {userIds.filter((v) => (v === username._id)).length} 
+                                    </h3>
+                                </li>
                             )) : 'no winners'}
                         </ul>
                     </div>
-
+                </div>
+                <ChatBox />
+            </div>
                     <button
                         type="button"
-                        className="btn btn-primary btn-lg btn-block"
+                        className="btn btn-primary btn-lg btn-block "
+                        style={{maxWidth:1000}}
                         onClick={playAgain}
                     >PLAY AGAIN</button>
-                </div>
-                {/* <div 
-                style={{minWidth:600}}
-                > */}
-
-                <ChatBox />
-                {/* </div> */}
-            </div>
         </div>
     )
 }

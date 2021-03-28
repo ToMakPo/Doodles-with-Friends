@@ -103,7 +103,8 @@ const WaitingRoom = () => {
             <div className="row containerCol">
                 <div className="card-deck ">
                     {/* Column 1 */}
-                    <div className="card">
+                    <div className="card"
+                    style={{minWidth:360}}>
                         <h2 className="card-header">Details:
                         {/* <div className="gameCode">{code || `no lobby`}</div> */}
                         </h2>
@@ -121,7 +122,8 @@ const WaitingRoom = () => {
                     </div>
 
                     {/* Column 2 */}
-                    <div className="card">
+                    <div className="card"
+                    style={{minWidth:360}}>
                         <h2 className="card-header">Options:</h2>
                         <div className="card-body">
                             <div style={{ marginBottom: 10 }}

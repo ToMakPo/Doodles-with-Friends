@@ -135,7 +135,8 @@ const ChatBox = () => {
     }
 
     return (
-        <div className="card">
+        <div className="card"
+        style={{minWidth:360}}>
             <h2 className="card-header">Chat:  </h2>
             <div className="card-body">
                 <div id='chat-component'>
@@ -156,6 +157,7 @@ const ChatBox = () => {
                         })
                     }</div>
                     <form
+                    className=""
                         id='chat-input-form'
                         onSubmit={chatInputFormOnSubmit}>
                         <input

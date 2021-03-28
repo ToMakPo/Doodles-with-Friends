@@ -4,7 +4,7 @@ import { useHistory } from "react-router"
 import { useAuthenticatedUser } from '../utils/auth'
 
 import ChatBox from "../components/ChatBox"
-// import Canvas from "../components/Canvas"
+import Canvas from "../components/Canvas"
 import Timer from "../components/Timer"
 import API from "../utils/API"
 import io from 'socket.io-client'
@@ -130,7 +130,7 @@ const ArtistView = () => {
                         {/* <div className="card-body "> */}
                             <div className="canvasContainer">
                                 {/* TODO: Check if this is the active player */}
-                                {/* <Canvas active={true}/>  */}
+                                <Canvas active={true}/> 
                             </div>
                         {/* </div> */}
                     {/* </div> */}
