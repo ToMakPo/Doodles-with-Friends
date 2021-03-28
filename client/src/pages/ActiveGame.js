@@ -25,10 +25,10 @@ const ArtistView = () => {
 
     const history = useHistory()
     const socket = useRef()
-    
+
     useEffect(() => {
         API.getLobby(code)
-            .then(({data: [lobby]}) => {
+            .then(({ data: [lobby] }) => {
                 setupSockets()
 
                 // get the current game
@@ -42,8 +42,8 @@ const ArtistView = () => {
                 const isArtist = round.artist === userId
                 setIsArtist(isArtist)
 
-                API.getPlayer(round.artist).then(({data: {_id: id, username}}) => {
-                    setArtist({id, username})
+                API.getPlayer(round.artist).then(({ data: { _id: id, username } }) => {
+                    setArtist({ id, username })
                 })
             })
             .catch(err => console.error(err))
@@ -60,7 +60,7 @@ const ArtistView = () => {
             isArtist && socket.current.emit('timedOut', code)
         }
     }, [countdown])
-    
+
     ///////////////////
     ///   SOCKETS   ///
     ///////////////////
@@ -77,8 +77,8 @@ const ArtistView = () => {
         const isArtist = round?.artist === userId
         setIsArtist(isArtist)
 
-        API.getPlayer(round.artist).then(({data: {_id: id, username}}) => {
-            setArtist({id, username})
+        API.getPlayer(round.artist).then(({ data: { _id: id, username } }) => {
+            setArtist({ id, username })
         })
 
         setCountdown(initialCountdown)
@@ -88,54 +88,54 @@ const ArtistView = () => {
         console.log('END GAME');
         history.push(`/score-board/${code}`);
     }
-    
+
     return (
         <div
             id="bootstrap-overrides"
             className="active-game-main main container sketchBackground">
-                <h2 className="banner">
-                    <div className="d-flex justify-content-around align-items-center">
-                        {
-                            isArtist ? (
-                                <div className="d-inline p-1">
-                                    Your word is:
-                                    <div id='artist-answer'>{round?.answer}</div>
-                                </div>
-                            ) : (
-                                <div className="d-inline p-1">
-                                    Artist:
-                                    <div id='active-artist'>{artist?.username}</div>
-                                </div>
-                            )
-                        }
-                        
-                        <div className="d-inline p-1 ">
-                            Round {game?.currentRotation + 1} of {game?.rotations}
-                        </div>
-    
-                        <div className="d-inline p-1 ">
-                            Remaining Time:
-                            <Timer countdown={countdown}/>
-                        </div> 
-                    </div>
-                </h2>
-                <div className="card-deck" style={{
-                    display: 'flex',
-                    justifyContent:"center",
-                    alignItems: "stretch",
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    width:"100%",
-                }}>
-
-                    <Canvas active={isArtist}/> 
-                    <ChatBox/>
-                            <div className="canvasContainer">
-                                {/* TODO: Check if this is the active player */}
-                                <Canvas active={true}/> 
+            <h2 className="banner">
+                <div className="d-flex justify-content-around align-items-center">
+                    {
+                        isArtist ? (
+                            <div className="d-inline p-1">
+                                Your word is:
+                                <div id='artist-answer'>{round?.answer}</div>
                             </div>
+                        ) : (
+                            <div className="d-inline p-1">
+                                Artist:
+                                <div id='active-artist'>{artist?.username}</div>
+                            </div>
+                        )
+                    }
 
+                    <div className="d-inline p-1 ">
+                        Round {game?.currentRotation + 1} of {game?.rotations}
+                    </div>
+
+                    <div className="d-inline p-1 ">
+                        Remaining Time:
+                            <Timer countdown={countdown} />
+                    </div>
                 </div>
+            </h2>
+            <div className="card-deck" style={{
+                display: 'flex',
+                justifyContent: "center",
+                alignItems: "stretch",
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                width: "100%",
+            }}>
+
+                <Canvas active={isArtist} />
+                <ChatBox />
+                {/* <div className="canvasContainer">
+                    TODO: Check if this is the active player
+                    <Canvas active={true} />
+                </div> */}
+
+            </div>
         </div>
     )
 }
