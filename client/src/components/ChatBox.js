@@ -142,7 +142,7 @@ const ChatBox = () => {
         style={{minWidth:360}}>
             <h2 className="card-header">Chat:  </h2>
             <div className="card-body">
-                <div id='chat-component'>
+                <div id='chat-component m-0'>
                     <div id='chat-log' ref={chatLog}>{
                         log.map((data, i) => {
                             const fromSelf = data.userId === userId
