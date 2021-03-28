@@ -52,6 +52,27 @@ function newConnection(socket) {
     socket.on('timedOut', timedOut)
     socket.on('playAgain', playAgain)
 
+    /// CANVAS ///
+    socket.on('changeColor', (code, color) => {
+        socket.broadcast.emit(`${code}-changeColor`, color)
+    })
+    socket.on('changeSize', (code, size) => {
+        socket.broadcast.emit(`${code}-changeSize`, size)
+    })
+    socket.on('clearDrawing', (code) => {
+        socket.broadcast.emit(`${code}-clearDrawing`)
+    })
+    socket.on('startLine', (code, x, y) => {
+        socket.broadcast.emit(`${code}-startLine`, x, y)
+    })
+    socket.on('drawLine', (code, x, y) => {
+        socket.broadcast.emit(`${code}-drawLine`, x, y)
+    })
+    socket.on('endLine', (code) => {
+        socket.broadcast.emit(`${code}-endLine`)
+    })
+
+    /// FUNCTIONS ///
     async function submitChat(code, data) {
         const lobby = await db.Lobby.findOne({ code })
         const type = data.messageType

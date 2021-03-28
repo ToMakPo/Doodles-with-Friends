@@ -1,6 +1,15 @@
 canvas {
-    cursor: none;
+    cursor: crosshair;
     background-color: white;
+}
+
+#canvas-component {
+    width: fit-content;
+}
+
+#canvas-input-box {
+    display: flex;
+    gap: 10px
 }
 
 #draw-area {
@@ -15,18 +24,11 @@ canvas {
 
 #canvas-cursor {
     position: absolute;
-    transform: translate(-50%, -50%);
-    width: 35px;
-    height: 35px;
     border-radius: 50%;
     z-index: 5;
-    cursor: none;
+    cursor: crosshair;
     pointer-events: none;
     border: 1px solid black;
-}
-
-#canvas-cursor.eraser {
-    background-color: #ffffff88 !important;
 }
 
 #clear-drawing-button {

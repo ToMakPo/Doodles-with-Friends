@@ -12,7 +12,7 @@ import io from 'socket.io-client'
 import '../styles/palette.css'
 import '../styles/ActiveGame.css'
 
-const initialCountdown = 10
+const initialCountdown = 120
 
 const ArtistView = () => {
     const [code] = useState(window.location.pathname.split('/')[2])
@@ -93,43 +93,36 @@ const ArtistView = () => {
         <div
             id="bootstrap-overrides"
             className="active-game-main main container sketchBackground">
-                <h2 className="banner">
-                    <div className="d-flex justify-content-around align-items-center">
-                        {
-                            isArtist ? (
-                                <div className="d-inline p-1">
-                                    Your word is:
-                                    <div id='artist-answer'>{round?.answer}</div>
-                                </div>
-                            ) : (
-                                <div className="d-inline p-1">
-                                    Artist:
-                                    <div id='active-artist'>{artist?.username}</div>
-                                </div>
-                            )
-                        }
-                        
-                        <div className="d-inline p-1 ">
-                            Round {game?.currentRotation + 1} of {game?.rotations}
-                        </div>
-    
-                        <div className="d-inline p-1 ">
-                            Remaining Time:
-                            <Timer countdown={countdown}/>
-                        </div> 
+            <h2 className="banner">
+                <div className="d-flex justify-content-around align-items-center">
+                    {
+                        isArtist ? (
+                            <div className="d-inline p-1">
+                                Your word is:
+                                <div id='artist-answer'>{round?.answer}</div>
+                            </div>
+                        ) : (
+                            <div className="d-inline p-1">
+                                Artist:
+                                <div id='active-artist'>{artist?.username}</div>
+                            </div>
+                        )
+                    }
+                    
+                    <div className="d-inline p-1 ">
+                        Round {game?.currentRotation + 1} of {game?.rotations}
                     </div>
-                </h2>
-                <div className="card-deck" style={{
-                    display: 'flex',
-                    justifyContent:"center",
-                    alignItems: "stretch",
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    width:"100%",
-                }}>
-                    <Canvas active={isArtist}/> 
-                    <ChatBox/>
+
+                    <div className="d-inline p-1 ">
+                        Remaining Time:
+                        <Timer countdown={countdown}/>
+                    </div> 
                 </div>
+            </h2>
+            <div className="card-deck">
+                <Canvas isArtist={isArtist} code={code}/> 
+                <ChatBox/>
+            </div>
         </div>
     )
 }
