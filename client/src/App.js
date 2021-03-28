@@ -1,4 +1,5 @@
-import { useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom'
 
 import PageHeader from './components/PageHeader'
@@ -26,20 +27,24 @@ const App = () => {
 	const history = useHistory()
 
 	function fixURL(defaultPage, ...ifs) {
-	// 	const pathname = window.location.pathname.split('/')[1]
+		const pathname = window.location.pathname.split('/')[1]
+		console.log({defaultPage, ifs});
+		console.log(pathname);
+		console.log(ifs.includes(pathname));
 
-	// 	if (pathname === '' || ifs.includes(pathname)) {
-	// 		window.history.replaceState(null, '', '/' + defaultPage)
-	// 		history?.push(defaultPage)
-	// 	}
+		if (pathname === '' || ifs.includes(pathname)) {
+			window.history.replaceState(null, '', '/' + defaultPage)
+			history?.push(defaultPage)
+		}
 	}
 
-	if (!isAuthenticated) {
-		console.debug({isAuthenticated});
-		fixURL('login', 'home', 'waiting-room', 'active-game', 'score-board')
-	} else {
-		fixURL('home', 'login', 'signup')
-	}
+	useEffect(() => {
+		if (!isAuthenticated) {
+			fixURL('login', 'home', 'waiting-room', 'active-game', 'score-board')
+		} else {
+			fixURL('home', 'login', 'signup')
+		}
+	}, [])
 
 	return (
 		<LobbyContext.Provider value={lobby}>

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { useLogin } from "../utils/auth"
 import { Link } from "react-router-dom"
 
@@ -9,7 +9,6 @@ import swal from "sweetalert"
 const Login = _ => {
     const usernameInput = useRef('')
     const passwordInput = useRef('')
-    const [errorMsg, setErrorMsg] = useState('')
 
     const login = useLogin();
 
