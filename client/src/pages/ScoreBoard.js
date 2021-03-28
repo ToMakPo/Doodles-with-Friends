@@ -17,14 +17,14 @@ const ScoreBoard = () => {
 
     const socket = useRef()
     useEffect(async () => {
-        const {data: [lobby]} = await API.getLobby(code)
+        const { data: [lobby] } = await API.getLobby(code)
         const gameCount = lobby.games.length
         const game = lobby.games[gameCount - 1]
         setResults(game.results)
-        
+
         setupSockets()
     }, [])
-    
+
     const emit = {
         playAgain: _ => socket.current.emit('playAgain', code) //triggers the server
     }
@@ -38,16 +38,20 @@ const ScoreBoard = () => {
         event.preventDefault()
         emit.playAgain() //triggers line 20
     }
-    
+
     //line 40 gets triggered with the sockets from the server
-    function goToWaitingRoom() {
+    async function goToWaitingRoom() {
+        await API.updateLobby(code, {
+            players: []
+        })
+
         history.push(`/waiting-room/${code}`);
     }
 
     function nth(n) {
         return n + (['st', 'nd', 'rd'][((n + 90) % 100 - 10) % 10 - 1] || 'th')
     }
-    
+
     return (
         <div id="bootstrap-overrides"
             className="score-board-main main container sketchBackground">
@@ -57,8 +61,8 @@ const ScoreBoard = () => {
                     <div className="info">
                         <div>
                             <ul className="list-group list-group-flush">
-                                {results?.map(({username, score, rank}, i) => (
-                                    <li className={'player-score rank-'+rank} key={i}>
+                                {results?.map(({ username, score, rank }, i) => (
+                                    <li className={'player-score rank-' + rank} key={i}>
                                         <span className='rank'>{nth(rank)}</span>
                                         <span className='username'>{username}</span>
                                         <span className='score'>{score}</span>
