@@ -13,6 +13,7 @@ const ScoreBoard = () => {
     const [code] = useState(window.location.pathname.split('/')[2])
     const [rounds, setRounds] = useState({})
     const [usernames, setUsernames] = useState([])
+    const [userIds, setUserIds] = useState([])
     const history = useHistory()
     // const userId = useAuthenticatedUser()._id.toString()
 
@@ -24,7 +25,7 @@ const ScoreBoard = () => {
                 getIDs(data[0].games[0].rounds)
             })
     }, [])
-
+    console.log(userIds)
     const getIDs = (round) => {
         let ids = []
         for (let i = 0; i < round.length; i++) {
@@ -33,6 +34,7 @@ const ScoreBoard = () => {
             console.log(id)
         }
         console.log(ids)
+        setUserIds(ids)
         getUsernames(ids)
     }
     const getUsernames = (ids) => {
@@ -88,7 +90,7 @@ const ScoreBoard = () => {
                     <div>
                         <ul className="list-group list-group-flush">
                             {usernames ? usernames.map(username => (
-                                <li key={username.username}>{username.username}</li>
+                                <li key={username.username}>{username.username} {userIds.filter((v) => (v === username._id)).length}</li>
                             )) : 'no winners'}
                         </ul>
                     </div>
