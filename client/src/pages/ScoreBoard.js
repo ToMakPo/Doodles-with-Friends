@@ -9,11 +9,14 @@ import io from 'socket.io-client'
 
 import '../styles/palette.css'
 import '../styles/ScoreBoard.css'
+import { useAuthenticatedUser } from "../utils/auth";
 
 const ScoreBoard = () => {
     const [code] = useState(window.location.pathname.split('/')[2])
     const [results, setResults] = useState()
     const history = useHistory()
+    const [isHost, setIsHost] = useState(false)
+    const userId = useAuthenticatedUser()._id.toString()
 
     const socket = useRef()
     useEffect(async () => {
@@ -23,9 +26,14 @@ const ScoreBoard = () => {
         setResults(game.results)
 
         setupSockets()
+
+        setIsHost(userId === lobby.host)
+        emit.addPlayer(userId)
+
     }, [])
 
     const emit = {
+        addPlayer: id => socket.current.emit('addPlayer', code, id),
         playAgain: _ => socket.current.emit('playAgain', code) //triggers the server
     }
 
@@ -79,6 +87,7 @@ const ScoreBoard = () => {
                             type="button"
                             className="btn btn-primary btn-lg btn-block"
                             onClick={playAgain}
+                            disabled={!isHost}
                         >PLAY AGAIN</button>
                     </div>
                 </div>
