@@ -52,7 +52,8 @@ const Canvas = ({active}) => {
     }
 
     return (
-        <div className="card canvasCard">
+        <div className="card canvasCard d-flex"
+            style={{minWidth:600}}>
         <div className="card-body ">
         <div className="canvasContainer">
         <div id='canvas-component'>

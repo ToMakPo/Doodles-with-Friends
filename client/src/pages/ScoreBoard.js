@@ -89,6 +89,7 @@ const ScoreBoard = () => {
                 flex-row
                 justify-content-center
                 align-items-between
+                flex-wrap
             ">
                 <div className="card scoreBoardCardEl">
                     <h2 className="card-header">
@@ -96,8 +97,8 @@ const ScoreBoard = () => {
                     </h2>
                     <div>
                         <ul className="
-                         p-5
-                         justify-content-center
+                        p-5
+                        justify-content-center
                         align-items-between
                         list-group">
                                 {/* <li 
