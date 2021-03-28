@@ -8,6 +8,26 @@ h2{
     text-align: center;
 }
 
+.scoreBoardCardEl{
+    min-width: 360px !important;
+
+}
+/* 
+.chatBoxCardEl{
+    min-width:360px;
+
+} */
+
+
+/* @media (min-width:1200px){
+	.scoreBoardCardEl{
+        min-width: 300px !important;
+		flex: 1 0;
+		margin-right: 15px;
+		margin-bottom:5px;
+        margin-left: 15px;
+	}
+} */
 .info {
     display: flex;
     justify-content: space-between;
