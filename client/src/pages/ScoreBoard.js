@@ -48,10 +48,10 @@ const ScoreBoard = () => {
     }
 
     //line 40 gets triggered with the sockets from the server
-    async function goToWaitingRoom() {
-        await API.updateLobby(code, {
-            players: []
-        })
+    function goToWaitingRoom() {
+        // await API.updateLobby(code, {
+        //     players: []
+        // })
 
         history.push(`/waiting-room/${code}`);
     }
