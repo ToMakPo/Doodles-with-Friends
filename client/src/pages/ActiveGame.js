@@ -127,11 +127,14 @@ const ArtistView = () => {
                     flexWrap: 'wrap',
                     width:"100%",
                 }}>
+
+                    <Canvas active={isArtist}/> 
+                    <ChatBox/>
                             <div className="canvasContainer">
                                 {/* TODO: Check if this is the active player */}
                                 <Canvas active={true}/> 
                             </div>
-                    <ChatBox lobby={{code: 'D5EA12C14'}} user={{username: 'ToMakPo'}}/>
+
                 </div>
         </div>
     )
