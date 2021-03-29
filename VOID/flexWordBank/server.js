@@ -86,6 +86,14 @@ function newConnection(socket) {
         return text.replace(/\W/g, '').toLowerCase()
     }
 
+    function checkAnswer(guess, answers) {
+        guess = strip(guess)
+        for (const answer of answers) {
+            if (guess == strip(answer)) return true
+        }
+        false
+    }
+
     /// FUNCTIONS ///
     async function submitChat(code, data) {
         const lobby = await db.Lobby.findOne({ code })
@@ -101,11 +109,11 @@ function newConnection(socket) {
             if (sender != artist) {
                 await lobby.update({$push: {chatLog: data}})
 
-                if (strip(guess) == strip(answer)) {
+                if (checkAnswer(guess, answer)) {
                     const answerMessage = {
                         ...data,
                         messageType: 'answer',
-                        text: round?.answer
+                        text: round?.answer[0]
                     }
                     await lobby.update({$push: {chatLog: answerMessage}, })
                     await updataChatLog(code)
@@ -225,7 +233,8 @@ function newConnection(socket) {
                     messageType: 'newGame',
                     text: artist.username
                 }
-                await lobby.update({$push: {chatLog: newGameMessage}})\
+                await lobby.update({$push: {chatLog: newGameMessage}})
+                console.log({game});
                 
                 db.Lobby
                     .findById(lobby._id)
