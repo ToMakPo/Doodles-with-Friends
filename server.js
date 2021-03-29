@@ -54,22 +54,32 @@ function newConnection(socket) {
 
     /// CANVAS ///
     socket.on('changeColor', (code, color) => {
+        console.log('changeColor:', {code, color});
         socket.broadcast.emit(`${code}-changeColor`, color)
     })
     socket.on('changeSize', (code, size) => {
+        console.log('changeSize:', {code, size});
         socket.broadcast.emit(`${code}-changeSize`, size)
     })
     socket.on('clearDrawing', (code) => {
+        console.log('clearDrawing:', {code});
         socket.broadcast.emit(`${code}-clearDrawing`)
     })
-    socket.on('startLine', (code, x, y) => {
-        socket.broadcast.emit(`${code}-startLine`, x, y)
+    socket.on('startLine', (code, thisPoint) => {
+        console.log('startLine:', {code, thisPoint});
+        socket.broadcast.emit(`${code}-startLine`, thisPoint)
     })
-    socket.on('drawLine', (code, x, y) => {
-        socket.broadcast.emit(`${code}-drawLine`, x, y)
+    socket.on('drawLine', (code, thisPoint) => {
+        console.log('drawLine:', {code, thisPoint});
+        socket.broadcast.emit(`${code}-drawLine`, thisPoint)
     })
     socket.on('endLine', (code) => {
+        console.log('endLine:', {code});
         socket.broadcast.emit(`${code}-endLine`)
+    })
+    socket.on('changeTool', (code, toolName) => {
+        console.log('changeTool:', {code, toolName});
+        socket.broadcast.emit(`${code}-changeTool`, toolName)
     })
 
     /// FUNCTIONS ///
@@ -130,6 +140,7 @@ function newConnection(socket) {
     }
 
     function endRound(code) {
+        io.emit(`${code}-clearDrawing`)
         startNextRound(code)
     }
 

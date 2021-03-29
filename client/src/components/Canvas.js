@@ -1,3 +1,4 @@
+/* eslint-disable no-eval */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useRef, useEffect } from 'react'
 // import LobbyContext from '../utils/LobbyContext'
@@ -15,6 +16,14 @@ const penSizeRange = {min: 1, max: 50}
 const defaultPenColor = '#000000'
 const defaultPenSize = 35
 
+let _color = defaultPenColor
+let _size = defaultPenSize
+let _penSize = defaultPenSize
+let _eraserSize = penSizeRange.max
+let _tool = null
+let _position = restingPosition
+let _lastPoint = null
+
 /**
  * @param {Boolean} isArtist True if this is the active player (Required)
  */
@@ -26,36 +35,99 @@ const Canvas = ({isArtist, code}) => {
     const canvas = useRef()
 
     const socket = useRef()
-
-    // const {lobby} = useContext(LobbyContext)
+    const context = useRef()
+    
+    const [tool, setTool] = useState(penTool)
+    const [tools] = useState({penTool, eraserTool})
     const [color, setColor] = useState(defaultPenColor)
     const [size, setSize] = useState(defaultPenSize)
     const [penSize, setPenSize] = useState(defaultPenSize)
-    const [eraserSize, setEraserSize] = useState(penSizeRange.max)
-    const [tool, setTool] = useState(penTool)
-    const [position, setPosition] = useState(restingPosition)
-    const [lastPoint, setLastPoint] = useState(null)
-    const [ctx, setCTX] = useState()
+    const setEraserSize = useState(penSizeRange.max)[1]
+    const setPosition = useState(restingPosition)[1]
 
     const emit = {
-        changeColor: color => socket.current.emit('changeLineColor', code, color),
-        changeSize: size => socket.current.emit('changeLineWidth', code, size),
+        changeColor: color => socket.current.emit('changeColor', code, color),
+        changeSize: size => socket.current.emit('changeSize', code, size),
         clearDrawing: _ => socket.current.emit('clearDrawing', code),
-        startLine: (x, y) => socket.current.emit('startLine', code, x, y),
-        drawLine: (x, y) => socket.current.emit('drawLine', code, x, y),
+        startLine: (thisPoint) => socket.current.emit('startLine', code, thisPoint),
+        drawLine: (thisPoint) => socket.current.emit('drawLine', code, thisPoint),
         endLine: _ => socket.current.emit('endLine', code),
+        changeTool: (toolName) => socket.current.emit('changeTool', code, toolName)
     }
 
     useEffect(_ => {
-        const ctx = canvas.current.getContext('2d')
-        console.log({ctx});
-        setCTX(ctx)
         setupSockets()
+        context.current = canvas.current.getContext('2d')
+        context.current.strokeStyle = color
+        context.current.fillStyle = color
+        context.current.lineWidth = size
+        _tool = penTool
+
+        // canvas.current.addEventListener('mousemove', event => {
+        //     console.log('canvasOnMouseMove');
+        //     const viewportOffset = canvas.current.getBoundingClientRect();
+
+        //     const x = event.clientX - viewportOffset.x
+        //     const y = event.clientY - viewportOffset.y
+
+        //     _position = {
+        //         top: y,
+        //         left: x,
+        //         transform: `translate(-50%, -50%)`
+        //     }
+        //     setPosition(_position)
+        
+        //     if (_lastPoint !== null) {
+        //         drawLine([x, y], _lastPoint)
+        //         emit.drawLine([x, y], _lastPoint)
+        //     }
+        // })
+        // canvas.current.addEventListener('mousedown', event => {
+        //     console.log('canvasOnMouseDown');
+        //     const viewportOffset = canvas.current.getBoundingClientRect();
+
+        //     const x = event.clientX - viewportOffset.x
+        //     const y = event.clientY - viewportOffset.y
+
+        //     startLine([x, y])
+        //     emit.startLine([x, y])
+        // })
+        // canvas.current.addEventListener('mouseup', _ => {
+        //     console.log('canvasOnMouseUp');
+        //     if (_lastPoint !== null) {
+        //         endLine()
+        //         emit.endLine()
+        //     }
+        // })
+        // canvas.current.addEventListener('mouseout', _ => {
+        //     console.log('canvasOnMouseOut');
+        //     if (_lastPoint !== null) {
+        //         endLine()
+        //         emit.endLine()
+        //     }
+        //     _position = restingPosition
+        //     setPosition(_position)
+        // })
+        // canvas.current.addEventListener('wheel', event => {
+        //     event.preventDefault()
+        
+        //     const changeBy = 5
+        //     const value = event.deltaY * -(changeBy / 100)
+        //     const newSize = (size.value * 1) + value
+        
+        //     changeSize(newSize)
+        // }, {passive: false})
     }, [])
 
     useEffect(_ => {
-        console.log(ctx);
-    }, [ctx])
+        const clr = tool === penTool ? color : '#ffffff'
+        context.current.strokeStyle = clr
+        context.current.fillStyle = clr
+    }, [color, tool])
+
+    useEffect(_ => {
+        context.current.lineWidth = size
+    }, [size])
 
     /// EVENT LISTENERS ///
     function canvasOnMouseMove(event) {
@@ -65,15 +137,16 @@ const Canvas = ({isArtist, code}) => {
         const x = event.clientX - viewportOffset.x
         const y = event.clientY - viewportOffset.y
 
-        setPosition({
+        _position = {
             top: y,
             left: x,
-            transform: `translate(-50%, -50%)` 
-        })
+            transform: `translate(-50%, -50%)`
+        }
+        setPosition(_position)
     
-        if (lastPoint !== null) {
-            drawLine(x, y)
-            emit.drawLine(x, y)
+        if (_lastPoint !== null) {
+            drawLine([x, y])
+            emit.drawLine([x, y])
         }
     }
     function canvasOnMouseDown(event) {
@@ -83,31 +156,46 @@ const Canvas = ({isArtist, code}) => {
         const x = event.clientX - viewportOffset.x
         const y = event.clientY - viewportOffset.y
 
-        startLine(x, y)
-        emit.startLine(x, y)
+        startLine([x, y])
+        emit.startLine([x, y])
     }
     function canvasOnMouseUp() {
         console.log('canvasOnMouseUp');
-        endLine()
-        emit.endLine()
+        if (_lastPoint !== null) {
+            endLine()
+            emit.endLine()
+        }
     } 
     function canvasOnMouseOut() {
         console.log('canvasOnMouseOut');
         canvasOnMouseUp()
-        setPosition(restingPosition)
-    } 
+        _position = restingPosition
+        setPosition(_position)
+    }
+
+    // function canvasOnMouseWheel(event) {
+    //     // event.preventDefault()
+    
+    //     const changeBy = 5
+    //     const value = event.deltaY * -(changeBy / 100)
+    //     const newSize = (size * 1) + value
+        
+    //     changeSize(newSize)
+    // }
 
     function penToolOnClick() {
         console.log('penToolOnClick');
-        setTool(penTool)
-        changeSize(penSize)
-        emit.changeSize(penSize)
+        changeTool('penTool')
+        changeSize(_penSize)
+        emit.changeTool('penTool')
+        emit.changeSize(_penSize)
     }
     function eraserToolOnClick() {
         console.log('eraserToolOnClick');
-        setTool(eraserTool)
-        changeSize(eraserSize)
-        emit.changeSize(eraserSize)
+        changeTool('eraserTool')
+        changeSize(_eraserSize)
+        emit.changeTool('eraserTool')
+        emit.changeSize(_eraserSize)
     }
     function clearDrawingButtonOnClick() {
         console.log('clearDrawingButtonOnClick');
@@ -130,58 +218,80 @@ const Canvas = ({isArtist, code}) => {
         changeSize(size)
         emit.changeSize(size)
         
-        switch(tool) {
-            case penTool: setPenSize(size); break
-            case eraserTool: setEraserSize(size); break
+        switch(_tool) {
+            case penTool: _penSize = size; setPenSize(_penSize); break
+            case eraserTool: _eraserSize = size; setEraserSize(_eraserSize); break
             default: break
         }
     }
 
     /// ACTIONS ///
+    function getContext() {
+        const ctx = canvas.current.getContext('2d')
+        const clr = tool === penTool ? _color : '#ffffff'
+        console.log({clr, _tool, tool, _color});
+        ctx.strokeStyle = clr
+        ctx.fillStyle = clr
+        ctx.lineWidth = _size
+
+        return ctx
+    }
+
     function changeColor(color) {
         console.log('changeColor');
-        setColor(color)
-        ctx.strokeStyle = color
-        ctx.fillStyle = color
+        _color = color
+        setColor(_color)
     }
     function changeSize(size) {
         console.log('changeSize');
-        setSize(size)
-        ctx.lineWidth = size
-    }
-    
-    function startLine(x, y) {
-        console.log('startLine');
-        console.log('startLine > ctx:', ctx);
-        setLastPoint([x, y])
-        ctx.beginPath()
-        ctx.arc(x, y, size / 2, 0, 2 * Math.PI)
-        ctx.fill()
+        _size = size
+        setSize(_size)
     }
 
-    function drawLine(x, y) {
+    function changeTool(toolName) {
+        console.log('changeTool');
+        _tool = tools[toolName]
+        console.log(_tool);
+        setTool(_tool)
+        console.log({toolName, _tool, tool, tools});
+    }
+    
+    function startLine(thisPoint) {
+        console.log('startLine');
+        const ctx = context.current
+        ctx.beginPath()
+        ctx.arc(...thisPoint, _size / 2, 0, 2 * Math.PI)
+        ctx.fill()
+        _lastPoint = thisPoint
+    }
+
+    function drawLine(thisPoint) {
         console.log('drawLine');
-        if (lastPoint !== null) {
+        console.log({_lastPoint});
+        if (_lastPoint !== null) {
+            const ctx = context.current
+            console.log({ctx, thisPoint, lastPoint: _lastPoint, _size});
             ctx.beginPath()
-            ctx.moveTo(...lastPoint)
-            ctx.lineTo(x, y)
+            ctx.moveTo(..._lastPoint)
+            ctx.lineTo(...thisPoint)
             ctx.stroke()
             
             ctx.beginPath()
-            ctx.arc(x, y, size / 2, 0, 2 * Math.PI)
+            ctx.arc(...thisPoint, _size / 2, 0, 2 * Math.PI)
             ctx.fill()
     
-            setLastPoint([x, y])
+            _lastPoint = thisPoint
         }
     }
 
     function endLine() {
         console.log('endLine');
-        setLastPoint(null)
+        _lastPoint = null
     }
 
     function clearDrawing() {
         console.log('clearDrawing');
+        const ctx = context.current
         ctx.clearRect(0, 0, canvas.current.width, canvas.current.height)
     }
 
@@ -196,6 +306,7 @@ const Canvas = ({isArtist, code}) => {
         socket.current.on(`${code}-startLine`, startLine)
         socket.current.on(`${code}-drawLine`, drawLine)
         socket.current.on(`${code}-endLine`, endLine)
+        socket.current.on(`${code}-changeTool`, changeTool)
     }
 
     return (
@@ -211,6 +322,7 @@ const Canvas = ({isArtist, code}) => {
                     onMouseDown={canvasOnMouseDown}
                     onMouseUp={canvasOnMouseUp}
                     onMouseOut={canvasOnMouseOut}
+                    // onWheel={canvasOnMouseWheel}
                     ref={canvas}
                 ></canvas>
                 {isArtist && <>
@@ -219,7 +331,7 @@ const Canvas = ({isArtist, code}) => {
                             width: size,
                             height: size,
                             backgroundColor: tool === penTool ? color : '#ffffff88',
-                            ...position
+                            ..._position
                         }} 
                         ref={canvasCursor}></span>
                     <div id='tools'>
@@ -232,7 +344,7 @@ const Canvas = ({isArtist, code}) => {
                                 style={{
                                     width: 24, 
                                     height: 120,
-                                    pointerEvents: lastPoint === null ? 'all' : 'none'
+                                    // pointerEvents: _lastPoint === null ? 'all' : 'none'
                                 }}>
                                 <path
                                     id='pen-tip'
@@ -264,7 +376,7 @@ const Canvas = ({isArtist, code}) => {
                                 style={{
                                     width: 32, 
                                     height: 120,
-                                    pointerEvents: lastPoint === null ? 'all' : 'none'
+                                    // pointerEvents: _lastPoint === null ? 'all' : 'none'
                                 }}>
                                 <path
                                     id='eraser-top'
