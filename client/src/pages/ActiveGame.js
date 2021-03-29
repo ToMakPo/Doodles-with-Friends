@@ -85,7 +85,7 @@ const ArtistView = () => {
     }
 
     function endGame() {
-        console.log('END GAME');
+        // console.log('END GAME')
         history.push(`/score-board/${code}`);
     }
     

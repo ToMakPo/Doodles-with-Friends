@@ -64,7 +64,7 @@ const Canvas = ({isArtist, code}) => {
         _tool = penTool
 
         // canvas.current.addEventListener('mousemove', event => {
-        //     console.log('canvasOnMouseMove');
+             // console.log('canvasOnMouseMove')
         //     const viewportOffset = canvas.current.getBoundingClientRect();
 
         //     const x = event.clientX - viewportOffset.x
@@ -83,7 +83,7 @@ const Canvas = ({isArtist, code}) => {
         //     }
         // })
         // canvas.current.addEventListener('mousedown', event => {
-        //     console.log('canvasOnMouseDown');
+             // console.log('canvasOnMouseDown')
         //     const viewportOffset = canvas.current.getBoundingClientRect();
 
         //     const x = event.clientX - viewportOffset.x
@@ -93,14 +93,14 @@ const Canvas = ({isArtist, code}) => {
         //     emit.startLine([x, y])
         // })
         // canvas.current.addEventListener('mouseup', _ => {
-        //     console.log('canvasOnMouseUp');
+             // console.log('canvasOnMouseUp')
         //     if (_lastPoint !== null) {
         //         endLine()
         //         emit.endLine()
         //     }
         // })
         // canvas.current.addEventListener('mouseout', _ => {
-        //     console.log('canvasOnMouseOut');
+             // console.log('canvasOnMouseOut')
         //     if (_lastPoint !== null) {
         //         endLine()
         //         emit.endLine()
@@ -131,7 +131,7 @@ const Canvas = ({isArtist, code}) => {
 
     /// EVENT LISTENERS ///
     function canvasOnMouseMove(event) {
-        console.log('canvasOnMouseMove');
+        // console.log('canvasOnMouseMove')
         const viewportOffset = canvas.current.getBoundingClientRect();
 
         const x = event.clientX - viewportOffset.x
@@ -150,7 +150,7 @@ const Canvas = ({isArtist, code}) => {
         }
     }
     function canvasOnMouseDown(event) {
-        console.log('canvasOnMouseDown');
+        // console.log('canvasOnMouseDown')
         const viewportOffset = canvas.current.getBoundingClientRect();
 
         const x = event.clientX - viewportOffset.x
@@ -160,14 +160,14 @@ const Canvas = ({isArtist, code}) => {
         emit.startLine([x, y])
     }
     function canvasOnMouseUp() {
-        console.log('canvasOnMouseUp');
+        // console.log('canvasOnMouseUp')
         if (_lastPoint !== null) {
             endLine()
             emit.endLine()
         }
     } 
     function canvasOnMouseOut() {
-        console.log('canvasOnMouseOut');
+        // console.log('canvasOnMouseOut')
         canvasOnMouseUp()
         _position = restingPosition
         setPosition(_position)
@@ -184,34 +184,34 @@ const Canvas = ({isArtist, code}) => {
     // }
 
     function penToolOnClick() {
-        console.log('penToolOnClick');
+        // console.log('penToolOnClick')
         changeTool('penTool')
         changeSize(_penSize)
         emit.changeTool('penTool')
         emit.changeSize(_penSize)
     }
     function eraserToolOnClick() {
-        console.log('eraserToolOnClick');
+        // console.log('eraserToolOnClick')
         changeTool('eraserTool')
         changeSize(_eraserSize)
         emit.changeTool('eraserTool')
         emit.changeSize(_eraserSize)
     }
     function clearDrawingButtonOnClick() {
-        console.log('clearDrawingButtonOnClick');
+        // console.log('clearDrawingButtonOnClick')
         clearDrawing()
         emit.clearDrawing()
 
         penToolOnClick()
     }
     function colorPickerOnInput(event) {
-        console.log('colorPickerOnInput');
+        // console.log('colorPickerOnInput')
         const color = event.target.value
         changeColor(color)
         emit.changeColor(color)
     }
     function sizePickerOnInput(event) {
-        console.log('sizePickerOnInput');
+        // console.log('sizePickerOnInput')
         const value = event.target.value * 1
         const size = Math.min(penSizeRange.max, Math.max(penSizeRange.min, value))
 
@@ -227,26 +227,26 @@ const Canvas = ({isArtist, code}) => {
 
     /// ACTIONS ///
     function changeColor(color) {
-        console.log('changeColor');
+        // console.log('changeColor')
         _color = color
         setColor(_color)
     }
     function changeSize(size) {
-        console.log('changeSize');
+        // console.log('changeSize')
         _size = size
         setSize(_size)
     }
 
     function changeTool(toolName) {
-        console.log('changeTool');
+        // console.log('changeTool')
         _tool = tools[toolName]
-        console.log(_tool);
+        // console.log(_tool)
         setTool(_tool)
-        console.log({toolName, _tool, tool, tools});
+        // console.log({toolName, _tool, tool, tools})
     }
     
     function startLine(thisPoint) {
-        console.log('startLine');
+        // console.log('startLine')
         const ctx = context.current
         ctx.beginPath()
         ctx.arc(...thisPoint, _size / 2, 0, 2 * Math.PI)
@@ -255,11 +255,11 @@ const Canvas = ({isArtist, code}) => {
     }
 
     function drawLine(thisPoint) {
-        console.log('drawLine');
-        console.log({_lastPoint});
+        // console.log('drawLine')
+        // console.log({_lastPoint})
         if (_lastPoint !== null) {
             const ctx = context.current
-            console.log({ctx, thisPoint, lastPoint: _lastPoint, _size});
+            // console.log({ctx, thisPoint, lastPoint: _lastPoint, _size})
             ctx.beginPath()
             ctx.moveTo(..._lastPoint)
             ctx.lineTo(...thisPoint)
@@ -274,19 +274,19 @@ const Canvas = ({isArtist, code}) => {
     }
 
     function endLine() {
-        console.log('endLine');
+        // console.log('endLine')
         _lastPoint = null
     }
 
     function clearDrawing() {
-        console.log('clearDrawing');
+        // console.log('clearDrawing')
         const ctx = context.current
         ctx.clearRect(0, 0, canvas.current.width, canvas.current.height)
     }
 
     /// SOCKETS ///
     function setupSockets() {
-        console.log('setupSockets');
+        // console.log('setupSockets')
         socket.current = io.connect('/')
 
         socket.current.on(`${code}-changeColor`, changeColor)

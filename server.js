@@ -54,31 +54,31 @@ function newConnection(socket) {
 
     /// CANVAS ///
     socket.on('changeColor', (code, color) => {
-        console.log('changeColor:', {code, color});
+        // console.log('changeColor:', {code, color})
         socket.broadcast.emit(`${code}-changeColor`, color)
     })
     socket.on('changeSize', (code, size) => {
-        console.log('changeSize:', {code, size});
+        // console.log('changeSize:', {code, size})
         socket.broadcast.emit(`${code}-changeSize`, size)
     })
     socket.on('clearDrawing', (code) => {
-        console.log('clearDrawing:', {code});
+        // console.log('clearDrawing:', {code})
         socket.broadcast.emit(`${code}-clearDrawing`)
     })
     socket.on('startLine', (code, thisPoint) => {
-        console.log('startLine:', {code, thisPoint});
+        // console.log('startLine:', {code, thisPoint})
         socket.broadcast.emit(`${code}-startLine`, thisPoint)
     })
     socket.on('drawLine', (code, thisPoint) => {
-        console.log('drawLine:', {code, thisPoint});
+        // console.log('drawLine:', {code, thisPoint})
         socket.broadcast.emit(`${code}-drawLine`, thisPoint)
     })
     socket.on('endLine', (code) => {
-        console.log('endLine:', {code});
+        // console.log('endLine:', {code})
         socket.broadcast.emit(`${code}-endLine`)
     })
     socket.on('changeTool', (code, toolName) => {
-        console.log('changeTool:', {code, toolName});
+        // console.log('changeTool:', {code, toolName})
         socket.broadcast.emit(`${code}-changeTool`, toolName)
     })
 
@@ -134,7 +134,7 @@ function newConnection(socket) {
         db.Lobby
             .findOne({ code })
             .then(lobby => {
-                // console.log('lobby:', lobby);
+                 // console.log('lobby:', lobby)
                 io.emit(`${code}-updataChatLog`, lobby.chatLog)
             })
     }
@@ -259,26 +259,26 @@ function newConnection(socket) {
         let lobby = await db.Lobby.findOne({ code })
         const game = getActiveGame(lobby)
         const count = game.players.length
-        console.log('---------------');
+        // console.log('---------------')
         
-        // console.log('playerIndex:', game.playerIndex);
+         // console.log('playerIndex:', game.playerIndex)
         game.playerIndex++
-        console.log('playerIndex:', game.playerIndex);
-        console.log('count:', count);
+        // console.log('playerIndex:', game.playerIndex)
+        // console.log('count:', count)
         
-        console.log('playerIndex == count:', game.playerIndex == count);
+        // console.log('playerIndex == count:', game.playerIndex == count)
         if (game.playerIndex == count) {
             game.playerIndex = 0
-            console.log('playerIndex:', game.playerIndex);
-            console.log('currentRotation:', game.currentRotation);
+            // console.log('playerIndex:', game.playerIndex)
+            // console.log('currentRotation:', game.currentRotation)
             game.currentRotation++
-            console.log('currentRotation:', game.currentRotation);
-            console.log('rotations:', game.rotations);
-            console.log('currentRotation == rotations:', game.currentRotation == game.rotations);
+            // console.log('currentRotation:', game.currentRotation)
+            // console.log('rotations:', game.rotations)
+            // console.log('currentRotation == rotations:', game.currentRotation == game.rotations)
             // await game.update({$set: {currentRotation: game.currentRotation}})
             if (game.currentRotation == game.rotations) {
                 /// The game is over. Do not move to next round.
-                console.log('ENDING GAME');
+                // console.log('ENDING GAME')
                 return endGame(lobby, game)
             }
         }
@@ -294,26 +294,26 @@ function newConnection(socket) {
             artist: game.players[game.playerIndex],
             winner: null
         }
-        console.log('round:', round);
+        // console.log('round:', round)
 
         game.rounds.push(round)
         // await game.update({$push: {rounds: round}})
 
         const artist = await db.User.findById(game.players[0])
-        // console.log('artist:', artist);
+         // console.log('artist:', artist)
 
         const newRoundMessage = {
             messageType: 'newRound',
             text: artist.username
         }
-        // console.log('newRoundMessage:', newRoundMessage);
+         // console.log('newRoundMessage:', newRoundMessage)
         lobby.chatLog.push(newRoundMessage)
 
-        // console.log('lobby:', lobby);
+         // console.log('lobby:', lobby)
         lobby = await lobby.save()
 
         await updataChatLog(code)
-        // console.log('lobby:', lobby);
+         // console.log('lobby:', lobby)
         
         io.emit(`${code}-startNextRound`, game, round)
     }
@@ -327,29 +327,29 @@ function newConnection(socket) {
             }
         })
 
-        console.log('GOING IN');
+        // console.log('GOING IN')
         game.rounds.forEach(round => {
             const artist = round.artist.toString()
             const winner = round.winner?.toString() || null
-            console.log('round:', {artist, winner});
+            // console.log('round:', {artist, winner})
 
             if (winner !== null) {
                 for (const result of results) {
                     const playerId = result.playerId.toString()
 
-                    console.log('result:', result);
-                    console.log('playerId == artist:', result.playerId == artist);
-                    console.log('playerId == winner:', result.playerId == winner);
+                    // console.log('result:', result)
+                    // console.log('playerId == artist:', result.playerId == artist)
+                    // console.log('playerId == winner:', result.playerId == winner)
                     if (result.playerId == artist || result.playerId == winner) {
-                        console.log('score:', result.score);
+                        // console.log('score:', result.score)
                         result.score++
-                        console.log('score:', result.score);
-                        console.log('result:', result);
+                        // console.log('score:', result.score)
+                        // console.log('result:', result)
                     }
                 }
             }
         })
-        console.log('results:', results);
+        // console.log('results:', results)
         
         results = results.sort((a, b) => b.score - a.score)
 
