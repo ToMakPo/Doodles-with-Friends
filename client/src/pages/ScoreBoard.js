@@ -8,23 +8,31 @@ import io from 'socket.io-client'
 
 import '../styles/palette.css'
 import '../styles/ScoreBoard.css'
+import { useAuthenticatedUser } from "../utils/auth";
 
 const ScoreBoard = () => {
     const [code] = useState(window.location.pathname.split('/')[2])
     const [results, setResults] = useState()
     const history = useHistory()
+    const [isHost, setIsHost] = useState(false)
+    const userId = useAuthenticatedUser()._id.toString()
 
     const socket = useRef()
     useEffect(async () => {
-        const {data: [lobby]} = await API.getLobby(code)
+        const { data: [lobby] } = await API.getLobby(code)
         const gameCount = lobby.games.length
         const game = lobby.games[gameCount - 1]
         setResults(game.results)
-        
+
         setupSockets()
+
+        setIsHost(userId === lobby.host)
+        emit.addPlayer(userId)
+
     }, [])
-    
+
     const emit = {
+        addPlayer: id => socket.current.emit('addPlayer', code, id),
         playAgain: _ => socket.current.emit('playAgain', code) //triggers the server
     }
 
@@ -37,16 +45,20 @@ const ScoreBoard = () => {
         event.preventDefault()
         emit.playAgain() //triggers line 20
     }
-    
+
     //line 40 gets triggered with the sockets from the server
     function goToWaitingRoom() {
+        // await API.updateLobby(code, {
+        //     players: []
+        // })
+
         history.push(`/waiting-room/${code}`);
     }
 
     function nth(n) {
         return n + (['st', 'nd', 'rd'][((n + 90) % 100 - 10) % 10 - 1] || 'th')
     }
-    
+
     return (
         <div id="bootstrap-overrides"
             className="score-board-main main container sketchBackground">
@@ -55,8 +67,8 @@ const ScoreBoard = () => {
                     <h2 className="card-header">Score Board</h2>
                     <div className="info">
                         <ul className="list-group list-group-flush">
-                            {results?.map(({username, score, rank}, i) => (
-                                <li className={'player-score rank-'+rank} key={i}>
+                            {results?.map(({ username, score, rank }, i) => (
+                                <li className={'player-score rank-' + rank} key={i}>
                                     <span className='rank'>{nth(rank)}</span>
                                     <span className='username'>{username}</span>
                                     <span className='score'>{score}</span>
@@ -72,6 +84,7 @@ const ScoreBoard = () => {
                             type="button"
                             className="btn btn-primary btn-lg btn-block"
                             onClick={playAgain}
+                            disabled={!isHost}
                         >PLAY AGAIN</button>
                     </div>
                 </div>
