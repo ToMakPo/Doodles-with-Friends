@@ -190,7 +190,8 @@ function newConnection(socket) {
         const subList = []
         for (let c = 0; c < count || fullList.length == 0; c++) {
             const i = Math.floor(Math.random() * fullList.length)
-            subList.push(fullList.splice(i, 1))
+            const word = fullList.splice(i, 1)[0]
+            subList.push(word)
         }
         return subList
     }
@@ -201,6 +202,7 @@ function newConnection(socket) {
                 const count = rotations * lobby.players.length + 10
 
                 const wordList = getRandomListOfWords(category, count)
+                console.log(wordList);
                 const players = randomizePlayerOrder(lobby)
                 const answer = getRandomWord(wordList)
 
@@ -225,7 +227,7 @@ function newConnection(socket) {
                     messageType: 'newGame',
                     text: artist.username
                 }
-                await lobby.update({$push: {chatLog: newGameMessage}})\
+                await lobby.update({$push: {chatLog: newGameMessage}})
                 
                 db.Lobby
                     .findById(lobby._id)

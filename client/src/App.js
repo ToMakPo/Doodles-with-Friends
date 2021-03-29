@@ -11,7 +11,7 @@ import WaitingRoom from './pages/WaitingRoom'
 import ActiveGame from './pages/ActiveGame'
 import ScoreBoard from './pages/ScoreBoard'
 // import PageNotFound from './pages/PageNotFound'
-import Canvas from './components/Canvas'
+// import Canvas from './components/Canvas'
 
 import LobbyContext from './utils/LobbyContext'
 import { WordBankProvider } from './utils/GlobalState'
