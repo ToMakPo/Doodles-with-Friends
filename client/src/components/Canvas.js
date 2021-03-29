@@ -1,7 +1,5 @@
-/* eslint-disable no-eval */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useRef, useEffect } from 'react'
-// import LobbyContext from '../utils/LobbyContext'
 import io from 'socket.io-client'
 
 import PropTypes from 'prop-types'
@@ -24,9 +22,6 @@ let _tool = null
 let _position = restingPosition
 let _lastPoint = null
 
-/**
- * @param {Boolean} isArtist True if this is the active player (Required)
- */
 const Canvas = ({isArtist, code}) => {
     const penTool = useRef()
     const penBody = useRef()
@@ -62,61 +57,6 @@ const Canvas = ({isArtist, code}) => {
         context.current.fillStyle = color
         context.current.lineWidth = size
         _tool = penTool
-
-        // canvas.current.addEventListener('mousemove', event => {
-             // console.log('canvasOnMouseMove')
-        //     const viewportOffset = canvas.current.getBoundingClientRect();
-
-        //     const x = event.clientX - viewportOffset.x
-        //     const y = event.clientY - viewportOffset.y
-
-        //     _position = {
-        //         top: y,
-        //         left: x,
-        //         transform: `translate(-50%, -50%)`
-        //     }
-        //     setPosition(_position)
-        
-        //     if (_lastPoint !== null) {
-        //         drawLine([x, y], _lastPoint)
-        //         emit.drawLine([x, y], _lastPoint)
-        //     }
-        // })
-        // canvas.current.addEventListener('mousedown', event => {
-             // console.log('canvasOnMouseDown')
-        //     const viewportOffset = canvas.current.getBoundingClientRect();
-
-        //     const x = event.clientX - viewportOffset.x
-        //     const y = event.clientY - viewportOffset.y
-
-        //     startLine([x, y])
-        //     emit.startLine([x, y])
-        // })
-        // canvas.current.addEventListener('mouseup', _ => {
-             // console.log('canvasOnMouseUp')
-        //     if (_lastPoint !== null) {
-        //         endLine()
-        //         emit.endLine()
-        //     }
-        // })
-        // canvas.current.addEventListener('mouseout', _ => {
-             // console.log('canvasOnMouseOut')
-        //     if (_lastPoint !== null) {
-        //         endLine()
-        //         emit.endLine()
-        //     }
-        //     _position = restingPosition
-        //     setPosition(_position)
-        // })
-        // canvas.current.addEventListener('wheel', event => {
-        //     event.preventDefault()
-        
-        //     const changeBy = 5
-        //     const value = event.deltaY * -(changeBy / 100)
-        //     const newSize = (size.value * 1) + value
-        
-        //     changeSize(newSize)
-        // }, {passive: false})
     }, [])
 
     useEffect(_ => {
@@ -131,122 +71,127 @@ const Canvas = ({isArtist, code}) => {
 
     /// EVENT LISTENERS ///
     function canvasOnMouseMove(event) {
-        // console.log('canvasOnMouseMove')
-        const viewportOffset = canvas.current.getBoundingClientRect();
+        if (isArtist) {
+            const viewportOffset = canvas.current.getBoundingClientRect();
 
-        const x = event.clientX - viewportOffset.x
-        const y = event.clientY - viewportOffset.y
+            const x = event.clientX - viewportOffset.x
+            const y = event.clientY - viewportOffset.y
 
-        _position = {
-            top: y,
-            left: x,
-            transform: `translate(-50%, -50%)`
-        }
-        setPosition(_position)
-    
-        if (_lastPoint !== null) {
-            drawLine([x, y])
-            emit.drawLine([x, y])
+            _position = {
+                top: y,
+                left: x,
+                transform: `translate(-50%, -50%)`
+            }
+            setPosition(_position)
+        
+            if (_lastPoint !== null) {
+                drawLine([x, y])
+                emit.drawLine([x, y])
+            }
         }
     }
     function canvasOnMouseDown(event) {
-        // console.log('canvasOnMouseDown')
-        const viewportOffset = canvas.current.getBoundingClientRect();
+        if (isArtist) {
+            const viewportOffset = canvas.current.getBoundingClientRect();
 
-        const x = event.clientX - viewportOffset.x
-        const y = event.clientY - viewportOffset.y
+            const x = event.clientX - viewportOffset.x
+            const y = event.clientY - viewportOffset.y
 
-        startLine([x, y])
-        emit.startLine([x, y])
+            startLine([x, y])
+            emit.startLine([x, y])
+        }
     }
     function canvasOnMouseUp() {
-        // console.log('canvasOnMouseUp')
-        if (_lastPoint !== null) {
-            endLine()
-            emit.endLine()
+        if (isArtist) {
+            if (_lastPoint !== null) {
+                endLine()
+                emit.endLine()
+            }
         }
     } 
     function canvasOnMouseOut() {
-        // console.log('canvasOnMouseOut')
-        canvasOnMouseUp()
-        _position = restingPosition
-        setPosition(_position)
+        if (isArtist) {
+            canvasOnMouseUp()
+            _position = restingPosition
+            setPosition(_position)
+        }
     }
 
     // function canvasOnMouseWheel(event) {
-    //     // event.preventDefault()
+    //     if (isArtist) {
+    //         event.preventDefault()
     
-    //     const changeBy = 5
-    //     const value = event.deltaY * -(changeBy / 100)
-    //     const newSize = (size * 1) + value
-        
-    //     changeSize(newSize)
+    //         const changeBy = 5
+    //         const value = event.deltaY * -(changeBy / 100)
+    //         const newSize = (size * 1) + value
+            
+    //         changeSize(newSize)
+    //     }
     // }
 
     function penToolOnClick() {
-        // console.log('penToolOnClick')
-        changeTool('penTool')
-        changeSize(_penSize)
-        emit.changeTool('penTool')
-        emit.changeSize(_penSize)
+        if (isArtist) {
+            changeTool('penTool')
+            changeSize(_penSize)
+            emit.changeTool('penTool')
+            emit.changeSize(_penSize)
+        }
     }
     function eraserToolOnClick() {
-        // console.log('eraserToolOnClick')
-        changeTool('eraserTool')
-        changeSize(_eraserSize)
-        emit.changeTool('eraserTool')
-        emit.changeSize(_eraserSize)
+        if (isArtist) {
+            changeTool('eraserTool')
+            changeSize(_eraserSize)
+            emit.changeTool('eraserTool')
+            emit.changeSize(_eraserSize)
+        }
     }
     function clearDrawingButtonOnClick() {
-        // console.log('clearDrawingButtonOnClick')
-        clearDrawing()
-        emit.clearDrawing()
+        if (isArtist) {
+            clearDrawing()
+            emit.clearDrawing()
 
-        penToolOnClick()
+            penToolOnClick()
+        }
     }
     function colorPickerOnInput(event) {
-        // console.log('colorPickerOnInput')
-        const color = event.target.value
-        changeColor(color)
-        emit.changeColor(color)
+        if (isArtist) {
+            const color = event.target.value
+            changeColor(color)
+            emit.changeColor(color)
+        }
     }
     function sizePickerOnInput(event) {
-        // console.log('sizePickerOnInput')
-        const value = event.target.value * 1
-        const size = Math.min(penSizeRange.max, Math.max(penSizeRange.min, value))
+        if (isArtist) {
+            const value = event.target.value * 1
+            const size = Math.min(penSizeRange.max, Math.max(penSizeRange.min, value))
 
-        changeSize(size)
-        emit.changeSize(size)
-        
-        switch(_tool) {
-            case penTool: _penSize = size; setPenSize(_penSize); break
-            case eraserTool: _eraserSize = size; setEraserSize(_eraserSize); break
-            default: break
+            changeSize(size)
+            emit.changeSize(size)
+            
+            switch(_tool) {
+                case penTool: _penSize = size; setPenSize(_penSize); break
+                case eraserTool: _eraserSize = size; setEraserSize(_eraserSize); break
+                default: break
+            }
         }
     }
 
     /// ACTIONS ///
     function changeColor(color) {
-        // console.log('changeColor')
         _color = color
         setColor(_color)
     }
     function changeSize(size) {
-        // console.log('changeSize')
         _size = size
         setSize(_size)
     }
 
     function changeTool(toolName) {
-        // console.log('changeTool')
         _tool = tools[toolName]
-        // console.log(_tool)
         setTool(_tool)
-        // console.log({toolName, _tool, tool, tools})
     }
     
     function startLine(thisPoint) {
-        // console.log('startLine')
         const ctx = context.current
         ctx.beginPath()
         ctx.arc(...thisPoint, _size / 2, 0, 2 * Math.PI)
@@ -255,11 +200,8 @@ const Canvas = ({isArtist, code}) => {
     }
 
     function drawLine(thisPoint) {
-        // console.log('drawLine')
-        // console.log({_lastPoint})
         if (_lastPoint !== null) {
             const ctx = context.current
-            // console.log({ctx, thisPoint, lastPoint: _lastPoint, _size})
             ctx.beginPath()
             ctx.moveTo(..._lastPoint)
             ctx.lineTo(...thisPoint)
@@ -274,19 +216,20 @@ const Canvas = ({isArtist, code}) => {
     }
 
     function endLine() {
-        // console.log('endLine')
         _lastPoint = null
     }
 
     function clearDrawing() {
-        // console.log('clearDrawing')
         const ctx = context.current
         ctx.clearRect(0, 0, canvas.current.width, canvas.current.height)
+        endLine()
+        changeTool(penTool)
+        changeColor(defaultPenColor)
+        changeSize(defaultPenSize)
     }
 
     /// SOCKETS ///
     function setupSockets() {
-        // console.log('setupSockets')
         socket.current = io.connect('/')
 
         socket.current.on(`${code}-changeColor`, changeColor)
@@ -299,9 +242,6 @@ const Canvas = ({isArtist, code}) => {
     }
 
     return (
-        // <div className="card canvasCard">
-        // <div className="card-body ">
-        // <div className="canvasContainer">
         <div id='canvas-component'>
             <div id='draw-area'>
                 <canvas
@@ -312,6 +252,7 @@ const Canvas = ({isArtist, code}) => {
                     onMouseUp={canvasOnMouseUp}
                     onMouseOut={canvasOnMouseOut}
                     // onWheel={canvasOnMouseWheel}
+                    style={{cursor: isArtist ? 'none': 'initial'}}
                     ref={canvas}
                 ></canvas>
                 {isArtist && <>
@@ -411,9 +352,6 @@ const Canvas = ({isArtist, code}) => {
                 </div>
             }
         </div>
-        // </div>
-        // </div>
-        // </div>
     )
 }
 
