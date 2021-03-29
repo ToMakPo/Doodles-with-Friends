@@ -44,9 +44,11 @@ const TimedOutMessage = ({ text }) => {
 const NewGameMessage = ({ text }) => {
     return (
         <div className={'new-game-message log'}>
+            <span>Thank you for playing</span>
+            <h3>Doodle with Friends</h3>
             <span>Time to start a new game.</span>
-            <small>The artist for this round is:</small>
-            <h3>{text}</h3>
+            {/* <small>The artist for this round is:</small> */}
+            {/* <h3>{text}</h3> */}
         </div>
     )
 }
@@ -54,16 +56,15 @@ const NewRoundMessage = ({ text }) => {
     return (
         <div className={'new-round-message log'}>
             <span>Time to start a new round.</span>
-            <small>The artist for this round is:</small>
-            <h3>{text}</h3>
+            {/* <small>The artist for this round is:</small> */}
+            {/* <h3>{text}</h3> */}
         </div>
     )
 }
 const EndGameMessage = () => {
     return (
         <div className={'end-game-message log'}>
-            <span>Thank you for playing</span>
-            <h3>Doodle with Friends</h3>
+            <h3>Game Over!</h3>
         </div>
     )
 }
