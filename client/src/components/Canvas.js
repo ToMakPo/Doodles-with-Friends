@@ -226,17 +226,6 @@ const Canvas = ({isArtist, code}) => {
     }
 
     /// ACTIONS ///
-    function getContext() {
-        const ctx = canvas.current.getContext('2d')
-        const clr = tool === penTool ? _color : '#ffffff'
-        console.log({clr, _tool, tool, _color});
-        ctx.strokeStyle = clr
-        ctx.fillStyle = clr
-        ctx.lineWidth = _size
-
-        return ctx
-    }
-
     function changeColor(color) {
         console.log('changeColor');
         _color = color
