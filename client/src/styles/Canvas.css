@@ -3,6 +3,15 @@ canvas {
     background-color: white;
 }
 
+#canvas-component {
+    width: fit-content;
+}
+
+#canvas-input-box {
+    display: flex;
+    gap: 10px
+}
+
 #draw-area {
     position: relative;
     width: fit-content;
@@ -15,18 +24,11 @@ canvas {
 
 #canvas-cursor {
     position: absolute;
-    transform: translate(-50%, -50%);
-    width: 35px;
-    height: 35px;
     border-radius: 50%;
     z-index: 5;
     cursor: none;
     pointer-events: none;
     border: 1px solid black;
-}
-
-#canvas-cursor.eraser {
-    background-color: #ffffff88 !important;
 }
 
 #clear-drawing-button {

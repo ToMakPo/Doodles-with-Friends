@@ -11,6 +11,7 @@ import WaitingRoom from './pages/WaitingRoom'
 import ActiveGame from './pages/ActiveGame'
 import ScoreBoard from './pages/ScoreBoard'
 // import PageNotFound from './pages/PageNotFound'
+import Canvas from './components/Canvas'
 
 import LobbyContext from './utils/LobbyContext'
 import { WordBankProvider } from './utils/GlobalState'
@@ -47,6 +48,13 @@ const App = () => {
 		<LobbyContext.Provider value={lobby}>
 			<WordBankProvider>
 				{
+					// true ? <main style={{
+					// 	width: '100vw', 
+					// 	height: '100vh', 
+					// 	display: 'flex',
+					// 	justifyContent: 'center',
+					// 	alignItems: 'center'
+					// }}><Canvas isArtist={true} code='BADA55'/></main> :
 					<Router>
 						<PageHeader loggedIn={isAuthenticated} />
 
@@ -70,13 +78,12 @@ const App = () => {
 								</Switch>
 							)}
 						</main>
-						{/* }  */}
 
+						<PageFooter />
 
 					</Router>
 
 				}
-				<PageFooter />
 			</WordBankProvider>
 		</LobbyContext.Provider>
 	)

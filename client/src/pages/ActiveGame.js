@@ -12,7 +12,7 @@ import io from 'socket.io-client'
 import '../styles/palette.css'
 import '../styles/ActiveGame.css'
 
-const initialCountdown = 10
+const initialCountdown = 120
 
 const ArtistView = () => {
     const [code] = useState(window.location.pathname.split('/')[2])
@@ -108,33 +108,20 @@ const ArtistView = () => {
                             </div>
                         )
                     }
-
+                    
                     <div className="d-inline p-1 ">
                         Round {game?.currentRotation + 1} of {game?.rotations}
                     </div>
 
                     <div className="d-inline p-1 ">
                         Remaining Time:
-                            <Timer countdown={countdown} />
-                    </div>
+                        <Timer countdown={countdown}/>
+                    </div> 
                 </div>
             </h2>
-            <div className="card-deck" style={{
-                display: 'flex',
-                justifyContent: "center",
-                alignItems: "stretch",
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                width: "100%",
-            }}>
-
-                <Canvas active={isArtist} />
-                <ChatBox />
-                {/* <div className="canvasContainer">
-                    TODO: Check if this is the active player
-                    <Canvas active={true} />
-                </div> */}
-
+            <div className="card-deck">
+                <Canvas isArtist={isArtist} code={code}/> 
+                <ChatBox/>
             </div>
         </div>
     )

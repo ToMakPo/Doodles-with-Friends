@@ -89,7 +89,7 @@ const ArtistView = () => {
                 {/* <div className="card-body "> */}
                 <div className="canvasContainer">
                     {/* TODO: Check if this is the active player */}
-                    <Canvas active={true} />
+                    {/* <Canvas active={true} /> */}
                 </div>
                 {/* </div> */}
                 {/* </div> */}
