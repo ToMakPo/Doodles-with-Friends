@@ -44,9 +44,11 @@ const TimedOutMessage = ({ text }) => {
 const NewGameMessage = ({ text }) => {
     return (
         <div className={'new-game-message log'}>
+            <span>Thank you for playing</span>
+            <h3>Doodle with Friends</h3>
             <span>Time to start a new game.</span>
-            <small>The artist for this round is:</small>
-            <h3>{text}</h3>
+            {/* <small>The artist for this round is:</small> */}
+            {/* <h3>{text}</h3> */}
         </div>
     )
 }
@@ -54,16 +56,15 @@ const NewRoundMessage = ({ text }) => {
     return (
         <div className={'new-round-message log'}>
             <span>Time to start a new round.</span>
-            <small>The artist for this round is:</small>
-            <h3>{text}</h3>
+            {/* <small>The artist for this round is:</small> */}
+            {/* <h3>{text}</h3> */}
         </div>
     )
 }
 const EndGameMessage = () => {
     return (
         <div className={'end-game-message log'}>
-            <span>Thank you for playing</span>
-            <h3>Doodle with Friends</h3>
+            <h3>Game Over!</h3>
         </div>
     )
 }
@@ -138,45 +139,38 @@ const ChatBox = () => {
     }
 
     return (
-        <div className="card"
-        style={{minWidth:360}}>
-            <h2 className="card-header">Chat:  </h2>
-            <div className="card-body">
-                <div id='chat-component m-0'>
-                    <div id='chat-log' ref={chatLog}>{
-                        log.map((data, i) => {
-                            const fromSelf = data.userId === userId
-                            switch (data.messageType) {
-                                case 'chat': return <ChatMessage key={i} {...data} fromSelf={fromSelf} />
-                                case 'guess': return <GuessMessage key={i} {...data} fromSelf={fromSelf} />
-                                case 'answer': return <AnswerMessage key={i} {...data} />
-                                case 'timedOut': return <TimedOutMessage key={i} {...data} />
-                                case 'newGame': return <NewGameMessage key={i} {...data} />
-                                case 'newRound': return <NewRoundMessage key={i} {...data} />
-                                case 'endGame': return <EndGameMessage key={i} />
-                                default: return ''
-                            }
-                        })
-                    }</div>
-                    <form
-                    className=""
-                        id='chat-input-form'
-                        onSubmit={chatInputFormOnSubmit}>
-                        <input
-                            id='chat-input'
-                            type="text"
-                            ref={chatInput}
-                            onInput={chatInputOnInput}
-                        />
-                        <input
-                            id='chat-submit'
-                            type='submit'
-                            className='chat-button'
-                            value={guessing ? '❓' : '💬'}
-                        />
-                    </form>
-                </div>
-            </div>
+        <div id='chat-component'>
+            <div id='chat-log' ref={chatLog}>{
+                log.map((data, i) => {
+                    const fromSelf = data.userId === userId
+                    switch (data.messageType) {
+                        case 'chat': return <ChatMessage key={i} {...data} fromSelf={fromSelf} />
+                        case 'guess': return <GuessMessage key={i} {...data} fromSelf={fromSelf} />
+                        case 'answer': return <AnswerMessage key={i} {...data} />
+                        case 'timedOut': return <TimedOutMessage key={i} {...data} />
+                        case 'newGame': return <NewGameMessage key={i} {...data} />
+                        case 'newRound': return <NewRoundMessage key={i} {...data} />
+                        case 'endGame': return <EndGameMessage key={i} />
+                        default: return ''
+                    }
+                })
+            }</div>
+            <form
+                id='chat-input-form'
+                onSubmit={chatInputFormOnSubmit}>
+                <input
+                    id='chat-input'
+                    type="text"
+                    ref={chatInput}
+                    onInput={chatInputOnInput}
+                />
+                <input
+                    id='chat-submit'
+                    type='submit'
+                    className='chat-button'
+                    value={guessing ? '❓' : '💬'}
+                />
+            </form>
         </div>
     )
 }

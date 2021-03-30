@@ -61,3 +61,7 @@ ul {
 .player-score.rank-3 {
     font-size: 1.25em;
 }
+
+.player-score .score {
+    font-size: 0.5em;
+}

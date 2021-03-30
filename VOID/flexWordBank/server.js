@@ -86,6 +86,14 @@ function newConnection(socket) {
         return text.replace(/\W/g, '').toLowerCase()
     }
 
+    function checkAnswer(guess, answers) {
+        guess = strip(guess)
+        for (const answer of answers) {
+            if (guess == strip(answer)) return true
+        }
+        false
+    }
+
     /// FUNCTIONS ///
     async function submitChat(code, data) {
         const lobby = await db.Lobby.findOne({ code })
@@ -101,11 +109,11 @@ function newConnection(socket) {
             if (sender != artist) {
                 await lobby.update({$push: {chatLog: data}})
 
-                if (strip(guess) == strip(answer)) {
+                if (checkAnswer(guess, answer)) {
                     const answerMessage = {
                         ...data,
                         messageType: 'answer',
-                        text: round?.answer
+                        text: round?.answer[0]
                     }
                     await lobby.update({$push: {chatLog: answerMessage}, })
                     await updataChatLog(code)
@@ -190,8 +198,7 @@ function newConnection(socket) {
         const subList = []
         for (let c = 0; c < count || fullList.length == 0; c++) {
             const i = Math.floor(Math.random() * fullList.length)
-            const word = fullList.splice(i, 1)[0]
-            subList.push(word)
+            subList.push(fullList.splice(i, 1))
         }
         return subList
     }
@@ -202,7 +209,6 @@ function newConnection(socket) {
                 const count = rotations * lobby.players.length + 10
 
                 const wordList = getRandomListOfWords(category, count)
-                console.log(wordList);
                 const players = randomizePlayerOrder(lobby)
                 const answer = getRandomWord(wordList)
 
@@ -228,6 +234,7 @@ function newConnection(socket) {
                     text: artist.username
                 }
                 await lobby.update({$push: {chatLog: newGameMessage}})
+                console.log({game});
                 
                 db.Lobby
                     .findById(lobby._id)

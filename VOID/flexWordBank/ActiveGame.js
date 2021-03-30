@@ -99,7 +99,7 @@ const ArtistView = () => {
                         isArtist ? (
                             <div className="d-inline p-1">
                                 Your word is:
-                                <div id='artist-answer'>{round?.answer}</div>
+                                <div id='artist-answer'>{round?.answer[0]}</div>
                             </div>
                         ) : (
                             <div className="d-inline p-1">
@@ -121,9 +121,7 @@ const ArtistView = () => {
             </h2>
             <div className="card-deck">
                 <Canvas isArtist={isArtist} code={code}/> 
-                <div style={{minWidth: 360}}>
-                    <ChatBox/>
-                </div>
+                <ChatBox/>
             </div>
         </div>
     )

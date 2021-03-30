@@ -101,139 +101,96 @@ const WaitingRoom = () => {
             id="bootstrap-overrides"
             className="waiting-room-main main container">
             <div className="row containerCol">
-                <div className="card-deck ">
-                    {/* Column 1 */}
-                    <div className="card"
-                    style={{minWidth:360}}>
-                        <h2 className="card-header">Details:
-                        {/* <div className="gameCode">{code || `no lobby`}</div> */}
-                        </h2>
-                        <div className="card-body">
-                        <div className="d-flex 
-                                flex-row
-                                justify-content-center
-                                align-items-between">
-                            <h5 className="mr-3 mt-1 mb-0" >Game Code: </h5>
-                            <h4 className="gameCode mb-0">{code || `no lobby`}</h4>
-                        </div>
-                        <hr></hr>
-                            <PlayerList players={players} />
-                        </div>
-                    </div>
-
-                    {/* Column 2 */}
-                    <div className="card"
-                    style={{minWidth:360}}>
-                        <h2 className="card-header">Options:</h2>
-                        <div className="card-body">
-                            <div style={{ marginBottom: 10 }}
-                                className="d-flex 
-                                flex-row
-                                justify-content-center
-                                align-items-center">
-                                <label
-                                    className="mr-2 my-0"
-                                    htmlFor="num-rotations-input">
-                                    Number of Rounds: </label>
-                                <input
-                                    id='num-rotations-input'
-                                    type="number"
-                                    className="form-control col mx-auto text-center"
-                                    aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2"
-                                    min={1}
-                                    value={rotations}
-                                    onChange={event => {
-                                        const value = Math.max(event.target.value, 1)
-                                        emit.updateRotations(value)
-                                    }}
-                                    disabled={!isHost}
-                                />
+                <div id='container' className="card-deck">
+                    <div id="content">
+                        {/* Column 1 */}
+                        <div className="card">
+                            <h2 className="card-header">Details:
+                            {/* <div className="gameCode">{code || `no lobby`}</div> */}
+                            </h2>
+                            <div className="card-body">
+                            <div className="d-flex 
+                                    flex-row
+                                    justify-content-center
+                                    align-items-between">
+                                <h5 className="mr-3 mt-1 mb-0" >Game Code: </h5>
+                                <h4 className="gameCode mb-0">{code || `no lobby`}</h4>
                             </div>
-
-                            <div style={{ marginBottom: 10 }}
-                                className="d-flex 
-                                flex-row
-                                justify-content-center
-                                align-items-center">
-                                <label
-                                    className="col-auto p-0 mr-2 my-0" htmlFor="category-selector">
-                                    Category:</label>
-                                <select
-                                    id="category-selector"
-                                    style={{ height: 38 }}
-                                    className=" col-auto btn btn-primary dropDN col flex-grow-1"
-                                    type="button"
-                                    onChange={event => {
-                                        const category = event.target.value
-                                        emit.updateCategory(category)
-                                    }}
-                                    disabled={!isHost}
-                                    value={category}
-                                    name="categories">
-
-                                    <option value='any'>Any</option>
-                                    <option disabled>------------</option>
-                                    {categories.map(category =>
-                                        <option
-                                            key={category}
-                                            value={category}>
-                                            {category}
-                                        </option>
-                                    )}
-                                </select>
+                            <hr></hr>
+                                <PlayerList players={players} />
                             </div>
-                            {/* <div style={{ marginBottom: 5 }}>
-                                <form
-                                    className="
-                                
-                                
-                                d-flex 
-                                flex-row
-                                justify-content-between
-                                align-items-center
-                                    "
-                                    onSubmit={handleSubmit}>
-                                    <div className="col p-0">
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="Enter Custom Word"
-                                            aria-label="Recipient's username"
-                                            aria-describedby="basic-addon2"
-                                            ref={customWordInputRef}
-                                        />
-                                    </div>
-                                    <div className="col-auto p-0">
-                                        <button
-                                            className="btn btnAdd btn-block"
-                                            type="submit">
-                                            +
-                                    </button>
-                                    </div>
-                                </form>
-                                <div>
-                                    <ul className="">
-                                        {listOfCustomWords.map(word => (
-                                            <li className="" key={word.id}>
-                                                {word.name + " "}
-                                                <button
-                                                    className="btn btnDel"
-                                                    onClick={_ => dispatch({
-                                                        type: "deleteWord",
-                                                        id: word.id
-                                                    })}
-                                                >x</button>
-                                            </li>
-                                        ))}
-                                    </ul>
+                        </div>
+
+                        {/* Column 2 */}
+                        <div className="card">
+                            <h2 className="card-header">Options:</h2>
+                            <div className="card-body">
+                                <div style={{ marginBottom: 10 }}
+                                    className="d-flex
+                                    flex-row
+                                    justify-content-center
+                                    align-items-center">
+                                    <label
+                                        className="mr-2 my-0"
+                                        htmlFor="num-rotations-input">
+                                        Number of Rounds: </label>
+                                    <input
+                                        id='num-rotations-input'
+                                        type="number"
+                                        className="form-control col mx-auto text-center"
+                                        aria-label="Recipient's username"
+                                        aria-describedby="basic-addon2"
+                                        min={1}
+                                        value={rotations}
+                                        onChange={event => {
+                                            const value = Math.max(event.target.value, 1)
+                                            emit.updateRotations(value)
+                                        }}
+                                        disabled={!isHost}
+                                    />
                                 </div>
-                            </div> */}
+                                <div style={{ marginBottom: 10 }}
+                                    className="d-flex
+                                        flex-row
+                                        justify-content-center
+                                        align-items-center">
+                                    <label
+                                        className="col-auto p-0 mr-2 my-0" htmlFor="category-selector">
+                                        Category:</label>
+                                    <select
+                                        id="category-selector"
+                                        style={{ height: 38 }}
+                                        className=" col-auto btn btn-primary dropDN col flex-grow-1"
+                                        type="button"
+                                        onChange={event => {
+                                            const category = event.target.value
+                                            emit.updateCategory(category)
+                                        }}
+                                        disabled={!isHost}
+                                        value={category}
+                                        name="categories">
+                                        <option value='any'>Any</option>
+                                        <option disabled>------------</option>
+                                        {categories.map(category =>
+                                            <option
+                                                key={category}
+                                                value={category}>
+                                                {category}
+                                            </option>
+                                        )}
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     {/* Column 3 */}
-                    <ChatBox />
+                    <div id='chat' className="card">
+                        <h2 className="card-header">Chat:  </h2>
+                        <div className="card-body">
+                        <ChatBox />
+                        </div>
+                    </div>
                 </div>{/* end card deck div */}
             </div>
             <div className="containerBottom">
