@@ -121,7 +121,9 @@ const ArtistView = () => {
             </h2>
             <div className="card-deck">
                 <Canvas isArtist={isArtist} code={code}/> 
-                <ChatBox/>
+                <div style={{minWidth: 360}}>
+                    <ChatBox/>
+                </div>
             </div>
         </div>
     )
