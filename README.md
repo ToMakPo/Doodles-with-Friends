@@ -1,6 +1,6 @@
 # Doodles with Friends
 
-# Pod 7 Project 3
+### Pod 7: Project 3
 
 ## DESCRIPTION
 
