@@ -71,7 +71,7 @@ const ScoreBoard = () => {
                                 <li className={'player-score rank-' + rank} key={i}>
                                     <span className='rank'>{nth(rank)}</span>
                                     <span className='username'>{username}</span>
-                                    <span className='score'>{score}</span>
+                                    <span className='score'>{score} points</span>
                                     <span className='metal'>
                                         {rank === 1 && '🥇'}
                                         {rank === 2 && '🥈'}
@@ -89,10 +89,10 @@ const ScoreBoard = () => {
                     </div>
                 </div>
 
-                <div className="card" style={{minWidth:360}}>
-                    <h2 className="card-header">Chat:  </h2>
+                <div className="card">
+                    <h2 className="card-header">Chat:</h2>
                     <div className="card-body">
-                    <ChatBox />
+                        <ChatBox />
                     </div>
                 </div>
             </div>
